@@ -1,4 +1,5 @@
 #Directories
-.vs/
+*.vs/
 bin/
 bin-int/
+
