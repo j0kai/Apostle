@@ -4,6 +4,9 @@
     <Filter Include="Apostle">
       <UniqueIdentifier>{1D7CA49C-895B-2338-9273-AE0EFED18999}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Apostle\Events">
+      <UniqueIdentifier>{61C52BEE-4D93-1FF4-3627-901A2294FB58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Apostle.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\Apostle\EntryPoint.h">
       <Filter>Apostle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\Events\ApplicationEvents.h">
+      <Filter>Apostle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\Events\Events.h">
+      <Filter>Apostle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\Events\KeyEvents.h">
+      <Filter>Apostle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\Events\MouseEvents.h">
+      <Filter>Apostle\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Log.h">
       <Filter>Apostle</Filter>
