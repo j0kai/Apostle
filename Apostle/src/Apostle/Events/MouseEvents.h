@@ -2,8 +2,6 @@
 
 #include "Events.h"
 
-#include <sstream>
-
 namespace Apostle {
 
 	class APOSTLE_API MouseMovedEvent : public Event

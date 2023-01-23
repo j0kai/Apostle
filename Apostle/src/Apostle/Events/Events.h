@@ -2,9 +2,6 @@
 
 #include "Apostle/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Apostle {
 
 	// Events in Apostle are currently blocking, meaning that when an event occurs 

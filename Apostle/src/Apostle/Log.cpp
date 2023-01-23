@@ -1,3 +1,4 @@
+#include "APpch.h"
 #include "Log.h"
 
 namespace Apostle {
