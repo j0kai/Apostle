@@ -32,7 +32,14 @@ namespace Apostle {
 	class APOSTLE_API WindowCloseEvent : public Event
 	{
 	public:
-		WindowCloseEvent() = default;
+		WindowCloseEvent() {}
+		
+		virtual std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "Window closed";
+			return ss.str();
+		}
 
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)

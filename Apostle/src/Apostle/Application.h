@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Events/ApplicationEvents.h"
 
 namespace Apostle {
 
@@ -13,7 +14,11 @@ namespace Apostle {
 
 		void Run();
 
+		void OnUpdate(Event& e);
+
 	private:
+		bool OnWindowClose(WindowCloseEvent& e);
+
 		std::unique_ptr<Window> m_Window;
 		bool m_IsRunning = true;
 	};
