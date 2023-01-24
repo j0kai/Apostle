@@ -19,3 +19,5 @@
 	#include <Windows.h>
 #endif
 
+/*----Logger (REMOVE FROM RELEASE BUILD)*/
+#include "Apostle/Log.h"

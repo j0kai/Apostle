@@ -7,15 +7,21 @@ workspace "Apostle"
       "Dist"
     }
 
-outputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+-- Include directories relative to root
+IncludeDir = {}
+IncludeDir["GLFW"] = "Apostle/vendor/GLFW/include"
+
+include "Apostle/vendor/GLFW"
 
 project "Apostle"
     location "Apostle"
     kind "SharedLib"
     language "C++"
 
-    targetdir ("bin/" .. outputDir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     pchheader "APpch.h"
     pchsource "Apostle/src/APpch.cpp"
@@ -23,13 +29,20 @@ project "Apostle"
     files 
     { 
       "%{prj.name}/src/**.h", 
-      "%{prj.name}/src/**.cpp"
+      "%{prj.name}/src/**.cpp",
     }
 
     includedirs
     {
       "%{prj.name}/src",
-      "%{prj.name}/vendor/spdlog/include"
+      "%{prj.name}/vendor/spdlog/include",
+      "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+      "GLFW",
+      "opengl32.lib"
     }
     
     filter "system:windows"
@@ -45,7 +58,7 @@ project "Apostle"
       
       postbuildcommands
       {
-        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputDir   .. "/Sandbox")
+        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir   .. "/Sandbox")
       }
 
     filter "configurations:Debug"
@@ -70,8 +83,8 @@ project "Sandbox"
     kind "ConsoleApp"
     language "C++"
   
-    targetdir ("bin/" .. outputDir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
   
     files 
     { 

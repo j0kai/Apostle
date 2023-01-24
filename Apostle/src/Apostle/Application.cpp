@@ -8,6 +8,7 @@ namespace Apostle {
 
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Apostle::Application::~Application()
@@ -16,10 +17,10 @@ namespace Apostle {
 
 	void Apostle::Application::Run()
 	{
-		WindowResizeEvent e(1280, 720);
-		AP_TRACE(e);
-
-		while (true);
+		while (m_IsRunning)
+		{
+			m_Window->OnUpdate();
+		}
 	}
 
 }
