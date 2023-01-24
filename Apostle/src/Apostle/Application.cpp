@@ -13,7 +13,7 @@ namespace Apostle {
 	Application::Application()
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FUNC(OnUpdate));
+		m_Window->SetEventCallback(BIND_EVENT_FUNC(OnEvent));
 	}
 
 	Apostle::Application::~Application()
@@ -30,7 +30,7 @@ namespace Apostle {
 		}
 	}
 
-	void Application::OnUpdate(Event& e)
+	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(OnWindowClose));
@@ -43,5 +43,4 @@ namespace Apostle {
 		m_IsRunning = false;
 		return true;
 	}
-
 }

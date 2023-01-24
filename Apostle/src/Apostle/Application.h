@@ -14,7 +14,7 @@ namespace Apostle {
 
 		void Run();
 
-		void OnUpdate(Event& e);
+		void OnEvent(Event& e);
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
