@@ -47,6 +47,12 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\Layer.h">
+      <Filter>Apostle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\LayerStack.h">
+      <Filter>Apostle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp" />
@@ -58,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\Layer.cpp">
+      <Filter>Apostle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\LayerStack.cpp">
+      <Filter>Apostle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

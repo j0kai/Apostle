@@ -153,6 +153,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Layer.h" />
+    <ClInclude Include="src\Apostle\LayerStack.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Application.h" />
@@ -167,6 +169,8 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Apostle\Layer.cpp" />
+    <ClCompile Include="src\Apostle\LayerStack.cpp" />
     <ClCompile Include="src\APpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

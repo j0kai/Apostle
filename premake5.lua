@@ -63,14 +63,17 @@ project "Apostle"
 
     filter "configurations:Debug"
       defines { "AP_DEBUG" }
+      buildoptions "/MDd"
       symbols "On"
 
     filter "configurations:Release"
       defines { "AP_RELEASE" }
+      buildoptions "/MD"
       optimize "On"
 
     filter "configurations:Dist"
       defines { "AP_DIST" }
+      buildoptions "/MD"
       optimize "On"
 
     filter {"system:windows", "configurations:Release"}
@@ -115,12 +118,15 @@ project "Sandbox"
   
       filter "configurations:Debug"
         defines { "AP_DEBUG" }
+        buildoptions "/MDd"
         symbols "On"
   
       filter "configurations:Release"
         defines { "AP_RELEASE" }
+        buildoptions "/MD"
         optimize "On"
   
       filter "configurations:Dist"
         defines { "AP_DIST" }
+        buildoptions "/MD"
         optimize "On"
