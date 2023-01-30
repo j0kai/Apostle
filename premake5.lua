@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root
 IncludeDir = {}
 IncludeDir["GLFW"] = "Apostle/vendor/GLFW/include"
+IncludeDir["Glad"] = "Apostle/vendor/Glad/include"
 
 include "Apostle/vendor/GLFW"
+include "Apostle/vendor/Glad"
 
 project "Apostle"
     location "Apostle"
@@ -36,12 +38,14 @@ project "Apostle"
     {
       "%{prj.name}/src",
       "%{prj.name}/vendor/spdlog/include",
-      "%{IncludeDir.GLFW}"
+      "%{IncludeDir.GLFW}",
+      "%{IncludeDir.Glad}"
     }
 
     links
     {
       "GLFW",
+      "Glad",
       "opengl32.lib"
     }
     
@@ -53,7 +57,8 @@ project "Apostle"
       defines
       {
         "AP_PLATFORM_WINDOWS",
-        "AP_BUILD_DLL"
+        "AP_BUILD_DLL",
+        "GLFW_INCLUDE_NONE"
       }
       
       postbuildcommands
@@ -77,7 +82,7 @@ project "Apostle"
       optimize "On"
 
     filter {"system:windows", "configurations:Release"}
-      buildoptions "/MT"
+      buildoptions "/MD"
 
 
 --SANDBOX PROJECT--
