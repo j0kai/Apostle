@@ -5,6 +5,8 @@
 #include "Apostle/Events/KeyEvents.h"
 #include "Apostle/Events/MouseEvents.h"
 
+#include <glad/glad.h>
+
 namespace Apostle {
 
     static bool s_GLFWInitialised = false;
@@ -39,13 +41,16 @@ namespace Apostle {
         if (!s_GLFWInitialised)
         {
             int successful = glfwInit();
-            AP_ASSERT(successful, "Could not initialise window!");
+            AP_CORE_ASSERT(successful, "Could not initialise window!");
             glfwSetErrorCallback(GLFWErrorCallback);
+            
             s_GLFWInitialised = true;
         }
 
         m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        AP_CORE_ASSERT(status, "Failed to initialise Glad!");
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
