@@ -8,6 +8,7 @@
 
 #include "Apostle/Application.h"
 #include "Apostle/Layer.h"
+#include "Apostle/ImGui/ImGuiLayer.h"
 #include "Apostle/Log.h"
 
 /* ---------Entry Point------------ */

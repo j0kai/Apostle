@@ -13,9 +13,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Apostle/vendor/GLFW/include"
 IncludeDir["Glad"] = "Apostle/vendor/Glad/include"
+IncludeDir["ImGui"] = "Apostle/vendor/imgui"
 
 include "Apostle/vendor/GLFW"
 include "Apostle/vendor/Glad"
+include "Apostle/vendor/imgui"
 
 project "Apostle"
     location "Apostle"
@@ -39,13 +41,15 @@ project "Apostle"
       "%{prj.name}/src",
       "%{prj.name}/vendor/spdlog/include",
       "%{IncludeDir.GLFW}",
-      "%{IncludeDir.Glad}"
+      "%{IncludeDir.Glad}",
+      "%{IncludeDir.ImGui}"
     }
 
     links
     {
       "GLFW",
       "Glad",
+      "ImGui",
       "opengl32.lib"
     }
     
@@ -58,7 +62,8 @@ project "Apostle"
       {
         "AP_PLATFORM_WINDOWS",
         "AP_BUILD_DLL",
-        "GLFW_INCLUDE_NONE"
+        "GLFW_INCLUDE_NONE",
+        "IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
       }
       
       postbuildcommands

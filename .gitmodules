@@ -4,3 +4,6 @@
 [submodule "Apostle/vendor/GLFW"]
 	path = Apostle/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
+[submodule "Apostle/vendor/imgui"]
+	path = Apostle/vendor/imgui
+	url = https://github.com/ocornut/imgui
