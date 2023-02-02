@@ -9,7 +9,7 @@
 
 namespace Apostle {
 
-	ImGuiLayer::ImGuiLayer()
+    ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
 	}
@@ -24,9 +24,10 @@ namespace Apostle {
 		ImGui::StyleColorsDark();
 
 		ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
 		// TEMPORARY: will switch to Apostle key codes eventually
         /*
@@ -144,12 +145,12 @@ namespace Apostle {
         ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	void ImGuiLayer::OnDetach()
-	{
+    void ImGuiLayer::OnDetach()
+    {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-	}
+    }
 
 	void ImGuiLayer::OnUpdate()
 	{
@@ -164,8 +165,8 @@ namespace Apostle {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+        static bool showWindow = true;
+        ImGui::ShowDemoWindow(&showWindow);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -179,5 +180,10 @@ namespace Apostle {
             event.IsHandled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
             event.IsHandled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
         }
+    }
+
+    bool ImGuiLayer::OnImGuiWindowCloseEvent(Event& e)
+    {
+        return false;
     }
 }

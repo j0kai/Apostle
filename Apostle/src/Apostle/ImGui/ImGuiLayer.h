@@ -2,6 +2,7 @@
 
 #include "Apostle/Core.h"
 #include "Apostle/Layer.h"
+#include "Apostle/Events/ApplicationEvents.h"
 
 namespace Apostle {
 
@@ -17,6 +18,8 @@ namespace Apostle {
 		virtual void OnEvent(Event& event) override;
 		
 		void BlockEvents(bool block) { m_EventsBlocked = block; }
+	private:
+		bool OnImGuiWindowCloseEvent(Event& e);
 	private:
 		bool m_EventsBlocked = true;
 		float m_Time = 0.0f;

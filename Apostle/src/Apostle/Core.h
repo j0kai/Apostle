@@ -10,6 +10,10 @@
 	#error Apostle only supports Windows!
 #endif
 
+#ifdef AP_DEBUG
+	#define AP_ENABLE_ASSERTS
+#endif
+
 #ifdef AP_ENABLE_ASSERTS
 	#define AP_ASSERT(x, ...) { if(!(x)) { AP_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 	#define AP_CORE_ASSERT(x, ...) { if(!(x)) { AP_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }

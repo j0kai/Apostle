@@ -59,4 +59,20 @@ namespace Apostle {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
+	class APOSTLE_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {}
+
+		virtual std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "Key Typed: " << m_Keycode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
+	};
+
 }

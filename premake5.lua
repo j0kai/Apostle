@@ -7,6 +7,8 @@ workspace "Apostle"
       "Dist"
     }
 
+    startproject "Sandbox"
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Include directories relative to root
@@ -15,14 +17,18 @@ IncludeDir["GLFW"] = "Apostle/vendor/GLFW/include"
 IncludeDir["Glad"] = "Apostle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Apostle/vendor/imgui"
 
-include "Apostle/vendor/GLFW"
-include "Apostle/vendor/Glad"
-include "Apostle/vendor/imgui"
+group "Dependencies"
+    include "Apostle/vendor/GLFW"
+    include "Apostle/vendor/Glad"
+    include "Apostle/vendor/imgui"
+
+group""
 
 project "Apostle"
     location "Apostle"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -55,7 +61,6 @@ project "Apostle"
     
     filter "system:windows"
       cppdialect "C++17"
-      staticruntime "On"
       systemversion "latest"
 
       defines
@@ -68,22 +73,22 @@ project "Apostle"
       
       postbuildcommands
       {
-        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir   .. "/Sandbox")
+        ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir   .. "/Sandbox/\"")
       }
 
     filter "configurations:Debug"
       defines { "AP_DEBUG" }
-      buildoptions "/MDd"
+      runtime "Debug"
       symbols "On"
 
     filter "configurations:Release"
       defines { "AP_RELEASE" }
-      buildoptions "/MD"
+      runtime "Release"
       optimize "On"
 
     filter "configurations:Dist"
       defines { "AP_DIST" }
-      buildoptions "/MD"
+      runtime "Release"
       optimize "On"
 
     filter {"system:windows", "configurations:Release"}
@@ -95,6 +100,7 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
   
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -118,7 +124,6 @@ project "Sandbox"
       
     filter "system:windows"
       cppdialect "C++17"
-      staticruntime "On"
       systemversion "latest"
   
       defines
@@ -128,15 +133,15 @@ project "Sandbox"
   
       filter "configurations:Debug"
         defines { "AP_DEBUG" }
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
   
       filter "configurations:Release"
         defines { "AP_RELEASE" }
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
   
       filter "configurations:Dist"
         defines { "AP_DIST" }
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
