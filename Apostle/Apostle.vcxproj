@@ -153,6 +153,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Input.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Application.h" />
@@ -169,6 +170,8 @@
     <ClInclude Include="src\Apostle\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -181,6 +184,8 @@
     <ClCompile Include="src\Apostle\Log.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
