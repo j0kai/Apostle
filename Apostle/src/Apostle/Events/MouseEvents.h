@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Events.h"
+#include "Apostle/MouseButtonCodes.h"
 
 namespace Apostle {
 
@@ -76,7 +77,8 @@ namespace Apostle {
 		virtual std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Mouse Button Pressed: " << m_MouseButton;
+			auto it = MouseButtonCodesMap.find(static_cast<MouseButtonCodes>(m_MouseButton));
+			ss << "Mouse Button Pressed: " << it->second;
 			return ss.str();
 		}
 
@@ -92,7 +94,8 @@ namespace Apostle {
 		virtual std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Mouse Button released: " << m_MouseButton;
+			auto it = MouseButtonCodesMap.find(static_cast<MouseButtonCodes>(m_MouseButton));
+			ss << "Mouse Button released: " << it->second;
 			return ss.str();
 		}
 

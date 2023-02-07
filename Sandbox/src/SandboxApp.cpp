@@ -10,12 +10,18 @@ public:
 
 	void OnUpdate() override
 	{
-		AP_INFO("ExampleLayer::Update");
+		
 	}
 
 	void OnEvent(Apostle::Event& event) override
 	{
-		AP_TRACE("{0}", event);
+		if (event.GetEventType() == Apostle::EventType::KeyPressed)
+		{
+			Apostle::KeyPressedEvent& e = (Apostle::KeyPressedEvent&)event;
+			if (e.GetKeycode() == (int)KeyCodes::AP_KEY_TAB)
+				AP_TRACE("Tab key is pressed (event)!");
+			AP_TRACE("{0}", (char)e.GetKeycode());
+		}
 	}
 };
 

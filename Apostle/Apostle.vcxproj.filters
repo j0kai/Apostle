@@ -47,6 +47,9 @@
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h">
       <Filter>Apostle\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\Input.h">
+      <Filter>Apostle</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\Layer.h">
       <Filter>Apostle</Filter>
     </ClInclude>
@@ -62,12 +65,15 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Apostle\Input.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Apostle\KeyCodes.h" />
+    <ClInclude Include="src\Apostle\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp" />
@@ -89,10 +95,12 @@
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

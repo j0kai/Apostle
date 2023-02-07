@@ -38,7 +38,7 @@ namespace Apostle {
 				layer->OnUpdate();
 
 			auto [x, y] = Input::GetMousePosition();
-			AP_CORE_TRACE("{0}, {1}", x, y);
+			//AP_CORE_TRACE("{0}, {1}", x, y);
 
 			m_Window->OnUpdate();
 		}

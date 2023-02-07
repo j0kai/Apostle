@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Events.h"
+#include "Apostle/KeyCodes.h"
 
 namespace Apostle {
 
@@ -31,7 +32,8 @@ namespace Apostle {
 		virtual std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Key Pressed: " << m_Keycode << " (Times repeated: " << m_RepeatCount << ")";
+			auto it = KeyCodesMap.find(static_cast<KeyCodes>(m_Keycode));
+			ss << "Key Pressed: " << it->second << " (Times repeated: " << m_RepeatCount << ")";
 			return ss.str();
 		}
 
@@ -52,7 +54,8 @@ namespace Apostle {
 		virtual std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Key Released: " << m_Keycode;
+			auto it = KeyCodesMap.find(static_cast<KeyCodes>(m_Keycode));
+			ss << "Key Released: " << it->second;
 			return ss.str();
 		}
 		
@@ -68,7 +71,8 @@ namespace Apostle {
 		virtual std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "Key Typed: " << m_Keycode;
+			auto it = KeyCodesMap.find(static_cast<KeyCodes>(m_Keycode));
+			ss << "Key Typed: " << it->second;
 			return ss.str();
 		}
 

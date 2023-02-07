@@ -153,7 +153,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Apostle\Input.h" />
+    <ClInclude Include="src\Apostle\KeyCodes.h" />
+    <ClInclude Include="src\Apostle\MouseButtonCodes.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Application.h" />
@@ -164,14 +165,15 @@
     <ClInclude Include="src\Apostle\Events\KeyEvents.h" />
     <ClInclude Include="src\Apostle\Events\MouseEvents.h" />
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Apostle\Input.h" />
     <ClInclude Include="src\Apostle\Layer.h" />
     <ClInclude Include="src\Apostle\LayerStack.h" />
     <ClInclude Include="src\Apostle\Log.h" />
     <ClInclude Include="src\Apostle\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -183,9 +185,9 @@
     <ClCompile Include="src\Apostle\LayerStack.cpp" />
     <ClCompile Include="src\Apostle\Log.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
@@ -194,8 +196,8 @@
     <ProjectReference Include="vendor\Glad\Glad.vcxproj">
       <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
     </ProjectReference>
-    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
-      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    <ProjectReference Include="vendor\imgui\imgui.vcxproj">
+      <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
