@@ -4,8 +4,7 @@ Apostle Engine
 
 
 # Known Issues
-- Currently do not have a way to track imgui premake file, so it needs to be manually created when cloning the repository from Github. See section "imgui Premake" for basic template.
-
+- Currently do not have a way to track imgui premake file, so it needs to be manually created when cloning the repository from Github. See "Imgui Premake" section for basic template.
 
 
 
