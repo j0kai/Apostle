@@ -10,7 +10,7 @@ Apostle Engine
 
 
 
-#Imgui Premake
+# Imgui Premake
 - The following is the base template for the imgui premake file and is enough to get the engine up and running:
 
 project "imgui"
