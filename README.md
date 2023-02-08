@@ -7,8 +7,6 @@ The Apostle Engine is an in-development 2D/3D game engine.
 - Currently do not have a way to track imgui premake file, so it needs to be manually created when cloning the repository from Github. See "Imgui Premake" section for basic template.
 
 
-
-
 # Imgui Premake
 - This is the base template for the imgui premake file and is enough to get the engine up and running. Create a premake5.lua file and paste in the following:
 

@@ -7,3 +7,6 @@
 [submodule "Apostle/vendor/imgui"]
 	path = Apostle/vendor/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "Apostle/vendor/glm"]
+	path = Apostle/vendor/glm
+	url = https://github.com/g-truc/glm
