@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 # Apostle Engine
 The Apostle Engine is an in-development 2D/3D game engine.
+=======
+# Apostle
+Apostle Engine is a 2D/3D Game Engine in development.
+>>>>>>> dev
 
 
 
 # Known Issues
+<<<<<<< HEAD
 - Currently do not have a way to track imgui premake file, so it needs to be manually created when cloning the repository from Github. See "Imgui Premake" section for basic template.
 
 
@@ -37,4 +43,7 @@ project "imgui"
     runtime "Release"
     optimize "On"
 
+=======
+- None right now; if you notice any please let me know.
+>>>>>>> dev
 
