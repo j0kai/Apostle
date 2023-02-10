@@ -8,7 +8,7 @@ The Apostle Engine is an in-development 2D/3D game engine.
 
 
 # Imgui Premake
-- This is the base template for the imgui premake file and is enough to get the engine up and running. Create a premake5.lua file and paste in the following:
+- This is the base template for the imgui premake file and is enough to get the engine up and running. Create a premake5.lua file in Apostle/vendor/imgui, and paste in the following:
 
 project "imgui"
   kind "StaticLib"
