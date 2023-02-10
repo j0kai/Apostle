@@ -50,6 +50,9 @@
     <ClInclude Include="src\Apostle\Input.h">
       <Filter>Apostle</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\KeyCodes.h">
+      <Filter>Apostle</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\Layer.h">
       <Filter>Apostle</Filter>
     </ClInclude>
@@ -57,6 +60,9 @@
       <Filter>Apostle</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Log.h">
+      <Filter>Apostle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\MouseButtonCodes.h">
       <Filter>Apostle</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Window.h">
@@ -72,8 +78,6 @@
       <Filter>Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Apostle\KeyCodes.h" />
-    <ClInclude Include="src\Apostle\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp" />
