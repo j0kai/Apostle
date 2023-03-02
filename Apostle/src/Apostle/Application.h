@@ -7,6 +7,8 @@
 #include "Events/Events.h"
 #include "Events/ApplicationEvents.h"
 
+#include "Apostle/ImGui/ImGuiLayer.h"
+
 namespace Apostle {
 
 	class APOSTLE_API Application
@@ -28,6 +30,7 @@ namespace Apostle {
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
 	private:

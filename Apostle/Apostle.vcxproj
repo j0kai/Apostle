@@ -170,7 +170,6 @@
     <ClInclude Include="src\Apostle\Log.h" />
     <ClInclude Include="src\Apostle\MouseButtonCodes.h" />
     <ClInclude Include="src\Apostle\Window.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -589,21 +588,19 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\APpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Apostle\Application.cpp" />
-    <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Apostle\ImGui\ImGuiBuild.h" />
     <ClCompile Include="src\Apostle\Layer.cpp" />
     <ClCompile Include="src\Apostle\LayerStack.cpp" />
     <ClCompile Include="src\Apostle\Log.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
-    <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

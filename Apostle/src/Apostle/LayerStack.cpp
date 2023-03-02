@@ -2,7 +2,7 @@
 #include "LayerStack.h"
 
 namespace Apostle {
-
+	
 	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : m_Layers)

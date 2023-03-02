@@ -14,15 +14,17 @@ namespace Apostle {
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		void OnUpdate() override;
-		virtual void OnEvent(Event& event) override;
+		virtual void OnEvent(Event& e) override;
+
+		virtual void OnImGuiRender() override;
+
+		void Begin();
+		void End();
+
+		void BlockEvents(bool block) { m_BlockEvents = block; }
 		
-		void BlockEvents(bool block) { m_EventsBlocked = block; }
 	private:
-		bool OnImGuiWindowCloseEvent(Event& e);
-	private:
-		bool m_EventsBlocked = true;
-		float m_Time = 0.0f;
+		bool m_BlockEvents = true;
 	};
 
 }
