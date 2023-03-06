@@ -124,7 +124,7 @@ namespace Apostle {
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-            MouseScrolledEvent event(offsetX, offsetY);
+            MouseScrolledEvent event((float)offsetX, (float)offsetY);
             data.EventCallback(event);
         });
 

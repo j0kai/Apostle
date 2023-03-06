@@ -133,7 +133,8 @@ enum class APOSTLE_API KeyCodes
 
 };
 
-std::map<KeyCodes, std::string> KeyCodesMap = {
+// In future, find another way to fix linker error other than declaring as static
+static std::map<KeyCodes, std::string> KeyCodesMap = {
 
 	{ KeyCodes::AP_KEY_SPACE, "SPACE" },
 	{ KeyCodes::AP_KEY_APOSTROPHE, "APOSTROPHE (')" },

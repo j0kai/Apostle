@@ -75,6 +75,9 @@
     <ClInclude Include="src\Apostle\Events\MouseEvents.h">
       <Filter>src\Apostle\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\ImGui\ImGuiBuild.h">
+      <Filter>src\Apostle\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h">
       <Filter>src\Apostle\ImGui</Filter>
     </ClInclude>
@@ -1353,6 +1356,9 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h">
+      <Filter>vendor\imgui\backends</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1361,7 +1367,7 @@
     <ClCompile Include="src\Apostle\Application.cpp">
       <Filter>src\Apostle</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\ImGui\ImGuiBuild.h">
+    <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp">
       <Filter>src\Apostle\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\Layer.cpp">
@@ -1379,6 +1385,9 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp">
+      <Filter>vendor\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
   </ItemGroup>
 </Project>

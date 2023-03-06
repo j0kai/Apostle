@@ -19,7 +19,8 @@ enum class APOSTLE_API MouseButtonCodes
 	AP_MOUSE_BUTTON_MIDDLE  =  AP_MOUSE_BUTTON_3,
 };
 
-std::map<MouseButtonCodes, std::string> MouseButtonCodesMap = {
+// In future, find another way to fix linker error other than declaring as static
+static std::map<MouseButtonCodes, std::string> MouseButtonCodesMap = {
 
 	{ MouseButtonCodes::AP_MOUSE_BUTTON_1, "BUTTON 1" },
 	{ MouseButtonCodes::AP_MOUSE_BUTTON_2, "BUTTON 2" },
