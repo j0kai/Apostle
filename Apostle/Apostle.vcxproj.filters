@@ -1359,6 +1359,8 @@
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h">
       <Filter>vendor\imgui\backends</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\Renderer\RenderContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1389,5 +1391,6 @@
       <Filter>vendor\imgui\backends</Filter>
     </ClCompile>
     <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
 </Project>

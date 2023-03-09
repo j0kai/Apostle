@@ -3,6 +3,7 @@
 #include "Apostle/Window.h"
 
 #include <GLFW/glfw3.h>
+#include "Apostle/Renderer/RenderContext.h"
 
 namespace Apostle {
 
@@ -30,6 +31,7 @@ namespace Apostle {
 
 	private:
 		GLFWwindow* m_Window;
+		RenderContext* m_Context;
 
 		struct WindowData
 		{
