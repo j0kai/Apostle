@@ -1362,6 +1362,9 @@
     <ClInclude Include="src\Apostle\Renderer\RenderContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Apostle\Renderer\Shader.h" />
+    <ClInclude Include="src\Apostle\Renderer\Buffer.h" />
+    <ClInclude Include="src\Apostle\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1394,5 +1397,8 @@
     <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
