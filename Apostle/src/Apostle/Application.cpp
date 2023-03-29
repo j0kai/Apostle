@@ -17,24 +17,6 @@ namespace Apostle {
 
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum ShaderDataTypeToOpenGLEnumType(ShaderDataType type)
-	{
-		switch (type)
-		{
-		case ShaderDataType::Float:  return GL_FLOAT;
-		case ShaderDataType::Float2: return GL_FLOAT;
-		case ShaderDataType::Float3: return GL_FLOAT;
-		case ShaderDataType::Float4: return GL_FLOAT;
-		case ShaderDataType::Mat3:   return GL_FLOAT;
-		case ShaderDataType::Mat4:   return GL_FLOAT;
-		case ShaderDataType::Int:    return GL_INT;
-		case ShaderDataType::Int2:   return GL_INT;
-		case ShaderDataType::Int3:   return GL_INT;
-		case ShaderDataType::Int4:	 return GL_INT;
-		case ShaderDataType::Bool:	 return GL_BOOL;
-		}
-	}
-
 	Application::Application()
 	{
 		AP_CORE_ASSERT(!s_Instance, "Application already exists!");
@@ -46,9 +28,12 @@ namespace Apostle {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
+		/////////////////////////////////////////////////////////////// 
+		// Triangle ///////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////// 
+		
 		// Vertex Array
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_VertexArray = std::shared_ptr<VertexArray>(VertexArray::Create());
 		
 		// Vertex Buffer
 		float vertices[3 * 7] = {
@@ -56,36 +41,20 @@ namespace Apostle {
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<VertexBuffer> vertexBuffer(VertexBuffer::Create(vertices, sizeof(vertices)));
 		
-		{
-			BufferLayout layout = {
+		BufferLayout layout = {
 
-				{ ShaderDataType::Float3, "a_Position"},
-				{ ShaderDataType::Float4, "a_Color"},
-			};
-
-			m_VertexBuffer->SetLayout(layout);
-		}
-
-		uint32_t index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout();
-		for (auto& element : layout)
-		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLEnumType(element.Type),
-				element.isNormalised ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*) element.Offset);
-			index++;
-		}
+			{ ShaderDataType::Float3, "a_Position"},
+			{ ShaderDataType::Float4, "a_Color"},
+		};
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
 		
 		// Index Buffer
 		uint32_t indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		
+		std::shared_ptr<IndexBuffer> indexBuffer(IndexBuffer::Create(indices, sizeof(indices)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		std::string vertexSrc = R"(
 			#version 450 core
@@ -121,8 +90,67 @@ namespace Apostle {
 
 		)";
 
-		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+		m_Shader = std::shared_ptr<Shader>(new Shader(vertexSrc, fragmentSrc));
+		
+
+		/////////////////////////////////////////////////////////////// 
+		// Square ///////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////
+		
+		// Vertex Array
+		m_SquareVA = std::shared_ptr<VertexArray>(VertexArray::Create());
+		
+		// Vertex Buffer
+		float squareVertices[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+		std::shared_ptr<VertexBuffer> squareVB(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB->SetLayout({
+			{ShaderDataType::Float3, "a_Position" }
+		});
+		m_SquareVA->AddVertexBuffer(squareVB);
+		
+		// Index Buffer
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIB(IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
+		m_SquareVA->SetIndexBuffer(squareIB);
+
+		// Shaders
+		std::string squareVertexSrc = R"(
+			#version 450 core
+			
+			layout(location = 0) in vec3 a_Position;
+			
+			out vec3 v_Position;			
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);
+			}
+
+		)";
+
+		std::string squareFragmentSrc = R"(
+			#version 450 core
+			
+			layout(location = 0) out vec4 color;
+			
+			in vec3 v_Position;
+				
+			void main()
+			{
+				color = vec4(0.2, 0.8, 0.4, 1.0);
+			}
+
+		)";
+
+		m_SquareShader = std::shared_ptr<Shader>(new Shader(squareVertexSrc, squareFragmentSrc));
 	}
+
 
 	Apostle::Application::~Application()
 	{
@@ -135,9 +163,13 @@ namespace Apostle {
 			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			m_SquareShader->Bind();
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 			m_Shader->Bind();
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			m_VertexArray->Bind();
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

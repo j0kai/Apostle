@@ -5,8 +5,6 @@
 
 namespace Apostle {
 
-
-
 	Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		// Create an empty vertex shader handle
