@@ -13,6 +13,10 @@
 #include "Apostle/Renderer/Buffer.h"
 #include "Apostle/Renderer/VertexArray.h"
 
+#include "Apostle/Renderer/Camera.h"
+#include "Apostle/Renderer/PerspectiveCamera.h"
+#include "Apostle/Renderer/OrthographicCamera.h"
+
 namespace Apostle {
 
 	class APOSTLE_API Application
@@ -43,6 +47,9 @@ namespace Apostle {
 		
 		std::shared_ptr<Shader> m_SquareShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		PerspectiveCamera m_PerspectiveCam;
+		OrthographicCamera m_OrthoCamera;
 
 	private:
 		static Application* s_Instance;

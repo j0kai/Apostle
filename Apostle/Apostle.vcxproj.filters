@@ -1370,6 +1370,9 @@
     <ClInclude Include="src\Apostle\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Apostle\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Apostle\Renderer\Camera.h" />
+    <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1410,5 +1413,7 @@
     <ClCompile Include="src\Apostle\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Apostle\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp" />
   </ItemGroup>
 </Project>

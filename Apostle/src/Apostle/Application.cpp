@@ -18,6 +18,7 @@ namespace Apostle {
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
+		: m_PerspectiveCam(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), m_OrthoCamera(-3.2f, 3.2f, -1.8f, 1.8f)
 	{
 		AP_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
@@ -62,14 +63,17 @@ namespace Apostle {
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 			
+			uniform mat4 u_ViewProjection;
+			
 			out vec3 v_Position;	
 			out vec4 v_Color;
-	
+			
+
 			void main()
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -124,12 +128,14 @@ namespace Apostle {
 			
 			layout(location = 0) in vec3 a_Position;
 			
-			out vec3 v_Position;			
+			uniform mat4 u_ViewProjection;
 
+			out vec3 v_Position;			
+	
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -149,6 +155,7 @@ namespace Apostle {
 		)";
 
 		m_SquareShader = std::shared_ptr<Shader>(new Shader(squareVertexSrc, squareFragmentSrc));
+
 	}
 
 
@@ -163,13 +170,13 @@ namespace Apostle {
 			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 			RenderCommand::Clear();
 
-			Renderer::BeginScene();
-			
-			m_SquareShader->Bind();
-			Renderer::Submit(m_SquareVA);
+			// m_OrthoCamera.SetPosition({-1.5f, 0.0f, 0.0f});
+			// m_OrthoCamera.SetRotation(20.0f);
 
-			m_Shader->Bind();
-			Renderer::Submit(m_VertexArray);
+			Renderer::BeginScene(m_PerspectiveCam);
+			
+			Renderer::Submit(m_SquareShader, m_SquareVA);
+			Renderer::Submit(m_Shader, m_VertexArray);
 
 			Renderer::EndScene();
 

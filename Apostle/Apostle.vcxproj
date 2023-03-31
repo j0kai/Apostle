@@ -143,6 +143,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Renderer\Camera.h" />
+    <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h" />
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Apostle\Renderer\Buffer.h" />
     <ClInclude Include="src\Apostle\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Apostle\Renderer\RenderContext.h" />
@@ -593,7 +596,9 @@
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Apostle\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Apostle\Renderer\RendererAPI.cpp" />
