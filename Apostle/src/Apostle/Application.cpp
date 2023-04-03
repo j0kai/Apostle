@@ -18,7 +18,7 @@ namespace Apostle {
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
-		: m_PerspectiveCam(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), m_OrthoCamera(-3.2f, 3.2f, -1.8f, 1.8f)
+		
 	{
 		AP_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
@@ -28,134 +28,6 @@ namespace Apostle {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		/////////////////////////////////////////////////////////////// 
-		// Triangle ///////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////// 
-		
-		// Vertex Array
-		m_VertexArray = std::shared_ptr<VertexArray>(VertexArray::Create());
-		
-		// Vertex Buffer
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
-		};
-		std::shared_ptr<VertexBuffer> vertexBuffer(VertexBuffer::Create(vertices, sizeof(vertices)));
-		
-		BufferLayout layout = {
-
-			{ ShaderDataType::Float3, "a_Position"},
-			{ ShaderDataType::Float4, "a_Color"},
-		};
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-		
-		// Index Buffer
-		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<IndexBuffer> indexBuffer(IndexBuffer::Create(indices, sizeof(indices)));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-
-		std::string vertexSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-			
-			uniform mat4 u_ViewProjection;
-			
-			out vec3 v_Position;	
-			out vec4 v_Color;
-			
-
-			void main()
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) out vec4 color;
-			
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main()
-			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
-				color = v_Color;
-			}
-
-		)";
-
-		m_Shader = std::shared_ptr<Shader>(new Shader(vertexSrc, fragmentSrc));
-		
-
-		/////////////////////////////////////////////////////////////// 
-		// Square ///////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////
-		
-		// Vertex Array
-		m_SquareVA = std::shared_ptr<VertexArray>(VertexArray::Create());
-		
-		// Vertex Buffer
-		float squareVertices[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
-		};
-		std::shared_ptr<VertexBuffer> squareVB(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		squareVB->SetLayout({
-			{ShaderDataType::Float3, "a_Position" }
-		});
-		m_SquareVA->AddVertexBuffer(squareVB);
-		
-		// Index Buffer
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<IndexBuffer> squareIB(IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
-		m_SquareVA->SetIndexBuffer(squareIB);
-
-		// Shaders
-		std::string squareVertexSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) in vec3 a_Position;
-			
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;			
-	
-			void main()
-			{
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		std::string squareFragmentSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) out vec4 color;
-			
-			in vec3 v_Position;
-				
-			void main()
-			{
-				color = vec4(0.2, 0.8, 0.4, 1.0);
-			}
-
-		)";
-
-		m_SquareShader = std::shared_ptr<Shader>(new Shader(squareVertexSrc, squareFragmentSrc));
-
 	}
 
 
@@ -167,19 +39,6 @@ namespace Apostle {
 	{
 		while (m_IsRunning)
 		{
-			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			RenderCommand::Clear();
-
-			// m_OrthoCamera.SetPosition({-1.5f, 0.0f, 0.0f});
-			// m_OrthoCamera.SetRotation(20.0f);
-
-			Renderer::BeginScene(m_PerspectiveCam);
-			
-			Renderer::Submit(m_SquareShader, m_SquareVA);
-			Renderer::Submit(m_Shader, m_VertexArray);
-
-			Renderer::EndScene();
-
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

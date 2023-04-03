@@ -1373,6 +1373,7 @@
     <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Apostle\Renderer\Camera.h" />
     <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h" />
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1415,5 +1416,6 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>
