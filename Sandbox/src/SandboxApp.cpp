@@ -134,54 +134,54 @@ public:
 		m_SquareShader = std::shared_ptr<Apostle::Shader>(new Apostle::Shader(squareVertexSrc, squareFragmentSrc));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Apostle::Timestep ts) override
 	{
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
 		{
 			if (m_IsSpeedModified)
-				m_CameraPosition.x -= (m_CameraMoveSpeed / 10);
+				m_CameraPosition.x -= (m_CameraMoveSpeed / 10) * ts;
 			else
-				m_CameraPosition.x -= m_CameraMoveSpeed;
+				m_CameraPosition.x -= m_CameraMoveSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
 		{
 			if (m_IsSpeedModified)
-				m_CameraPosition.x += (m_CameraMoveSpeed / 10);
+				m_CameraPosition.x += (m_CameraMoveSpeed / 10) * ts;
 			else
-				m_CameraPosition.x += m_CameraMoveSpeed;
+				m_CameraPosition.x += m_CameraMoveSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
 		{
 			if (m_IsSpeedModified)
-				m_CameraPosition.y += (m_CameraMoveSpeed / 10);
+				m_CameraPosition.y += (m_CameraMoveSpeed / 10) * ts;
 			else
-				m_CameraPosition.y += m_CameraMoveSpeed;
+				m_CameraPosition.y += m_CameraMoveSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
 		{
 			if(m_IsSpeedModified)
-				m_CameraPosition.y -= (m_CameraMoveSpeed / 10);
+				m_CameraPosition.y -= (m_CameraMoveSpeed / 10) * ts;
 			else
-				m_CameraPosition.y -= m_CameraMoveSpeed;
+				m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_Q))
 		{
 			if (m_IsSpeedModified)
-				m_CameraRotation += (m_CameraRotationSpeed / 10);
+				m_CameraRotation += (m_CameraRotationSpeed / 10) * ts;
 			else
-				m_CameraRotation += m_CameraRotationSpeed;
+				m_CameraRotation += m_CameraRotationSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_E))
 		{
 			if(m_IsSpeedModified)
-				m_CameraRotation -= (m_CameraRotationSpeed / 10);
+				m_CameraRotation -= (m_CameraRotationSpeed / 10) * ts;
 			else
-				m_CameraRotation -= m_CameraRotationSpeed;
+				m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT))
@@ -220,8 +220,9 @@ private:
 	
 	glm::vec3 m_CameraPosition;
 	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 0.5f;
-	float m_CameraMoveSpeed = 0.01f;
+	
+	float m_CameraMoveSpeed = 5.0f;
+	float m_CameraRotationSpeed = 90.0f;
 	bool m_IsSpeedModified = false;
 };
 

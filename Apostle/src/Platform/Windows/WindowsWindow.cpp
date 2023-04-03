@@ -150,7 +150,7 @@ namespace Apostle {
 
     void WindowsWindow::SetVSync(bool isEnabled)
     {
-        if (!isEnabled)
+        if (isEnabled)
             glfwSwapInterval(1);
         else
             glfwSwapInterval(0);

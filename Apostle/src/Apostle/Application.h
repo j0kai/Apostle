@@ -9,17 +9,9 @@
 
 #include "Apostle/ImGui/ImGuiLayer.h"
 
-#include "Apostle/Renderer/Shader.h"
-#include "Apostle/Renderer/Buffer.h"
-#include "Apostle/Renderer/VertexArray.h"
-
-#include "Apostle/Renderer/Camera.h"
-#include "Apostle/Renderer/PerspectiveCamera.h"
-#include "Apostle/Renderer/OrthographicCamera.h"
-
 namespace Apostle {
 
-	class APOSTLE_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -41,6 +33,8 @@ namespace Apostle {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
+
+		float m_LastFrameTime = 0.0f;
 
 	private:
 		static Application* s_Instance;

@@ -11,6 +11,8 @@
 #include "Apostle/ImGui/ImGuiLayer.h"
 #include "Apostle/Log.h"
 
+#include "Apostle/Core/Timestep.h"
+
 #include "Apostle/Input.h"
 #include "Apostle/KeyCodes.h"
 #include "Apostle/MouseButtonCodes.h"
