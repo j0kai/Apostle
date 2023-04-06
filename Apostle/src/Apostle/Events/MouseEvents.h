@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Events.h"
-#include "Apostle/MouseButtonCodes.h"
+#include "Apostle/Core/MouseButtonCodes.h"
 
 namespace Apostle {
 

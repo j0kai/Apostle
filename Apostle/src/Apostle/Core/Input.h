@@ -1,7 +1,7 @@
 #pragma once
 
 #include "APpch.h"
-#include "Apostle/Core.h"
+#include "Apostle/Core/Core.h"
 
 
 namespace Apostle {

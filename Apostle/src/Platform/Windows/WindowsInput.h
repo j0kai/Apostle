@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Apostle/Input.h"
+#include "Apostle/Core/Input.h"
 
 namespace Apostle {
         class WindowsInput : public Input

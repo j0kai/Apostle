@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Apostle/Core.h"
+#include "Apostle/Core/Core.h"
 #include "Apostle/Events/Events.h"
 #include "Apostle/Core/Timestep.h"
 

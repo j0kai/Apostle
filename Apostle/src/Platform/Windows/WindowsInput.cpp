@@ -2,7 +2,7 @@
 #include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
-#include "Apostle/Application.h"
+#include "Apostle/Core/Application.h"
 
 namespace Apostle {
 

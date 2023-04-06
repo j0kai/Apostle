@@ -3,9 +3,9 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Apostle/LayerStack.h"
-#include "Events/Events.h"
-#include "Events/ApplicationEvents.h"
+#include "Apostle/Core/LayerStack.h"
+#include "Apostle/Events/Events.h"
+#include "Apostle/Events/ApplicationEvents.h"
 
 #include "Apostle/ImGui/ImGuiLayer.h"
 

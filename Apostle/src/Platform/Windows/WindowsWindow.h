@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Apostle/Window.h"
+#include "Apostle/Core/Window.h"
 
 #include <GLFW/glfw3.h>
 #include "Apostle/Renderer/RenderContext.h"

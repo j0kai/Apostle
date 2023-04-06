@@ -6,16 +6,16 @@
  
 ////////////////////////////////////////////////////////////////
 
-#include "Apostle/Application.h"
-#include "Apostle/Layer.h"
+#include "Apostle/Core/Application.h"
+#include "Apostle/Core/Layer.h"
 #include "Apostle/ImGui/ImGuiLayer.h"
-#include "Apostle/Log.h"
+#include "Apostle/Core/Log.h"
 
 #include "Apostle/Core/Timestep.h"
 
-#include "Apostle/Input.h"
-#include "Apostle/KeyCodes.h"
-#include "Apostle/MouseButtonCodes.h"
+#include "Apostle/Core/Input.h"
+#include "Apostle/Core/KeyCodes.h"
+#include "Apostle/Core/MouseButtonCodes.h"
 
 #include "Apostle/Events/ApplicationEvents.h"
 #include "Apostle/Events/KeyEvents.h"
@@ -33,5 +33,5 @@
 #include "Apostle/Renderer/PerspectiveCamera.h"
 
 /* ---------Entry Point------------ */
-#include "Apostle/EntryPoint.h"
+#include "Apostle/Core/EntryPoint.h"
 //---------------------------------

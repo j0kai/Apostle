@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Apostle/Core.h"
-#include "Apostle/Layer.h"
+#include "Apostle/Core/Core.h"
+#include "Apostle/Core/Layer.h"
 #include "Apostle/Events/ApplicationEvents.h"
 
 namespace Apostle {

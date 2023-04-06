@@ -54,13 +54,13 @@
     <ClInclude Include="src\Apostle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Application.h">
+    <ClInclude Include="src\Apostle\Core\Application.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Core.h">
+    <ClInclude Include="src\Apostle\Core\Core.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\EntryPoint.h">
+    <ClInclude Include="src\Apostle\Core\EntryPoint.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Events\ApplicationEvents.h">
@@ -81,25 +81,25 @@
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h">
       <Filter>src\Apostle\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Input.h">
+    <ClInclude Include="src\Apostle\Core\Input.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\KeyCodes.h">
+    <ClInclude Include="src\Apostle\Core\KeyCodes.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Layer.h">
+    <ClInclude Include="src\Apostle\Core\Layer.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\LayerStack.h">
+    <ClInclude Include="src\Apostle\Core\LayerStack.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Log.h">
+    <ClInclude Include="src\Apostle\Core\Log.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\MouseButtonCodes.h">
+    <ClInclude Include="src\Apostle\Core\MouseButtonCodes.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Window.h">
+    <ClInclude Include="src\Apostle\Core\Window.h">
       <Filter>src\Apostle</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
@@ -1380,19 +1380,19 @@
     <ClCompile Include="src\APpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Application.cpp">
+    <ClCompile Include="src\Apostle\Core\Application.cpp">
       <Filter>src\Apostle</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp">
       <Filter>src\Apostle\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Layer.cpp">
+    <ClCompile Include="src\Apostle\Core\Layer.cpp">
       <Filter>src\Apostle</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\LayerStack.cpp">
+    <ClCompile Include="src\Apostle\Core\LayerStack.cpp">
       <Filter>src\Apostle</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Log.cpp">
+    <ClCompile Include="src\Apostle\Core\Log.cpp">
       <Filter>src\Apostle</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">

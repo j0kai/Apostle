@@ -85,8 +85,8 @@ public:
 		float squareVertices[3 * 4] = {
 			-0.75f, -0.75f, 0.0f,
 			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f
+0.75f, 0.75f, 0.0f,
+-0.75f, 0.75f, 0.0f
 		};
 		std::shared_ptr<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
@@ -135,7 +135,7 @@ public:
 	}
 
 	void OnUpdate(Apostle::Timestep ts) override
-	{
+	{		
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
 		{
 			if (m_IsSpeedModified)
@@ -162,7 +162,7 @@ public:
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
 		{
-			if(m_IsSpeedModified)
+			if (m_IsSpeedModified)
 				m_CameraPosition.y -= (m_CameraMoveSpeed / 10) * ts;
 			else
 				m_CameraPosition.y -= m_CameraMoveSpeed * ts;
@@ -178,7 +178,7 @@ public:
 
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_E))
 		{
-			if(m_IsSpeedModified)
+			if (m_IsSpeedModified)
 				m_CameraRotation -= (m_CameraRotationSpeed / 10) * ts;
 			else
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
@@ -206,6 +206,7 @@ public:
 
 	void OnEvent(Apostle::Event& event) override
 	{
+
 	}
 
 private:
