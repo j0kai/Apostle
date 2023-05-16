@@ -21,10 +21,12 @@ namespace Apostle {
 
 	void PerspectiveCamera::UpdateProjection()
 	{
+
 	}
 
 	void PerspectiveCamera::UpdateView()
 	{
+
 	}
 
 }

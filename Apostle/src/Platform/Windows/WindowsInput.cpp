@@ -3,6 +3,7 @@
 
 #include <GLFW/glfw3.h>
 #include "Apostle/Core/Application.h"
+#include "Apostle/Events/MouseEvents.h"
 
 namespace Apostle {
 

@@ -101,6 +101,6 @@ namespace Apostle {
     void ImGuiLayer::OnImGuiRender()
     {
         static bool show = true;
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
     }
 }

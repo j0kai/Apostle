@@ -38,7 +38,7 @@ namespace Apostle {
 		glm::vec3 m_FocalPoint = { 0.0f, 0.0f, 0.0f };
 		
 		float m_FOV = 45.0f;
-		float m_AspectRatio = 1.778f;
+		float m_AspectRatio = 16.0f / 9.0f;
 		float m_Near = 0.1f;
 		float m_Far = 1000.0f;
 	};
