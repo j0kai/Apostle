@@ -17,7 +17,7 @@ public:
 		/////////////////////////////////////////////////////////////// 
 
 		// Vertex Array
-		m_VertexArray = std::shared_ptr<Apostle::VertexArray>(Apostle::VertexArray::Create());
+		m_VertexArray = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
 		// Vertex Buffer
 		float vertices[3 * 7] = {
@@ -25,7 +25,7 @@ public:
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		std::shared_ptr<Apostle::VertexBuffer> vertexBuffer(Apostle::VertexBuffer::Create(vertices, sizeof(vertices)));
+		Apostle::Ref<Apostle::VertexBuffer> vertexBuffer(Apostle::VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		Apostle::BufferLayout layout = {
 
@@ -37,7 +37,7 @@ public:
 
 		// Index Buffer
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
+		Apostle::Ref<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		std::string vertexSrc = R"(
@@ -77,7 +77,7 @@ public:
 
 		)";
 
-		m_Shader = std::shared_ptr<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
 
 
 		/////////////////////////////////////////////////////////////// 
@@ -85,7 +85,7 @@ public:
 		///////////////////////////////////////////////////////////////
 
 		// Vertex Array
-		m_SquareVA = std::shared_ptr<Apostle::VertexArray>(Apostle::VertexArray::Create());
+		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
 		// Vertex Buffer
 		float squareVertices[3 * 4] = {
@@ -94,7 +94,7 @@ public:
 			 0.5f,  0.5f, 0.0f,
 			-0.5f,  0.5f, 0.0f
 		};
-		std::shared_ptr<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		Apostle::Ref<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
 			{Apostle::ShaderDataType::Float3, "a_Position" }
 			});
@@ -102,7 +102,7 @@ public:
 
 		// Index Buffer
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Apostle::IndexBuffer> squareIB(Apostle::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
+		Apostle::Ref<Apostle::IndexBuffer> squareIB(Apostle::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		// Shaders
@@ -140,7 +140,7 @@ public:
 
 		)";
 
-		m_FlatColorShader = std::shared_ptr<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
 	}
 
 	void OnUpdate(Apostle::Timestep ts) override
@@ -195,7 +195,7 @@ public:
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
-		// Movement/Rotation/Zoom Speed Modifier
+		// Movement/Rotation
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT))
 			m_IsSpeedModified = true;
 		else
@@ -228,7 +228,7 @@ public:
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
 				Apostle::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
-		}		
+		}
 		
 		Apostle::Renderer::Submit(m_Shader, m_VertexArray);
 
@@ -248,11 +248,11 @@ public:
 	}
 
 private:
-	std::shared_ptr<Apostle::Shader> m_Shader;
-	std::shared_ptr<Apostle::VertexArray> m_VertexArray;
+	Apostle::Ref<Apostle::Shader> m_Shader;
+	Apostle::Ref<Apostle::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Apostle::Shader> m_FlatColorShader;
-	std::shared_ptr<Apostle::VertexArray> m_SquareVA;
+	Apostle::Ref<Apostle::Shader> m_FlatColorShader;
+	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
 
 	Apostle::PerspectiveCamera m_PerspectiveCamera;
 	Apostle::OrthographicCamera m_OrthoCamera;
@@ -262,7 +262,6 @@ private:
 	
 	float m_CameraMoveSpeed = 5.0f;
 	float m_CameraRotationSpeed = 90.0f;
-	//float m_ZoomSpeed = 16.0f / 10.0f;
 	bool m_IsSpeedModified = false;
 
 

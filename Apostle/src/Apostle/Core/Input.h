@@ -26,7 +26,7 @@ namespace Apostle {
 		virtual float GetMouseXImpl() = 0;
 		virtual float GetMouseYImpl() = 0;
 	private:
-		static std::shared_ptr<Input> s_Instance;
+		static Ref<Input> s_Instance;
 	};
 
 }
