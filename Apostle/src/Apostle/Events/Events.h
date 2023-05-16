@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Apostle/Core.h"
+#include "Apostle/Core/Core.h"
+#include "spdlog/fmt/ostr.h"
 
 namespace Apostle {
 
 	// Events in Apostle are currently blocking, meaning that when an event occurs 
 	// the program is paused and it is immediately dispathed and dealt with then and there.
 	// In the future, a better method would be to implement an event 'bus' that 
-	// buffers events and deals with them suring the 'event' part of the update stage.
+	// buffers events and deals with them during the 'event' part of the update stage.
 
 	enum class EventType {
 		None = 0,
@@ -82,4 +83,5 @@ namespace Apostle {
 	{
 		return os << e.ToString();
 	}
+	
 }

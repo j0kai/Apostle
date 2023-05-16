@@ -3,15 +3,15 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Apostle/LayerStack.h"
-#include "Events/Events.h"
-#include "Events/ApplicationEvents.h"
+#include "Apostle/Core/LayerStack.h"
+#include "Apostle/Events/Events.h"
+#include "Apostle/Events/ApplicationEvents.h"
 
 #include "Apostle/ImGui/ImGuiLayer.h"
 
 namespace Apostle {
 
-	class APOSTLE_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -33,6 +33,9 @@ namespace Apostle {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_IsRunning = true;
 		LayerStack m_LayerStack;
+
+		float m_LastFrameTime = 0.0f;
+
 	private:
 		static Application* s_Instance;
 	};

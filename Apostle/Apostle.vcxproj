@@ -143,26 +143,41 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Core\Timestep.h" />
+    <ClInclude Include="src\Apostle\Renderer\Camera.h" />
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCameraController.h" />
+    <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h" />
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Apostle\Renderer\Buffer.h" />
+    <ClInclude Include="src\Apostle\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Apostle\Renderer\RenderContext.h" />
+    <ClInclude Include="src\Apostle\Renderer\Renderer.h" />
+    <ClInclude Include="src\Apostle\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Apostle\Renderer\Shader.h" />
+    <ClInclude Include="src\Apostle\Renderer\VertexArray.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
-    <ClInclude Include="src\Apostle\Application.h" />
-    <ClInclude Include="src\Apostle\Core.h" />
-    <ClInclude Include="src\Apostle\EntryPoint.h" />
+    <ClInclude Include="src\Apostle\Core\Application.h" />
+    <ClInclude Include="src\Apostle\Core\Core.h" />
+    <ClInclude Include="src\Apostle\Core\EntryPoint.h" />
     <ClInclude Include="src\Apostle\Events\ApplicationEvents.h" />
     <ClInclude Include="src\Apostle\Events\Events.h" />
     <ClInclude Include="src\Apostle\Events\KeyEvents.h" />
     <ClInclude Include="src\Apostle\Events\MouseEvents.h" />
     <ClInclude Include="src\Apostle\ImGui\ImGuiBuild.h" />
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Apostle\Input.h" />
-    <ClInclude Include="src\Apostle\KeyCodes.h" />
-    <ClInclude Include="src\Apostle\Layer.h" />
-    <ClInclude Include="src\Apostle\LayerStack.h" />
-    <ClInclude Include="src\Apostle\Log.h" />
-    <ClInclude Include="src\Apostle\MouseButtonCodes.h" />
-    <ClInclude Include="src\Apostle\Window.h" />
+    <ClInclude Include="src\Apostle\Core\Input.h" />
+    <ClInclude Include="src\Apostle\Core\KeyCodes.h" />
+    <ClInclude Include="src\Apostle\Core\Layer.h" />
+    <ClInclude Include="src\Apostle\Core\LayerStack.h" />
+    <ClInclude Include="src\Apostle\Core\Log.h" />
+    <ClInclude Include="src\Apostle\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Apostle\Core\Window.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -584,15 +599,28 @@
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\APpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Application.cpp" />
+    <ClCompile Include="src\Apostle\Core\Application.cpp" />
     <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Apostle\Layer.cpp" />
-    <ClCompile Include="src\Apostle\LayerStack.cpp" />
-    <ClCompile Include="src\Apostle\Log.cpp" />
+    <ClCompile Include="src\Apostle\Core\Layer.cpp" />
+    <ClCompile Include="src\Apostle\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Apostle\Core\Log.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />

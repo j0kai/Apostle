@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Apostle/Core.h"
+#include "Apostle/Core/Core.h"
 #include "Apostle/Events/Events.h"
+#include "Apostle/Core/Timestep.h"
 
 namespace Apostle {
 
@@ -13,7 +14,7 @@ namespace Apostle {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 
