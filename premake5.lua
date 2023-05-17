@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "Apostle/vendor/GLFW/include"
 IncludeDir["Glad"] = "Apostle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Apostle/vendor/imgui"
 IncludeDir["glm"] = "Apostle/vendor/glm"
+IncludeDir["stb_image"] = "Apostle/vendor/stb_image"
 
 group "Dependencies"
     include "Apostle/vendor/GLFW"
@@ -44,6 +45,8 @@ project "Apostle"
       "%{prj.name}/src/**.cpp",
       "%{prj.name}/vendor/imgui/backends/imgui_impl_glfw.h",
       "%{prj.name}/vendor/imgui/backends/imgui_impl_glfw.cpp",
+      "%{prj.name}/vendor/stb_image/**.h",
+      "%{prj.name}/vendor/stb_image/**.cpp",
       "%{prj.name}/vendor/glm/glm/**.hpp",
       "%{prj.name}/vendor/glm/glm/**.inl",
     }
@@ -55,7 +58,8 @@ project "Apostle"
       "%{IncludeDir.GLFW}",
       "%{IncludeDir.Glad}",
       "%{IncludeDir.ImGui}",
-      "%{IncludeDir.glm}"
+      "%{IncludeDir.glm}",
+      "%{IncludeDir.stb_image}"
     }
 
     links
@@ -119,12 +123,14 @@ project "Sandbox"
     {
       "Apostle/vendor/spdlog/include",
       "Apostle/src",
+      "%{IncludeDir.ImGui}",
       "%{IncludeDir.glm}"
     }
 
     links
     {
-      "Apostle"
+      "Apostle",
+      "ImGui"
     }
       
     filter "system:windows"

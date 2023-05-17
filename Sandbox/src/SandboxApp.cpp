@@ -1,8 +1,10 @@
 #include <Apostle.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
-#include <imgui.h>
+#include "imgui.h"
+
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -10,7 +12,7 @@ class ExampleLayer : public Apostle::Layer
 {
 public:
 	ExampleLayer()
-		:Layer("Example"), m_PerspectiveCamera(45.0f, 16.0f / 9.0f, -0.1f, 1.0f), m_OrthoCamera(-3.2f, 3.2f, -1.8f, 1.8f, -1000.0f, 1000.0f), m_CameraPosition(0.0f)
+		:Layer("Example"), m_PerspectiveCamera(45.0f, 16.0f / 9.0f, -0.1f, 1.0f), m_OrthoCamera(-1.6f, 1.6f, -0.9f, 0.9f, -1000.0f, 1000.0f), m_CameraPosition(0.0f)
 	{
 		/////////////////////////////////////////////////////////////// 
 		// Triangle ///////////////////////////////////////////////////
@@ -80,23 +82,24 @@ public:
 		m_Shader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
 
 
-		/////////////////////////////////////////////////////////////// 
+		///////////////////////////////////////////////////////////// 
 		// Square ///////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////
 
 		// Vertex Array
 		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
 		// Vertex Buffer
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f,	1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,	0.0f, 1.0f
 		};
 		Apostle::Ref<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{Apostle::ShaderDataType::Float3, "a_Position" }
+			{Apostle::ShaderDataType::Float3, "a_Position" },
+			{Apostle::ShaderDataType::Float2, "a_TexCoords" },
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -141,6 +144,50 @@ public:
 		)";
 
 		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+
+
+		// Texture Shader
+
+		std::string textureVertexSrc = R"(
+			#version 450 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoords;
+			
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_ModelTransform;
+
+			out vec2 v_TexCoords;			
+	
+			void main()
+			{
+				v_TexCoords = a_TexCoords;
+				gl_Position = u_ViewProjection * u_ModelTransform * vec4(a_Position, 1.0);
+			}
+
+		)";
+
+		std::string textureFragmentSrc = R"(
+			#version 450 core
+			
+			layout(location = 0) out vec4 color;
+			
+			in vec2 v_TexCoords;
+			
+			uniform sampler2D u_Texture;
+	
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoords);
+			}
+
+		)";
+
+		m_TextureShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(textureVertexSrc, textureFragmentSrc));
+		m_Texture = Apostle::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Apostle::Timestep ts) override
@@ -230,7 +277,12 @@ public:
 			}
 		}
 		
-		Apostle::Renderer::Submit(m_Shader, m_VertexArray);
+		// Texture
+		m_Texture->Bind();
+		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Triangle
+		//Apostle::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Apostle::Renderer::EndScene();
 	}
@@ -251,8 +303,10 @@ private:
 	Apostle::Ref<Apostle::Shader> m_Shader;
 	Apostle::Ref<Apostle::VertexArray> m_VertexArray;
 
-	Apostle::Ref<Apostle::Shader> m_FlatColorShader;
+	Apostle::Ref<Apostle::Shader> m_FlatColorShader, m_TextureShader;
 	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
+
+	Apostle::Ref<Apostle::Texture2D> m_Texture;
 
 	Apostle::PerspectiveCamera m_PerspectiveCamera;
 	Apostle::OrthographicCamera m_OrthoCamera;
