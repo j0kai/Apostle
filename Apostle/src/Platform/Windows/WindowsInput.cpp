@@ -7,7 +7,7 @@
 
 namespace Apostle {
 
-    std::shared_ptr<Input> Input::s_Instance = std::make_shared<WindowsInput>();
+    Ref<Input> Input::s_Instance = std::make_shared<WindowsInput>();
 
     bool WindowsInput::IsKeyPressedImpl(int keycode)
     {

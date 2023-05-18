@@ -1,8 +1,10 @@
 #include <Apostle.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
-#include <imgui.h>
+#include "imgui.h"
+
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -10,14 +12,14 @@ class ExampleLayer : public Apostle::Layer
 {
 public:
 	ExampleLayer()
-		:Layer("Example"), m_PerspectiveCamera(45.0f, 16.0f / 9.0f, -0.1f, 1.0f), m_OrthoCamera(-3.2f, 3.2f, -1.8f, 1.8f, -1000.0f, 1000.0f), m_CameraPosition(0.0f)
+		:Layer("Example"), m_PerspectiveCamera(45.0f, 16.0f / 9.0f, -0.1f, 1.0f), m_OrthoCamera(-1.6f, 1.6f, -0.9f, 0.9f, -1000.0f, 1000.0f), m_CameraPosition(0.0f)
 	{
-		/////////////////////////////////////////////////////////////// 
-		// Triangle ///////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////// 
+		/////////////////////////////// 
+		////////// Triangle ///////////
+		/////////////////////////////// 
 
 		// Vertex Array
-		m_VertexArray = std::shared_ptr<Apostle::VertexArray>(Apostle::VertexArray::Create());
+		m_VertexArray = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
 		// Vertex Buffer
 		float vertices[3 * 7] = {
@@ -25,7 +27,7 @@ public:
 			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
-		std::shared_ptr<Apostle::VertexBuffer> vertexBuffer(Apostle::VertexBuffer::Create(vertices, sizeof(vertices)));
+		Apostle::Ref<Apostle::VertexBuffer> vertexBuffer(Apostle::VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		Apostle::BufferLayout layout = {
 
@@ -37,7 +39,7 @@ public:
 
 		// Index Buffer
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
+		Apostle::Ref<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		std::string vertexSrc = R"(
@@ -77,32 +79,33 @@ public:
 
 		)";
 
-		m_Shader = std::shared_ptr<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
 
 
-		/////////////////////////////////////////////////////////////// 
-		// Square ///////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////
+		///////////////////////////// 
+		////////// Square ///////////
+		/////////////////////////////
 
 		// Vertex Array
-		m_SquareVA = std::shared_ptr<Apostle::VertexArray>(Apostle::VertexArray::Create());
+		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
 		// Vertex Buffer
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f,	1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,	0.0f, 1.0f
 		};
-		std::shared_ptr<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		Apostle::Ref<Apostle::VertexBuffer> squareVB(Apostle::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{Apostle::ShaderDataType::Float3, "a_Position" }
+			{Apostle::ShaderDataType::Float3, "a_Position" },
+			{Apostle::ShaderDataType::Float2, "a_TexCoords" },
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		// Index Buffer
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Apostle::IndexBuffer> squareIB(Apostle::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
+		Apostle::Ref<Apostle::IndexBuffer> squareIB(Apostle::IndexBuffer::Create(squareIndices, sizeof(squareIndices)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		// Shaders
@@ -140,7 +143,19 @@ public:
 
 		)";
 
-		m_FlatColorShader = std::shared_ptr<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+
+		////////////////////////
+		/////// Textures ///////
+		////////////////////////
+
+		m_TextureShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("assets/shaders/Texture.glsl"));
+
+		m_Texture = Apostle::Texture2D::Create("assets/textures/Checkerboard-Grey.png");
+		m_ApostleLogo = Apostle::Texture2D::Create("assets/textures/Apostle-Engine-Logo.png");
+
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Apostle::Timestep ts) override
@@ -195,7 +210,7 @@ public:
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
 		}
 
-		// Movement/Rotation/Zoom Speed Modifier
+		// Movement/Rotation
 		if (Apostle::Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT))
 			m_IsSpeedModified = true;
 		else
@@ -228,9 +243,18 @@ public:
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
 				Apostle::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
-		}		
+		}
 		
-		Apostle::Renderer::Submit(m_Shader, m_VertexArray);
+		// Checkerboard Texture
+		m_Texture->Bind();
+		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Apostle Logo
+		m_ApostleLogo->Bind();
+		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Triangle
+		//Apostle::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Apostle::Renderer::EndScene();
 	}
@@ -248,11 +272,13 @@ public:
 	}
 
 private:
-	std::shared_ptr<Apostle::Shader> m_Shader;
-	std::shared_ptr<Apostle::VertexArray> m_VertexArray;
+	Apostle::Ref<Apostle::Shader> m_Shader;
+	Apostle::Ref<Apostle::VertexArray> m_VertexArray;
 
-	std::shared_ptr<Apostle::Shader> m_FlatColorShader;
-	std::shared_ptr<Apostle::VertexArray> m_SquareVA;
+	Apostle::Ref<Apostle::Shader> m_FlatColorShader, m_TextureShader;
+	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
+
+	Apostle::Ref<Apostle::Texture2D> m_Texture, m_ApostleLogo;
 
 	Apostle::PerspectiveCamera m_PerspectiveCamera;
 	Apostle::OrthographicCamera m_OrthoCamera;
@@ -262,7 +288,6 @@ private:
 	
 	float m_CameraMoveSpeed = 5.0f;
 	float m_CameraRotationSpeed = 90.0f;
-	//float m_ZoomSpeed = 16.0f / 10.0f;
 	bool m_IsSpeedModified = false;
 
 

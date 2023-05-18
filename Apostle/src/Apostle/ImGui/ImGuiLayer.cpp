@@ -4,8 +4,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+#include "ImGuiBuild.h"
 
 #include "Apostle/Core/Application.h"
 

@@ -26,6 +26,7 @@
 #include "Apostle/Renderer/RenderCommand.h"
 
 #include "Apostle/Renderer/Shader.h"
+#include "Apostle/Renderer/Texture.h"
 #include "Apostle/Renderer/VertexArray.h"
 #include "Apostle/Renderer/Buffer.h"
 

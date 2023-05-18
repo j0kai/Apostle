@@ -3,9 +3,9 @@
 
 #include "Apostle/Core/Timestep.h"
 
-#include "Platform/OpenGL/OpenGLBuffer.h"
+#include "Apostle/Renderer/Renderer.h"
 
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 namespace Apostle {
 
@@ -22,6 +22,8 @@ namespace Apostle {
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FUNC(OnEvent));
 		m_Window->SetVSync(false);
+
+		Renderer::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
