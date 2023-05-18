@@ -82,9 +82,9 @@ public:
 		m_Shader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
 
 
-		///////////////////////////////////////////////////////////// 
-		// Square ///////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////
+		///////////////////////////// 
+		////////// Square ///////////
+		/////////////////////////////
 
 		// Vertex Array
 		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
@@ -145,8 +145,9 @@ public:
 
 		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
 
-
-		// Texture Shader
+		///////////////////////
+		/////// Texture ///////
+		///////////////////////
 
 		std::string textureVertexSrc = R"(
 			#version 450 core
@@ -185,6 +186,7 @@ public:
 
 		m_TextureShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(textureVertexSrc, textureFragmentSrc));
 		m_Texture = Apostle::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_ApostleLogo = Apostle::Texture2D::Create("assets/textures/Apostle-Engine-Logo.png");
 
 		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -277,8 +279,12 @@ public:
 			}
 		}
 		
-		// Texture
+		// Checkerboard Texture
 		m_Texture->Bind();
+		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Apostle Logo
+		m_ApostleLogo->Bind();
 		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
@@ -306,7 +312,7 @@ private:
 	Apostle::Ref<Apostle::Shader> m_FlatColorShader, m_TextureShader;
 	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
 
-	Apostle::Ref<Apostle::Texture2D> m_Texture;
+	Apostle::Ref<Apostle::Texture2D> m_Texture, m_ApostleLogo;
 
 	Apostle::PerspectiveCamera m_PerspectiveCamera;
 	Apostle::OrthographicCamera m_OrthoCamera;
