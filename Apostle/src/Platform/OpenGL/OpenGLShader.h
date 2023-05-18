@@ -3,11 +3,15 @@
 #include "Apostle/Renderer/Shader.h"
 #include <glm/glm.hpp>
 
+// TODO: REMOVE THIS!
+typedef unsigned int GLenum;
+
 namespace Apostle {
 
 	class OpenGLShader : public Shader
 	{
 	public:
+		OpenGLShader(const std::string& filepath);
 		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
 		virtual ~OpenGLShader();
 
@@ -23,6 +27,10 @@ namespace Apostle {
 
 		void UploadUniformMat3(const std::string& name, const glm::mat3& matrix);
 		void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
+	private:
+		std::string ReadFile(const std::string& filepath);
+		std::unordered_map<GLenum, std::string> ParseShader(const std::string& source);
+		void CompileShader(const std::unordered_map<GLenum, std::string>& shaderSources);
 	private:
 		uint32_t m_RendererID;
 	};
