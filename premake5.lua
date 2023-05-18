@@ -45,10 +45,11 @@ project "Apostle"
       "%{prj.name}/src/**.cpp",
       "%{prj.name}/vendor/imgui/backends/imgui_impl_glfw.h",
       "%{prj.name}/vendor/imgui/backends/imgui_impl_glfw.cpp",
+      "%{prj.name}/vendor/imgui/backends/imgui_impl_opengl3.cpp",
       "%{prj.name}/vendor/stb_image/**.h",
       "%{prj.name}/vendor/stb_image/**.cpp",
       "%{prj.name}/vendor/glm/glm/**.hpp",
-      "%{prj.name}/vendor/glm/glm/**.inl",
+      "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs

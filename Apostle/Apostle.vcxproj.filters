@@ -1508,6 +1508,9 @@
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp">
       <Filter>vendor\imgui\backends</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>vendor\imgui\backends</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
