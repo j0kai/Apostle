@@ -2,6 +2,7 @@
 #include "OpenGLShader.h"
 
 #include <fstream>
+#include <filesystem>
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -24,9 +25,14 @@ namespace Apostle {
 		std::string source = ReadFile(filepath);
 		auto shaderSources = ParseShader(source);
 		CompileShader(shaderSources);
+
+		// Set m_Name to be the shader's file name 
+		std::filesystem::path path = filepath;
+		m_Name = path.stem().string(); // Returns the file's name stripped of the extension (.glsl)
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
+		:	m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSource;
@@ -87,7 +93,9 @@ namespace Apostle {
 	void OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		AP_CORE_ASSERT(shaderSources.size() <= 2, "Apostle only supports two shaders for now");
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		for (auto&& [type, src] : shaderSources)
 		{
 			GLuint shader = glCreateShader(type);
@@ -115,7 +123,7 @@ namespace Apostle {
 			}
 			
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] = shader;
 		}
 
 		glLinkProgram(program);

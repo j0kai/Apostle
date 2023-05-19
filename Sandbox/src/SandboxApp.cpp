@@ -14,10 +14,7 @@ public:
 	ExampleLayer()
 		:Layer("Example"), m_PerspectiveCamera(45.0f, 16.0f / 9.0f, -0.1f, 1.0f), m_OrthoCamera(-1.6f, 1.6f, -0.9f, 0.9f, -1000.0f, 1000.0f), m_CameraPosition(0.0f)
 	{
-		/////////////////////////////// 
-		////////// Triangle ///////////
-		/////////////////////////////// 
-
+		// Triangle
 		// Vertex Array
 		m_VertexArray = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
@@ -42,50 +39,10 @@ public:
 		Apostle::Ref<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		std::string vertexSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-			
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_ModelTransform;
-			
-			out vec3 v_Position;	
-			out vec4 v_Color;
-
-			void main()
-			{
-				v_Position = a_Position;
-				v_Color = a_Color;
-				gl_Position = u_ViewProjection * u_ModelTransform * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		std::string fragmentSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) out vec4 color;
-			
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main()
-			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
-				color = v_Color;
-			}
-
-		)";
-
-		m_Shader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(vertexSrc, fragmentSrc));
+		m_TriangleShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("assets/shaders/Triangle.glsl"));
 
 
-		///////////////////////////// 
-		////////// Square ///////////
-		/////////////////////////////
-
+		// Square
 		// Vertex Array
 		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
 
@@ -143,19 +100,16 @@ public:
 
 		)";
 
-		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create(flatColorVertexSrc, flatColorFragmentSrc));
+		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("FlatColor", flatColorVertexSrc, flatColorFragmentSrc));
 
-		////////////////////////
-		/////// Textures ///////
-		////////////////////////
-
-		m_TextureShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("assets/shaders/Texture.glsl"));
+		//Textures
+		auto textureShader = m_ShaderLibrary.LoadShader("assets/shaders/Texture.glsl");
 
 		m_Texture = Apostle::Texture2D::Create("assets/textures/Checkerboard-Grey.png");
-		m_ApostleLogo = Apostle::Texture2D::Create("assets/textures/Apostle-Engine-Logo.png");
+		m_ApostleLogoTexture = Apostle::Texture2D::Create("assets/textures/Apostle-Engine-Logo.png");
 
-		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Apostle::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Apostle::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Apostle::Timestep ts) override
@@ -245,16 +199,18 @@ public:
 			}
 		}
 		
+		auto textureShader = m_ShaderLibrary.GetShader("Texture");
+
 		// Checkerboard Texture
 		m_Texture->Bind();
-		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Apostle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Apostle Logo
-		m_ApostleLogo->Bind();
-		Apostle::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		m_ApostleLogoTexture->Bind();
+		Apostle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
-		//Apostle::Renderer::Submit(m_Shader, m_VertexArray);
+		//Apostle::Renderer::Submit(m_TriangleShader, m_VertexArray);
 
 		Apostle::Renderer::EndScene();
 	}
@@ -272,13 +228,14 @@ public:
 	}
 
 private:
-	Apostle::Ref<Apostle::Shader> m_Shader;
+	Apostle::ShaderLibrary m_ShaderLibrary;
+	Apostle::Ref<Apostle::Shader> m_TriangleShader;
 	Apostle::Ref<Apostle::VertexArray> m_VertexArray;
 
-	Apostle::Ref<Apostle::Shader> m_FlatColorShader, m_TextureShader;
+	Apostle::Ref<Apostle::Shader> m_FlatColorShader;
 	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
 
-	Apostle::Ref<Apostle::Texture2D> m_Texture, m_ApostleLogo;
+	Apostle::Ref<Apostle::Texture2D> m_Texture, m_ApostleLogoTexture;
 
 	Apostle::PerspectiveCamera m_PerspectiveCamera;
 	Apostle::OrthographicCamera m_OrthoCamera;

@@ -1,32 +1,34 @@
-// Basic Texture Shader
+// Triangle Shader
 
 #type vertex
 #version 450 core
 
 layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec2 a_TexCoords;
+layout(location = 1) in vec4 a_Color;
 
 uniform mat4 u_ViewProjection;
 uniform mat4 u_ModelTransform;
 
-out vec2 v_TexCoords;
+out vec3 v_Position;
+out vec4 v_Color;
 
 void main()
 {
-	v_TexCoords = a_TexCoords;
+	v_Position = a_Position;
+	v_Color = a_Color;
 	gl_Position = u_ViewProjection * u_ModelTransform * vec4(a_Position, 1.0);
 }
 
 #type fragment
 #version 450 core
-
+			
 layout(location = 0) out vec4 color;
-
-in vec2 v_TexCoords;
-
-uniform sampler2D u_Texture;
+			
+in vec3 v_Position;
+in vec4 v_Color;
 
 void main()
 {
-	color = texture(u_Texture, v_TexCoords);
+	color = vec4(v_Position * 0.5 + 0.5, 1.0);
+	color = v_Color;
 }
