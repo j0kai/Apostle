@@ -10,7 +10,9 @@ namespace Apostle {
 	class OrthographicCamera
 	{
 	public:
-		OrthographicCamera(float left, float right, float bottom, float top, float zNear, float zFar);
+		OrthographicCamera(float left, float right, float bottom, float top);
+		
+		void SetProjection(float left, float right, float bottom, float top);
 
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
@@ -18,9 +20,6 @@ namespace Apostle {
 		float GetRotation() const { return m_Rotation; }
 		void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
 
-		// void ZoomIn(float zoomLevel);
-		// void ZoomOut(float zoomLevel);
-	
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }		
 		glm::mat4& SetProjectionMatrix(const glm::mat4& projMatrix) { m_ProjectionMatrix = projMatrix; }	
 

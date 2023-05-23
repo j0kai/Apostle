@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Apostle/Core/Core.h"
 
 namespace Apostle {
 

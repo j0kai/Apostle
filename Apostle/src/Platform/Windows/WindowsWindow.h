@@ -7,7 +7,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API WindowsWindow : public Window
+	class WindowsWindow : public Window
 	{
 	public:
 		WindowsWindow(const WindowProperties& props);
