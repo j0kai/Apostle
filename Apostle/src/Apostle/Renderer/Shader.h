@@ -23,7 +23,7 @@ namespace Apostle {
 	public:
 		void AddShader(const Ref<Shader>& shader);
 		void AddShader(const std::string& name, const Ref<Shader>& shader);
-		Ref<Shader> LoadShader(const std::string& filepath); // ex: Texture.glsl name = "Texture"
+		Ref<Shader> LoadShader(const std::string& filepath);
 		Ref<Shader> LoadShader(const std::string& name, const std::string& filepath);
 
 		Ref<Shader> GetShader(const std::string& name);

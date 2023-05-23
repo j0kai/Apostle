@@ -36,7 +36,7 @@ public:
 		Apostle::Ref<Apostle::IndexBuffer> indexBuffer(Apostle::IndexBuffer::Create(indices, sizeof(indices)));
 		m_TriangleVA->SetIndexBuffer(indexBuffer);
 
-		m_TriangleShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("assets/shaders/Triangle.glsl"));
+		auto triangleShader = m_ShaderLibrary.LoadShader("assets/shaders/Triangle.glsl");
 
 
 		// Square
@@ -96,7 +96,7 @@ public:
 
 		m_FlatColorShader = Apostle::Ref<Apostle::Shader>(Apostle::Shader::Create("FlatColor", flatColorVertexSrc, flatColorFragmentSrc));
 
-		//Textures
+		// Textures
 		auto textureShader = m_ShaderLibrary.LoadShader("assets/shaders/Texture.glsl");
 
 		m_Texture = Apostle::Texture2D::Create("assets/textures/Checkerboard-Grey.png");
@@ -140,12 +140,13 @@ public:
 		m_Texture->Bind();
 		Apostle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+		// Triangle
+		auto triangleShader = m_ShaderLibrary.GetShader("Triangle");
+		Apostle::Renderer::Submit(triangleShader, m_TriangleVA);
+
 		// Apostle Logo
 		m_ApostleLogoTexture->Bind();
 		Apostle::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-		// Triangle
-		//Apostle::Renderer::Submit(m_TriangleShader, m_VertexArray);
 
 		Apostle::Renderer::EndScene();
 	}

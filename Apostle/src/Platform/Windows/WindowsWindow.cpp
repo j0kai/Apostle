@@ -163,5 +163,4 @@ namespace Apostle {
         return m_Data.VSync;
     }
 
-
 }
