@@ -126,7 +126,7 @@
     <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Core\OrthographicCameraController.h">
+    <ClInclude Include="src\Apostle\Renderer\OrthographicCameraController.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h">
@@ -1457,7 +1457,7 @@
     <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp">
       <Filter>src\Apostle\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Core\OrthographicCameraController.cpp">
+    <ClCompile Include="src\Apostle\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Apostle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp">

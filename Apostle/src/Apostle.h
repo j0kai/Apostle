@@ -16,7 +16,6 @@
 #include "Apostle/Core/Input.h"
 #include "Apostle/Core/KeyCodes.h"
 #include "Apostle/Core/MouseButtonCodes.h"
-#include "Apostle/Core/OrthographicCameraController.h"
 
 #include "Apostle/Events/ApplicationEvents.h"
 #include "Apostle/Events/KeyEvents.h"
@@ -33,6 +32,8 @@
 #include "Apostle/Renderer/Buffer.h"
 
 #include "Apostle/Renderer/OrthographicCamera.h"
+#include "Apostle/Renderer/OrthographicCameraController.h"
+
 #include "Apostle/Renderer/PerspectiveCamera.h"
 
 /* ---------Entry Point------------ */
