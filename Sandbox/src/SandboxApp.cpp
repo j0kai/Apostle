@@ -1,4 +1,5 @@
 #include <Apostle.h>
+#include <Apostle/Core/EntryPoint.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
@@ -7,6 +8,8 @@
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Sandbox2D.h"
 
 class ExampleLayer : public Apostle::Layer
 {
@@ -40,7 +43,7 @@ public:
 
 
 		// Square
-		m_SquareVA = Apostle::Ref<Apostle::VertexArray>(Apostle::VertexArray::Create());
+		m_SquareVA =Apostle::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -188,7 +191,8 @@ class Sandbox : public Apostle::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()

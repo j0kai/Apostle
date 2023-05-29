@@ -35,7 +35,3 @@
 #include "Apostle/Renderer/OrthographicCameraController.h"
 
 #include "Apostle/Renderer/PerspectiveCamera.h"
-
-/* ---------Entry Point------------ */
-#include "Apostle/Core/EntryPoint.h"
-//---------------------------------
