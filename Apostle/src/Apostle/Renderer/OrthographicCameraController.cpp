@@ -14,69 +14,56 @@ namespace Apostle {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		// Movement/Rotation Speed Modifier
+		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraMoveSpeed = 0.5f : m_CameraMoveSpeed = 5.0f;
+		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraRotationSpeed = 9.0f : m_CameraRotationSpeed = 90.0f;
+		
 		// Movement Controls
 		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
 		{
-			if (m_IsModified)
-				m_CameraPosition.x -= (m_CameraMoveSpeed / 10) * ts;
-			else
-				m_CameraPosition.x -= m_CameraMoveSpeed * ts;
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
 		}
-
-		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
+		else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
 		{
-			if (m_IsModified)
-				m_CameraPosition.x += (m_CameraMoveSpeed / 10) * ts;
-			else
-				m_CameraPosition.x += m_CameraMoveSpeed * ts;
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
 		}
 
 		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
 		{
-			if (m_IsModified)
-				m_CameraPosition.y += (m_CameraMoveSpeed / 10) * ts;
-			else
-				m_CameraPosition.y += m_CameraMoveSpeed * ts;
+			m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
 		}
-
-		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
+		else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
 		{
-			if (m_IsModified)
-				m_CameraPosition.y -= (m_CameraMoveSpeed / 10) * ts;
-			else
-				m_CameraPosition.y -= m_CameraMoveSpeed * ts;
+			m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
 		}
+		
 		// Rotation Controls
 		if(m_EnableRotation)
 		{
 			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_Q))
-			{
-				if (m_IsModified)
-					m_CameraRotation += (m_CameraRotationSpeed / 10) * ts;
-				else
-					m_CameraRotation += m_CameraRotationSpeed * ts;
-			}
+				m_CameraRotation += m_CameraRotationSpeed * ts;
 
 			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_E))
-			{
-				if (m_IsModified)
-					m_CameraRotation -= (m_CameraRotationSpeed / 10) * ts;
-				else
-					m_CameraRotation -= m_CameraRotationSpeed * ts;
-			}
+				m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+			/* The following if/else if statement seems useless
+			at first but it's useful when calculating the
+			difference between two angles */
+			if (m_CameraRotation > 180.0f)
+				m_CameraRotation -= 360.0f;
+			else if (m_CameraRotation <= -180.0f)
+				m_CameraRotation += 360.0f;
 
 			m_Camera.SetRotation(m_CameraRotation);
 		}
 
-		// Movement/Rotation Modifier
-		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT))
-			m_IsModified = true;
-		else
-			m_IsModified = false;
-
 		m_Camera.SetPosition(m_CameraPosition);
 
-		// m_CameraMoveSpeed = m_ZoomLevel; // Uncomment this for a linear move speed
+		// m_CameraMoveSpeed = m_ZoomLevel; /* Uncomment this for a linear move speed */
 	}
 
 	void OrthographicCameraController::OnEvent(Event& e)
