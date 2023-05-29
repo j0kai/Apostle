@@ -14,7 +14,7 @@ Furthermore, due to the way that the project is currently set up, there are a fe
 
 2) Navigate to ___Apostle/vendor/GLFW/premake5.lua___ and open it, then change the staticruntime from "off" to "on".
 
-3) Open the 'scripts' folder and run ___Win-GenerateProjects.bat___ and open Apostle.sln
+3) Open the 'scripts' folder and run ___Win-GenerateProjects.bat___ and then open Apostle.sln
 
 4) And with that you're ready to go! (NOTE: Hit F5 to see the example.)
 
