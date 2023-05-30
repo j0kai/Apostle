@@ -24,6 +24,7 @@
 
 /* ----------Renderer---------------*/
 #include "Apostle/Renderer/Renderer.h"
+#include "Apostle/Renderer/Renderer2D.h"
 #include "Apostle/Renderer/RenderCommand.h"
 
 #include "Apostle/Renderer/Shader.h"
