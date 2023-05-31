@@ -22,6 +22,14 @@ namespace Apostle {
 		printf("  Vendor:   %s\n", glGetString(GL_VENDOR));
 		printf("  Renderer: %s\n", glGetString(GL_RENDERER));
 		printf("  Version:  %s\n", glGetString(GL_VERSION));
+
+	#ifdef AP_ENABLE_ASSERTS
+			int versionMajor, versionMinor;
+			glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
+			glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
+
+			AP_CORE_ASSERT(versionMajor > 4 || (versionMajor == 4 && versionMinor >= 5), "Apostle requires at least OpenGL version 4.5 or higher!");
+	#endif
 	}
 	void OpenGLContext::SwapBuffers()
 	{
