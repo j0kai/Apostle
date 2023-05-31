@@ -18,6 +18,8 @@ private:
 	Apostle::Ref<Apostle::Shader> m_FlatColorShader;
 	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
 
+	Apostle::Ref<Apostle::Texture2D> m_CheckerboardTexture;
+
 	Apostle::OrthographicCameraController m_CameraController;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
