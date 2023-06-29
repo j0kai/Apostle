@@ -1432,6 +1432,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Renderer\Renderer2D.h" />
+    <ClInclude Include="src\Apostle\Debug\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">

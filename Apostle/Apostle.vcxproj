@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Debug\Instrumentor.h" />
     <ClInclude Include="src\Apostle\Renderer\Renderer2D.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />

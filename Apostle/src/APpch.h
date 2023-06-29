@@ -21,5 +21,8 @@
 	#include <Windows.h>
 #endif
 
-/*----Logger (REMOVE FROM RELEASE BUILD)*/
+/*---- Logger (REMOVE FROM RELEASE BUILD) ----*/
 #include "Apostle/Core/Log.h"
+
+/*---- Profiler (REMOVE FROM RELEASE BUILD) ----*/
+#include "Apostle/Debug/Instrumentor.h"
