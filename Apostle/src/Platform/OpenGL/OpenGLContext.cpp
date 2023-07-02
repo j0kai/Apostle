@@ -10,10 +10,14 @@ namespace Apostle {
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
+		AP_PROFILE_FUNCTION();
+
 		AP_CORE_ASSERT(windowHandle, "Window handle is null!");
 	}
 	void OpenGLContext::Init()
 	{
+		AP_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		AP_CORE_ASSERT(status, "Failed to initialise Glad!");
@@ -33,6 +37,8 @@ namespace Apostle {
 	}
 	void OpenGLContext::SwapBuffers()
 	{
+		AP_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(m_WindowHandle);
 	}
 }

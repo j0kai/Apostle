@@ -31,18 +31,24 @@ namespace Apostle {
 
 	void ShaderLibrary::AddShader(const std::string& name, const Ref<Shader>& shader)
 	{
+		AP_PROFILE_FUNCTION();
+
 		AP_CORE_ASSERT(Exists(name), "Shader already exists!");
 		m_Shaders[name] = shader;
 	}
 
 	void ShaderLibrary::AddShader(const Ref<Shader>& shader)
 	{
+		AP_PROFILE_FUNCTION();
+
 		auto& name = shader->GetName();
 		AddShader(name, shader);
 	}
 
 	Ref<Shader> ShaderLibrary::LoadShader(const std::string& filepath)
 	{
+		AP_PROFILE_FUNCTION();
+
 		auto shader = Shader::Create(filepath);
 		AddShader(shader);
 		return shader;
@@ -50,6 +56,8 @@ namespace Apostle {
 
 	Ref<Shader> ShaderLibrary::LoadShader(const std::string& name, const std::string& filepath)
 	{
+		AP_PROFILE_FUNCTION();
+
 		auto shader = Shader::Create(filepath);
 		AddShader(name, shader);
 		return shader;
@@ -57,6 +65,8 @@ namespace Apostle {
 
 	Ref<Shader> ShaderLibrary::GetShader(const std::string& name)
 	{
+		AP_PROFILE_FUNCTION();
+
 		AP_CORE_ASSERT(!Exists(name), "Shader not found!");
 		return m_Shaders[name];
 	}

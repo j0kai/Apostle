@@ -25,26 +25,36 @@ namespace Apostle {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		AP_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		AP_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		AP_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		AP_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
+		AP_PROFILE_FUNCTION();
+
 		AP_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 		
 		glBindVertexArray(m_RendererID);
@@ -68,6 +78,8 @@ namespace Apostle {
 
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
 	{
+		AP_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		indexBuffer->Bind();
 
