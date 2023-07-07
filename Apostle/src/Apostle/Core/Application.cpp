@@ -16,6 +16,8 @@ namespace Apostle {
 	Application::Application()
 		
 	{
+		AP_PROFILE_FUNCTION();
+
 		AP_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
@@ -32,26 +34,41 @@ namespace Apostle {
 
 	Apostle::Application::~Application()
 	{
+		AP_PROFILE_FUNCTION();
+
 	}
 
 	void Apostle::Application::Run()
 	{
+		AP_PROFILE_FUNCTION();
+
 		while (m_IsRunning)
 		{
+			AP_PROFILE_SCOPE("Run Loop");
+
 			float time = glfwGetTime();
 			Timestep ts = time - m_LastFrameTime;
 
 			m_LastFrameTime = time;
 
-			if(!m_IsMinimized)
 			{
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(ts);
+				AP_PROFILE_SCOPE("LayerStack Updates");
+
+				if (!m_IsMinimized)
+				{
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate(ts);
+				}
 			}
 
+			
 			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
+			{
+				AP_PROFILE_SCOPE("ImGuiLayer Updates");
+
+				for (Layer* layer : m_LayerStack)
+					layer->OnImGuiRender();
+			}
 			m_ImGuiLayer->End();
 			
 			m_Window->OnUpdate();
@@ -60,6 +77,8 @@ namespace Apostle {
 
 	void Application::OnEvent(Event& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNC(OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FUNC(OnWindowResize));
@@ -75,20 +94,26 @@ namespace Apostle {
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		m_IsRunning = false;
 		return true;
 	}
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 		{
 			m_IsMinimized = true;

@@ -14,6 +14,8 @@ namespace Apostle {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		AP_PROFILE_FUNCTION();
+
 		// Movement/Rotation Speed Modifier
 		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraMoveSpeed = 0.5f : m_CameraMoveSpeed = 5.0f;
 		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraRotationSpeed = 9.0f : m_CameraRotationSpeed = 90.0f;
@@ -68,6 +70,8 @@ namespace Apostle {
 
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(AP_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(AP_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
@@ -75,6 +79,8 @@ namespace Apostle {
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		m_ZoomLevel -= e.GetOffsetY() * 0.25f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel); // Set in same way as constructor now that zoom level has changed
@@ -83,6 +89,8 @@ namespace Apostle {
 
 	bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)
 	{
+		AP_PROFILE_FUNCTION();
+
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;

@@ -18,6 +18,8 @@ namespace Apostle {
 
     Window* Window::Create(const WindowProperties& props)
     {
+        AP_PROFILE_FUNCTION();
+
         return new WindowsWindow(props);
     }
 
@@ -32,6 +34,8 @@ namespace Apostle {
     }
     void WindowsWindow::Init(const WindowProperties& props)
     {
+        AP_PROFILE_FUNCTION();
+
         m_Data.Title = props.Title;
         m_Data.Width = props.Width;
         m_Data.Height = props.Height;
@@ -139,17 +143,23 @@ namespace Apostle {
 
     void WindowsWindow::Shutdown()
     {
+        AP_PROFILE_FUNCTION();
+
         glfwDestroyWindow(m_Window);
     }
 
     void WindowsWindow::OnUpdate()
     {
+        AP_PROFILE_FUNCTION();
+
         glfwPollEvents();
         m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(bool isEnabled)
     {
+        AP_PROFILE_FUNCTION();
+
         if (isEnabled)
             glfwSwapInterval(1);
         else

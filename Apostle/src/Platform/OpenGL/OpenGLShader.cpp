@@ -11,6 +11,8 @@ namespace Apostle {
 
 	static GLenum ShaderTypeFromString(const std::string& type)
 	{
+		AP_PROFILE_FUNCTION();
+
 		if (type == "vertex")
 			return GL_VERTEX_SHADER;
 		if (type == "fragment" || type == "pixel")
@@ -22,6 +24,8 @@ namespace Apostle {
 
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		AP_PROFILE_FUNCTION();
+
 		std::string source = ReadFile(filepath);
 		auto shaderSources = ParseShader(source);
 		CompileShader(shaderSources);
@@ -34,6 +38,8 @@ namespace Apostle {
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
 		:	m_Name(name)
 	{
+		AP_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSource;
 		sources[GL_FRAGMENT_SHADER] = fragmentSource;
@@ -42,11 +48,15 @@ namespace Apostle {
 
 	OpenGLShader::~OpenGLShader()
 	{
+		AP_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		AP_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream stream(filepath, std::ios::in | std::ios::binary);
 		if (stream)
@@ -67,6 +77,8 @@ namespace Apostle {
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::ParseShader(const std::string& source)
 	{
+		AP_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -92,6 +104,8 @@ namespace Apostle {
 
 	void OpenGLShader::CompileShader(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		AP_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		AP_CORE_ASSERT(shaderSources.size() <= 2, "Apostle only supports two shaders for now");
 		std::array<GLenum, 2> glShaderIDs;
@@ -156,26 +170,62 @@ namespace Apostle {
 
 	void OpenGLShader::Bind() const
 	{
+		AP_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		AP_PROFILE_FUNCTION();
+
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, int value)
+	{
+		AP_PROFILE_FUNCTION();
+
+		UploadUniformInt(name, value);
+	}
+
+	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		UploadUniformIntArray(name, values, count);
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, float value)
+	{
+		AP_PROFILE_FUNCTION();
+
+		UploadUniformFloat(name, value);
+	}
+
+	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
+	{
+		AP_PROFILE_FUNCTION();
+
+		UploadUniformFloat2(name, value);
 	}
 
 	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
 	{
+		AP_PROFILE_FUNCTION();
+
 		UploadUniformFloat3(name, value);
 	}
 
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
 	{
+		AP_PROFILE_FUNCTION();
+
 		UploadUniformFloat4(name, value);
 	}
 
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
+		AP_PROFILE_FUNCTION();
+
 		UploadUniformMat4(name, value);
 	}
 
@@ -185,28 +235,34 @@ namespace Apostle {
 		glUniform1i(location, value);
 	}
 
+	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(location, count, values);
+	}
+
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1f(location, value);
 	}
 
-	void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& values)
+	void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-		glUniform2f(location, values.x, values.y);
+		glUniform2f(location, value.x, value.y);
 	}
 
-	void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& values)
+	void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-		glUniform3f(location, values.x, values.y, values.z);
+		glUniform3f(location, value.x, value.y, value.z);
 	}
 
-	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
+	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& value)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
-		glUniform4f(location, values.x, values.y, values.z, values.w);
+		glUniform4f(location, value.x, value.y, value.z, value.w);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
