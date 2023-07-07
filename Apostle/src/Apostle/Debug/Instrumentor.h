@@ -129,7 +129,7 @@ namespace Apostle {
     };
 }
 
-#define PROFILE 1
+#define PROFILE 0
 #if PROFILE
     #define AP_PROFILE_BEGIN_SESSION(name, filepath) ::Apostle::Instrumentor::Get().BeginSession(name, filepath)
     #define AP_PROFILE_END_SESSION() ::Apostle::Instrumentor::Get().EndSession()
