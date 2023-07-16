@@ -21,6 +21,7 @@ private:
 	Apostle::Ref<Apostle::VertexArray> m_SquareVA;
 
 	Apostle::Ref<Apostle::Texture2D> m_CheckerboardTexture;
+	Apostle::Ref<Apostle::Texture2D> m_SpriteSheet;
 
 	Apostle::OrthographicCameraController m_CameraController;
 
