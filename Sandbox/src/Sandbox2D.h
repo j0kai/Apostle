@@ -22,6 +22,7 @@ private:
 
 	Apostle::Ref<Apostle::Texture2D> m_CheckerboardTexture;
 	Apostle::Ref<Apostle::Texture2D> m_SpriteSheet;
+	Apostle::Ref<Apostle::SubTexture2D> m_TextureStairs, m_TextureBarrel, m_TextureTree;
 
 	Apostle::OrthographicCameraController m_CameraController;
 
