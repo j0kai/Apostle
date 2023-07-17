@@ -14,6 +14,7 @@ namespace Apostle {
 		
 		virtual const uint32_t GetWidth() const override { return m_Width; }
 		virtual const uint32_t GetHeight() const override { return m_Height; }
+		virtual const uint32_t GetRendererID() const override { return m_RendererID; }
 
 		virtual void SetData(void* data, uint32_t size) override;
 

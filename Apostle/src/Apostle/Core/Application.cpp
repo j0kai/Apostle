@@ -75,6 +75,11 @@ namespace Apostle {
 		}
 	}
 
+	void Application::Close()
+	{
+		m_IsRunning = false;
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		AP_PROFILE_FUNCTION();
