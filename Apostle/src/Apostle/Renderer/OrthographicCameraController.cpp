@@ -77,17 +77,19 @@ namespace Apostle {
 		dispatcher.Dispatch<WindowResizeEvent>(AP_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
 	}
 
+	void OrthographicCameraController::CalculateView()
+	{
+		m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
+		m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+	}
+
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		AP_PROFILE_FUNCTION();
 
 		m_ZoomLevel -= e.GetOffsetY() * 0.25f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-		
-
-		/* For the particle system - REMOVE LATER */
-		m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
-		m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+		CalculateView();
 		
 		//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel); // Set in same way as constructor now that zoom level has changed
 		return false;
@@ -98,10 +100,7 @@ namespace Apostle {
 		AP_PROFILE_FUNCTION();
 
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		
-		/* For the particle system - REMOVE LATER */
-		m_Bounds = { -m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel };
-		m_Camera.SetProjection(m_Bounds.Left, m_Bounds.Right, m_Bounds.Bottom, m_Bounds.Top);
+		CalculateView();
 		
 		//m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;

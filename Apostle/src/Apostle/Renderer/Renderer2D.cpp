@@ -204,17 +204,7 @@ namespace Apostle {
 			FlushAndReset();
 		
 		constexpr size_t quadVertexCount = 4;
-		//constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f },{ 0.0f, 1.0f } };
-
-		constexpr float x = 7, y = 6;
-		constexpr float sheetWidth = 2560.0f, sheetHeight = 1664.0f;
-		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;
-		constexpr glm::vec2 textureCoords[] = { 
-			{ (x * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight },
-			{ (x * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight }
-		};
+		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f },{ 0.0f, 1.0f } };
 
 		float textureIndex = 0.0f;
 

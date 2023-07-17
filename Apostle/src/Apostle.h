@@ -29,6 +29,7 @@
 
 #include "Apostle/Renderer/Shader.h"
 #include "Apostle/Renderer/Texture.h"
+#include "Apostle/Renderer/Framebuffer.h"
 #include "Apostle/Renderer/SubTexture2D.h"
 #include "Apostle/Renderer/VertexArray.h"
 #include "Apostle/Renderer/Buffer.h"
