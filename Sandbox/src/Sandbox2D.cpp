@@ -5,7 +5,7 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
-#include <time.h>
+//#include <time.h>
 
 
 Sandbox2D::Sandbox2D()
@@ -19,6 +19,7 @@ void Sandbox2D::OnAttach()
 	AP_PROFILE_FUNCTION();
 	
 	m_CheckerboardTexture = Apostle::Texture2D::Create("assets/textures/Checkerboard-Grey.png");
+	m_SpriteSheet = Apostle::Texture2D::Create("assets/game/textures/RPGpack_sheet_2X.png");
 
 	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
 	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
@@ -27,6 +28,10 @@ void Sandbox2D::OnAttach()
 	m_Particle.Velocity = { 0.0f, 0.0f };
 	m_Particle.VelocityVariation = { 3.0f, 1.0f };
 	m_Particle.Position = { 0.0f, 0.0f };
+
+	m_TextureStairs = Apostle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7, 6 }, { 128, 128 });
+	m_TextureBarrel = Apostle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8, 2 }, { 128, 128 });
+	m_TextureTree = Apostle::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 2, 1 }, { 128, 128 }, { 1, 2 });
 }
 
 void Sandbox2D::OnDetach()
@@ -54,7 +59,7 @@ void Sandbox2D::OnUpdate(Apostle::Timestep ts)
 		Apostle::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Apostle::RenderCommand::Clear();
 	}
-
+#if 0
 	{
 		AP_PROFILE_SCOPE("Renderer Draw");
 
@@ -84,8 +89,8 @@ void Sandbox2D::OnUpdate(Apostle::Timestep ts)
 
 		Apostle::Renderer2D::EndScene();
 	}
-
-	// Emit particles from mouse position on click
+#endif
+	// Particle System - emits particles from mouse position
 	if (Apostle::Input::IsMouseButtonPressed(static_cast<int>(MouseButtonCodes::AP_MOUSE_BUTTON_LEFT)))
 	{
 		auto [x, y] = Apostle::Input::GetMousePosition();
@@ -103,6 +108,15 @@ void Sandbox2D::OnUpdate(Apostle::Timestep ts)
 
 	m_ParticleSystem.OnUpdate(ts);
 	m_ParticleSystem.OnRender(m_CameraController.GetCamera());
+
+	// Game Example - Move out into own project later
+	Apostle::Renderer2D::BeginScene(m_CameraController.GetCamera());
+
+	Apostle::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureStairs);
+	Apostle::Renderer2D::DrawQuad({ 1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_TextureTree);
+	Apostle::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_TextureBarrel);
+
+	Apostle::Renderer2D::EndScene();
 }
 
 void Sandbox2D::OnImGuiRender()
