@@ -6,8 +6,7 @@ workspace "Apostle"
       "Release", 
       "Dist"
     }
-
-    startproject "Sandbox"
+    startproject "ApostleEditor"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -102,6 +101,61 @@ project "Apostle"
       defines { "AP_DIST" }
       runtime "Release"
       optimize "on"
+
+--EDITOR PROJECT--
+project "ApostleEditor"
+    location "ApostleEditor"
+    kind "ConsoleApp"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
+  
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+  
+    files 
+    { 
+      "%{prj.name}/src/**.h", 
+      "%{prj.name}/src/**.cpp"
+    }
+  
+    includedirs
+    {
+      "Apostle/vendor/spdlog/include",
+      "Apostle/src",
+      "%{IncludeDir.ImGui}",
+      "%{IncludeDir.glm}"
+    }
+
+    links
+    {
+      "Apostle",
+      "ImGui"
+    }
+      
+    filter "system:windows"
+      systemversion "latest"
+  
+      defines
+      {
+        "AP_PLATFORM_WINDOWS",
+      }
+  
+      filter "configurations:Debug"
+        defines { "AP_DEBUG" }
+        runtime "Debug"
+        symbols "on"
+  
+      filter "configurations:Release"
+        defines { "AP_RELEASE" }
+        runtime "Release"
+        optimize "on"
+  
+      filter "configurations:Dist"
+        defines { "AP_DIST" }
+        runtime "Release"
+        optimize "on"
+
 
 --SANDBOX PROJECT--
 project "Sandbox"

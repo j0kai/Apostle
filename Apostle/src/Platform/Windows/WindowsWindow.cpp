@@ -16,11 +16,11 @@ namespace Apostle {
         AP_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
     }
 
-    Window* Window::Create(const WindowProperties& props)
+    Scope<Window> Window::Create(const WindowProperties& props)
     {
         AP_PROFILE_FUNCTION();
 
-        return new WindowsWindow(props);
+        return CreateScope<WindowsWindow>(props);
     }
 
     WindowsWindow::WindowsWindow(const WindowProperties& props)
