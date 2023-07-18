@@ -143,8 +143,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Apostle\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Apostle\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Core\Application.h" />
@@ -167,6 +165,7 @@
     <ClInclude Include="src\Apostle\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Apostle\Renderer\Buffer.h" />
     <ClInclude Include="src\Apostle\Renderer\Camera.h" />
+    <ClInclude Include="src\Apostle\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Apostle\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Apostle\Renderer\PerspectiveCamera.h" />
@@ -176,6 +175,7 @@
     <ClInclude Include="src\Apostle\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Apostle\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Apostle\Renderer\Shader.h" />
+    <ClInclude Include="src\Apostle\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\Apostle\Renderer\Texture.h" />
     <ClInclude Include="src\Apostle\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
@@ -607,8 +607,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Apostle\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Apostle\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\APpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -618,6 +616,7 @@
     <ClCompile Include="src\Apostle\Core\Log.cpp" />
     <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Apostle\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Apostle\Renderer\PerspectiveCamera.cpp" />
@@ -626,6 +625,7 @@
     <ClCompile Include="src\Apostle\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Apostle\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\Apostle\Renderer\Texture.cpp" />
     <ClCompile Include="src\Apostle\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />

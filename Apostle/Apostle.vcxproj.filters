@@ -129,6 +129,9 @@
     <ClInclude Include="src\Apostle\Renderer\Camera.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\Renderer\Framebuffer.h">
+      <Filter>src\Apostle\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\Renderer\OrthographicCamera.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
@@ -156,6 +159,9 @@
     <ClInclude Include="src\Apostle\Renderer\Shader.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\Renderer\SubTexture2D.h">
+      <Filter>src\Apostle\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\Renderer\Texture.h">
       <Filter>src\Apostle\Renderer</Filter>
     </ClInclude>
@@ -166,6 +172,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -1440,9 +1449,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Apostle\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\Apostle\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1464,6 +1470,9 @@
       <Filter>src\Apostle\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\Renderer\Buffer.cpp">
+      <Filter>src\Apostle\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\Renderer\Framebuffer.cpp">
       <Filter>src\Apostle\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\Renderer\OrthographicCamera.cpp">
@@ -1490,6 +1499,9 @@
     <ClCompile Include="src\Apostle\Renderer\Shader.cpp">
       <Filter>src\Apostle\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Apostle\Renderer\SubTexture2D.cpp">
+      <Filter>src\Apostle\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Apostle\Renderer\Texture.cpp">
       <Filter>src\Apostle\Renderer</Filter>
     </ClCompile>
@@ -1500,6 +1512,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1529,8 +1544,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Apostle\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Apostle\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>
