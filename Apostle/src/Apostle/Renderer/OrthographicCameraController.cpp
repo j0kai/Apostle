@@ -17,8 +17,8 @@ namespace Apostle {
 		AP_PROFILE_FUNCTION();
 
 		// Movement/Rotation Speed Modifier
-		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraMoveSpeed = 0.5f : m_CameraMoveSpeed = 5.0f;
-		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraRotationSpeed = 9.0f : m_CameraRotationSpeed = 90.0f;
+		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraMoveSpeed = 5.0f : m_CameraMoveSpeed = 2.0f;
+		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraRotationSpeed = 90.0f : m_CameraRotationSpeed = 40.0f;
 		
 		// Movement Controls
 		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))

@@ -8,7 +8,7 @@
 namespace Apostle {
 
 	EditorLayer::EditorLayer()
-		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f)
+		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f) // Add true for camera rotation
 	{
 
 	}
