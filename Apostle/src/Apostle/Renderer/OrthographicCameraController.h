@@ -35,7 +35,7 @@ namespace Apostle {
 		
 		// Movement
 		glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
-		float m_CameraMoveSpeed = 5.0f;
+		float m_CameraMoveSpeed;
 		bool m_IsModified = false;
 		
 		// Rotation
