@@ -25,6 +25,8 @@ namespace Apostle {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window;  }
 	private:

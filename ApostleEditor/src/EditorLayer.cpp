@@ -36,11 +36,9 @@ namespace Apostle {
 		AP_PROFILE_FUNCTION();
 
 		// Update
-		{
-			AP_PROFILE_SCOPE("CameraController::OnUpdate");
+		if(m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
-		}
-
+		
 		// Render
 
 		// Reset Renderer Statistics each frame
@@ -151,6 +149,12 @@ namespace Apostle {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
+		
+		//Handle Event Blocking
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+ 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (m_ViewportSize != *(glm::vec2*)&viewportPanelSize)
