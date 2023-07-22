@@ -68,7 +68,7 @@ namespace Apostle {
 		}
 		m_Camera.SetPosition(m_CameraPosition);
 
-		m_CameraMoveSpeed = m_ZoomLevel; /* Uncomment this for a linear move speed */
+		m_CameraMoveSpeed = m_ZoomLevel; /* Uncomment for a linear move speed */
 	}
 
 	void OrthographicCameraController::Resize(float width, float height)

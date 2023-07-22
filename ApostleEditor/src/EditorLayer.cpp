@@ -10,7 +10,6 @@ namespace Apostle {
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), m_CameraController(1280.0f / 720.0f) // Add true for camera rotation
 	{
-
 	}
 
 	void EditorLayer::OnAttach()
@@ -36,14 +35,15 @@ namespace Apostle {
 		AP_PROFILE_FUNCTION();
 
 		// Update
-		if(m_ViewportFocused)
+		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
-		
+
 		// Render
 
 		// Reset Renderer Statistics each frame
 		Apostle::Renderer2D::ResetStats();
 
+		/* --------- Generic Scene - rendering quads and textures ------------ */
 		{
 			AP_PROFILE_SCOPE("Renderer Prep");
 			m_Framebuffer->Bind();
@@ -54,12 +54,12 @@ namespace Apostle {
 		{
 			AP_PROFILE_SCOPE("Renderer Draw");
 
+
 			static float rotation = 0.0f;
 			rotation += ts * 50.0f;
 
 			Apostle::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-			//TODO: Figure out why the framebuffer is rendering in order of draw calls rather than using the Z value
 			Apostle::Renderer2D::DrawRotatedQuad({ -0.25f, -0.25f, 0.5f }, { 1.0f, 1.0f }, glm::radians(rotation), m_CheckerboardTexture, 20.0f); // Rotating checkerboard texture
 			Apostle::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.5f }, { 0.8f, 0.8f }, glm::radians(rotation), { 0.2f, 0.8f, 0.7f, 1.0f }); // Rotating teal quad
 			Apostle::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.5f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f }); // Static red quad
@@ -147,8 +147,9 @@ namespace Apostle {
 			ImGui::EndMenuBar();
 		}
 
+		// Scene Viewport
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		ImGui::Begin("Viewport");
+		ImGui::Begin("Scene Viewport");
 		
 		//Handle Event Blocking
 		m_ViewportFocused = ImGui::IsWindowFocused();
@@ -167,6 +168,7 @@ namespace Apostle {
 		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 
+		// Settings Panel
 		ImGui::Begin("Settings");
 		auto stats = Apostle::Renderer2D::GetStats();
 		ImGui::Text("Renderer Statistics: ");
