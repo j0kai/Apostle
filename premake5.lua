@@ -17,6 +17,7 @@ IncludeDir["Glad"] = "Apostle/vendor/Glad/include"
 IncludeDir["ImGui"] = "Apostle/vendor/imgui"
 IncludeDir["glm"] = "Apostle/vendor/glm"
 IncludeDir["stb_image"] = "Apostle/vendor/stb_image"
+IncludeDir["entt"] = "Apostle/vendor/entt/include"
 
 group "Dependencies"
     include "Apostle/vendor/GLFW"
@@ -59,7 +60,8 @@ project "Apostle"
       "%{IncludeDir.Glad}",
       "%{IncludeDir.ImGui}",
       "%{IncludeDir.glm}",
-      "%{IncludeDir.stb_image}"
+      "%{IncludeDir.stb_image}",
+      "%{IncludeDir.entt}"
     }
 
     links
@@ -124,7 +126,8 @@ project "ApostleEditor"
       "Apostle/vendor/spdlog/include",
       "Apostle/src",
       "%{IncludeDir.ImGui}",
-      "%{IncludeDir.glm}"
+      "%{IncludeDir.glm}",
+      "%{IncludeDir.entt}"
     }
 
     links
@@ -179,7 +182,8 @@ project "Sandbox"
       "Apostle/vendor/spdlog/include",
       "Apostle/src",
       "%{IncludeDir.ImGui}",
-      "%{IncludeDir.glm}"
+      "%{IncludeDir.glm}",
+      "%{IncludeDir.entt}"
     }
 
     links
