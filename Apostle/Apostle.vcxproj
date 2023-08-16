@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\ECS\Components.h" />
     <ClInclude Include="src\Apostle\ECS\Scene.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />

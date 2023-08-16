@@ -21,6 +21,9 @@
 #include "Apostle/Events/KeyEvents.h"
 #include "Apostle/Events/MouseEvents.h"
 
+#include "Apostle/ECS/Scene.h"
+#include "Apostle/ECS/Components.h"
+
 
 /* ----------Renderer---------------*/
 #include "Apostle/Renderer/Renderer.h"

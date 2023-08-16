@@ -1447,6 +1447,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\ECS\Scene.h" />
+    <ClInclude Include="src\Apostle\ECS\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
