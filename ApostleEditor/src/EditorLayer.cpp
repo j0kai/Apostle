@@ -129,27 +129,6 @@ namespace Apostle {
 			ImGui::EndMenuBar();
 		}
 
-		// Scene Viewport
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		ImGui::Begin("Scene Viewport");
-		
-		//Handle Event Blocking
-		m_ViewportFocused = ImGui::IsWindowFocused();
-		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
- 
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize != *(glm::vec2*)&viewportPanelSize)
-		{
-			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
-			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-
-			m_CameraController.Resize(m_ViewportSize.x, m_ViewportSize.y);
-		}
-		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1, 0 });
-		ImGui::End();
-
 		// Settings Panel
 		ImGui::Begin("Settings");
 		auto stats = Apostle::Renderer2D::GetStats();
@@ -161,11 +140,31 @@ namespace Apostle {
 
 		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
 		ImGui::ColorEdit4("Square Color: ", glm::value_ptr(squareColor));
-
 		ImGui::End();
+
+		// Scene Viewport
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::Begin("Scene Viewport");
+		
+		//Handle Event Blocking
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+ 
+		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+		if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
+		{
+			m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
+			m_CameraController.Resize(viewportPanelSize.x, viewportPanelSize.y);
+		}
+		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1, 0 });
+		ImGui::End(); // Scene Viewport END
 		ImGui::PopStyleVar();
 
-		ImGui::End();
+		ImGui::End(); // Dockspace Demo END
 	}
 
 	void EditorLayer::OnEvent(Apostle::Event& e)

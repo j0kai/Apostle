@@ -6,7 +6,7 @@ namespace Apostle {
 
 	struct TransformComponent
 	{
-		glm::mat4 Transform;
+		glm::mat4 Transform { 1.0f };
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
@@ -21,7 +21,7 @@ namespace Apostle {
 
 	struct SpriteRendererComponent
 	{
-		glm::vec4 Color;
+		glm::vec4 Color { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
