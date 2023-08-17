@@ -1448,6 +1448,7 @@
     </ClInclude>
     <ClInclude Include="src\Apostle\ECS\Scene.h" />
     <ClInclude Include="src\Apostle\ECS\Components.h" />
+    <ClInclude Include="src\Apostle\ECS\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1544,5 +1545,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\ECS\Scene.cpp" />
+    <ClCompile Include="src\Apostle\ECS\Entity.cpp" />
   </ItemGroup>
 </Project>

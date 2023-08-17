@@ -6,19 +6,22 @@
 
 namespace Apostle {
 
+	class Entity;
+
 	class Scene
 	{
 	public:
 		Scene();
 		~Scene();
 
-		entt::entity CreateEntity();
+		Entity CreateEntity(const std::string& name = std::string());
 
 		void OnUpdate(Timestep ts);
 
-		entt::registry& Reg() { return m_Registry; }
 	private:
 		entt::registry m_Registry;
+
+		friend class Entity;
 	};
 
 }

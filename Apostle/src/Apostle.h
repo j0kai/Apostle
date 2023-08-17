@@ -22,6 +22,7 @@
 #include "Apostle/Events/MouseEvents.h"
 
 #include "Apostle/ECS/Scene.h"
+#include "Apostle/ECS/Entity.h"
 #include "Apostle/ECS/Components.h"
 
 

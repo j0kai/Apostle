@@ -4,8 +4,9 @@
 #include "Components.h"
 
 #include "glm/glm.hpp"
-
 #include "Apostle/Renderer/Renderer2D.h"
+
+#include "Entity.h"
 
 namespace Apostle {
 
@@ -38,9 +39,15 @@ namespace Apostle {
 
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return m_Registry.create();
+		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>(name);
+		if (name.empty())
+			tag.Tag = "Entity";
+		
+		return entity;
 	}
 
 	void Scene::OnUpdate(Timestep ts)
