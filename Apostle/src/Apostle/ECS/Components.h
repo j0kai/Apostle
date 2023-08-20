@@ -2,6 +2,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Apostle/Renderer/Camera.h"
+
 namespace Apostle {
 
 	struct TransformComponent
@@ -36,6 +38,18 @@ namespace Apostle {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			: Color(color) {}
+
+	};
+
+	struct CameraComponent
+	{
+		Camera Camera;
+		bool Primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
 
 	};
 }

@@ -27,8 +27,15 @@ namespace Apostle {
 
 		auto square = m_ActiveScene->CreateEntity("Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
-
 		m_SquareEntity = square;
+
+		auto sceneCamera = m_ActiveScene->CreateEntity("Scene Camera");
+		sceneCamera.AddComponent<CameraComponent>(glm::ortho(- 16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		m_SceneCamera = sceneCamera;
+
+		auto cc = m_ActiveScene->CreateEntity("Clip-Space Camera");
+		cc.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f)).Primary = false;
+		m_SecondCamera = cc;
 	}
 
 	void EditorLayer::OnDetach()
@@ -38,7 +45,6 @@ namespace Apostle {
 
 	void EditorLayer::OnUpdate(Apostle::Timestep ts)
 	{
-		//using namespace std::literals;
 		AP_PROFILE_FUNCTION();
 
 		// Update
@@ -46,18 +52,14 @@ namespace Apostle {
 			m_CameraController.OnUpdate(ts);
 
 		// Render
-
 		Apostle::Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
 		Apostle::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Apostle::RenderCommand::Clear();
-
-		Apostle::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		
+		// Update Scene
 		m_ActiveScene->OnUpdate(ts);
-		
-		Apostle::Renderer2D::EndScene();
-		
+
 		m_Framebuffer->Unbind();
 	}
 
@@ -128,28 +130,45 @@ namespace Apostle {
 			ImGui::EndMenuBar();
 		}
 
-		// Settings Panel
-		ImGui::Begin("Settings");
+		// Statistics Panel
+		ImGui::Begin("Statistics");
+		
 		auto stats = Apostle::Renderer2D::GetStats();
 		ImGui::Text("Renderer Statistics: ");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quad Count: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		
+		ImGui::End();
 
+		// Inspector Panel
+		ImGui::Begin("Inspector");
 		
 		if (m_SquareEntity)
 		{
-			ImGui::Separator();
-			
 			auto tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
 			ImGui::Text("%s", tag.c_str());
 
 			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color: ", glm::value_ptr(squareColor));
+			ImGui::ColorEdit4("Color: ", glm::value_ptr(squareColor));
 
 			ImGui::Separator();
 		}
+
+		if(m_SceneCamera)
+		{
+			auto tag = m_SceneCamera.GetComponent<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
+			ImGui::DragFloat3("Transform", glm::value_ptr(m_SceneCamera.GetComponent<TransformComponent>().Transform[3]));
+
+			if (ImGui::Checkbox("Render w/ Scene Camera", &m_PrimaryCamera))
+			{
+				m_SceneCamera.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+				m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+			}
+		}
+		
 		ImGui::End();
 
 		// Scene Viewport

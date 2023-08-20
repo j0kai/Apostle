@@ -25,6 +25,9 @@ namespace Apostle {
 
 		Ref<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
+		Entity m_SceneCamera;
+		Entity m_SecondCamera;
+		bool m_PrimaryCamera = true;
 
 		glm::vec2 m_ViewportSize;
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
