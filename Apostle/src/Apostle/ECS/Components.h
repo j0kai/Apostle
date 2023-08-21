@@ -2,7 +2,7 @@
 
 #include "glm/glm.hpp"
 
-#include "Apostle/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 namespace Apostle {
 
@@ -43,13 +43,12 @@ namespace Apostle {
 
 	struct CameraComponent
 	{
-		Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
 
 	};
 }

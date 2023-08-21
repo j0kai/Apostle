@@ -146,6 +146,7 @@
     <ClInclude Include="src\Apostle\ECS\Components.h" />
     <ClInclude Include="src\Apostle\ECS\Entity.h" />
     <ClInclude Include="src\Apostle\ECS\Scene.h" />
+    <ClInclude Include="src\Apostle\ECS\SceneCamera.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Core\Application.h" />
@@ -611,6 +612,7 @@
   <ItemGroup>
     <ClCompile Include="src\Apostle\ECS\Entity.cpp" />
     <ClCompile Include="src\Apostle\ECS\Scene.cpp" />
+    <ClCompile Include="src\Apostle\ECS\SceneCamera.cpp" />
     <ClCompile Include="src\APpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
