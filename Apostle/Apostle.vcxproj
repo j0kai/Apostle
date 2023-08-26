@@ -147,6 +147,7 @@
     <ClInclude Include="src\Apostle\ECS\Entity.h" />
     <ClInclude Include="src\Apostle\ECS\Scene.h" />
     <ClInclude Include="src\Apostle\ECS\SceneCamera.h" />
+    <ClInclude Include="src\Apostle\ECS\ScriptableEntity.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Core\Application.h" />

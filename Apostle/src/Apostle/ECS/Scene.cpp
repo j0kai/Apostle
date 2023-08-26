@@ -52,6 +52,22 @@ namespace Apostle {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
+		// Update Scripts
+		{
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nativeScriptComponent)
+			{
+				if (!nativeScriptComponent.Instance)
+				{
+					nativeScriptComponent.InstantiateFunction();
+					nativeScriptComponent.Instance->m_Entity = { entity, this };
+					nativeScriptComponent.OnCreateFunction(nativeScriptComponent.Instance);
+				}
+
+				nativeScriptComponent.OnUpdateFunction(nativeScriptComponent.Instance, ts);
+			});
+		}
+		
+		
 		// Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;

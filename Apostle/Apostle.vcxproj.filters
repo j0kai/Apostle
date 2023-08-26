@@ -1450,6 +1450,7 @@
     <ClInclude Include="src\Apostle\ECS\Components.h" />
     <ClInclude Include="src\Apostle\ECS\Entity.h" />
     <ClInclude Include="src\Apostle\ECS\SceneCamera.h" />
+    <ClInclude Include="src\Apostle\ECS\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">

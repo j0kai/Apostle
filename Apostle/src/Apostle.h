@@ -21,8 +21,11 @@
 #include "Apostle/Events/KeyEvents.h"
 #include "Apostle/Events/MouseEvents.h"
 
+
+/* ------------- ECS ---------------*/
 #include "Apostle/ECS/Scene.h"
 #include "Apostle/ECS/Entity.h"
+#include "Apostle/ECS/ScriptableEntity.h"
 #include "Apostle/ECS/Components.h"
 
 
