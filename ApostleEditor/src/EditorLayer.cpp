@@ -42,6 +42,8 @@ namespace Apostle {
 		public:
 			void OnCreate()
 			{
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
 			}
 
 			void OnDestroy()
@@ -69,6 +71,7 @@ namespace Apostle {
 		};
 
 		m_SceneCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -200,6 +203,7 @@ namespace Apostle {
 			ImGui::Separator();
 		}
 
+		// Cameras
 		auto tag = m_SceneCamera.GetComponent<TagComponent>().Tag;
 		ImGui::Text("%s", tag.c_str());
 		ImGui::DragFloat3("Transform", glm::value_ptr(m_SceneCamera.GetComponent<TransformComponent>().Transform[3]));
@@ -209,7 +213,7 @@ namespace Apostle {
 			m_SceneCamera.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
 			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
 		}
-
+		
 		{
 			auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
 			float orthoSize = camera.GetOrthographicSize();
