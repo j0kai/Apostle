@@ -72,6 +72,8 @@ namespace Apostle {
 
 		m_SceneCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -176,6 +178,9 @@ namespace Apostle {
 
 			ImGui::EndMenuBar();
 		}
+
+		// Scene Hierarchy
+		m_SceneHierarchyPanel.OnImGuiRender();
 
 		// Statistics Panel
 		ImGui::Begin("Statistics");

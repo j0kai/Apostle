@@ -24,6 +24,7 @@ namespace Apostle {
 		uint32_t m_ViewportWidth, m_ViewportHeight;
 
 		friend class Entity;
+		friend class SceneHierarchyPanel;
 	};
 
 }

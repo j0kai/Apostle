@@ -2,6 +2,8 @@
 
 #include "Apostle.h"
 
+#include "Panels\SceneHierarchyPanel.h"
+
 namespace Apostle {
 
 	class EditorLayer : public Layer
@@ -17,6 +19,7 @@ namespace Apostle {
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& e) override;
 	private:
+		// temp
 		Ref<Shader> m_FlatColorShader;
 		Ref<VertexArray> m_SquareVA;
 
@@ -24,6 +27,7 @@ namespace Apostle {
 		Ref<Framebuffer> m_Framebuffer;
 
 		Ref<Scene> m_ActiveScene;
+		// Entities
 		Entity m_SquareEntity;
 		Entity m_SceneCamera;
 		Entity m_SecondCamera;
@@ -35,6 +39,9 @@ namespace Apostle {
 		OrthographicCameraController m_CameraController;
 
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+
+		// Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 
 }
