@@ -192,10 +192,7 @@ namespace Apostle {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 		
-		ImGui::End();
-
-		// Inspector Panel
-		ImGui::Begin("Inspector");
+		ImGui::Separator();
 		
 		if (m_SquareEntity)
 		{
