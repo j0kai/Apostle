@@ -121,7 +121,7 @@ namespace Apostle {
 		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 		// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
-		// because it would be confusing to have two docking targets within each others.
+		// because it would be confusing to have two docking targets within each other.
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 		if (opt_fullscreen)
 		{
@@ -186,43 +186,12 @@ namespace Apostle {
 		ImGui::Begin("Statistics");
 		
 		auto stats = Apostle::Renderer2D::GetStats();
-		ImGui::Text("Renderer Statistics: ");
+		ImGui::Text("Renderer2D Statistics: ");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quad Count: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-		
-		ImGui::Separator();
-		
-		if (m_SquareEntity)
-		{
-			auto tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
 
-			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Color: ", glm::value_ptr(squareColor));
-
-			ImGui::Separator();
-		}
-
-		// Cameras
-		auto tag = m_SceneCamera.GetComponent<TagComponent>().Tag;
-		ImGui::Text("%s", tag.c_str());
-		ImGui::DragFloat3("Transform", glm::value_ptr(m_SceneCamera.GetComponent<TransformComponent>().Transform[3]));
-
-		if (ImGui::Checkbox("Render w/ Scene Camera", &m_PrimaryCamera))
-		{
-			m_SceneCamera.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-		}
-		
-		{
-			auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
-			float orthoSize = camera.GetOrthographicSize();
-			if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-				camera.SetOrthographicSize(orthoSize);
-		}
-		
 		ImGui::End();
 
 		// Scene Viewport

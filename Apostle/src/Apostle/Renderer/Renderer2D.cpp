@@ -249,7 +249,9 @@ namespace Apostle {
 		if (textureIndex == 0.0f)
 		{
 			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+			{
 				FlushAndReset();
+			}
 
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
@@ -423,7 +425,9 @@ namespace Apostle {
 		AP_PROFILE_FUNCTION();
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		{
 			FlushAndReset();
+		}
 
 		constexpr size_t quadVertexCount = 4;
 		const glm::vec2* textureCoords = subtexture->GetTexCoords();
@@ -475,7 +479,4 @@ namespace Apostle {
 	{
 		return s_Data.Stats;
 	}
-
-	
-
 }
