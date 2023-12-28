@@ -4,6 +4,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "imgui.h"
+#include "imgui_internal.h"
 
 namespace Apostle {
 
@@ -42,6 +43,10 @@ namespace Apostle {
 		ImGui::End();
 	}
 
+	/// <summary>
+	/// Draws the entities in the Scene Hierarchy Panel
+	/// </summary>
+	/// <param name="entity"> The entity that you wish to draw. </param>
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
@@ -58,6 +63,77 @@ namespace Apostle {
 		{
 			ImGui::TreePop();
 		}
+	}
+
+	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f)
+	{
+		ImGui::PushID(label.c_str());
+
+		// Set ImGui to use 2 columns
+		ImGui::Columns(2);
+
+		// Label Column
+		ImGui::SetColumnWidth(0, columnWidth);
+		ImGui::Text(label.c_str());
+
+		ImGui::NextColumn();
+
+		// Values Column
+		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 1, 0 });
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize{ lineHeight + 3.0f, lineHeight };
+
+		// X Value
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.3f, 0.35f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		if (ImGui::Button("X", buttonSize))
+		{
+			values.x = resetValue;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::DragFloat("##X", &values.x, 0.1f);
+		ImGui::PopItemWidth();
+
+		ImGui::SameLine();
+
+		// Y value
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.8f, 0.35f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
+		if (ImGui::Button("Y", buttonSize))
+		{
+			values.y = resetValue;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::DragFloat("##Y", &values.y, 0.1f);
+		ImGui::PopItemWidth();
+
+		ImGui::SameLine();
+
+		// Z value
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.3f, 0.9f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+		if (ImGui::Button("Z", buttonSize))
+		{
+			values.z = resetValue;
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine();
+		ImGui::DragFloat("##Z", &values.z, 0.1f);
+		ImGui::PopItemWidth();
+
+		ImGui::PopStyleVar();
+
+		// Reset to 1 column
+		ImGui::Columns(1);
+
+		ImGui::PopID();
 	}
 
 	template<typename T>
@@ -94,8 +170,14 @@ namespace Apostle {
 		});
 		
 		DrawComponent<TransformComponent>("Transform", [&]() {
-			auto& transform = entity.GetComponent<TransformComponent>().Transform;
-			ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);
+			auto& tc = entity.GetComponent<TransformComponent>();
+			DrawVec3Control("Position", tc.Translation);
+
+			glm::vec3 rotation = glm::degrees(tc.Rotation);
+			DrawVec3Control("Rotation", rotation);
+			tc.Rotation = glm::radians(rotation);
+
+			DrawVec3Control("Scale", tc.Scale, 1.0f);
 		});
 
 		DrawComponent<CameraComponent>("Camera", [&]() {
