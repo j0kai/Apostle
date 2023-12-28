@@ -172,10 +172,14 @@ namespace Apostle {
 		DrawComponent<TransformComponent>("Transform", [&]() {
 			auto& tc = entity.GetComponent<TransformComponent>();
 			DrawVec3Control("Position", tc.Translation);
+			
+			ImGui::Spacing();
 
 			glm::vec3 rotation = glm::degrees(tc.Rotation);
 			DrawVec3Control("Rotation", rotation);
 			tc.Rotation = glm::radians(rotation);
+			
+			ImGui::Spacing();
 
 			DrawVec3Control("Scale", tc.Scale, 1.0f);
 		});
