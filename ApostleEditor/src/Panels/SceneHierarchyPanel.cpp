@@ -33,6 +33,15 @@ namespace Apostle {
 			m_SelectionContext = {};
 		}
 
+		// Right-click in blank space
+		if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Create Empty Entity"))
+				m_Context->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
 		ImGui::Begin("Inspector");
@@ -50,18 +59,43 @@ namespace Apostle {
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
 		
+		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
-
 		if (ImGui::IsItemClicked())
 		{
 			m_SelectionContext = entity;
 		}
 
+		// Right-click on entity
+		bool entityDeleted = false;
+		// TODO: Figure out a way to generate unique IDs for each entity.
+		if (ImGui::BeginPopupContextItem(tag.c_str()))
+		{
+			std::string itemText = "Delete '" + tag + "'";
+			if (ImGui::MenuItem(itemText.c_str()))
+				entityDeleted = true;
+			
+			ImGui::EndPopup();
+		}
+
 		if (opened)
 		{
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+			if (opened)
+				ImGui::TreePop();
+			
 			ImGui::TreePop();
+		}
+
+		// Defer entity deletion until end of frame - in case other actions must be performed on it before deletion.
+		if (entityDeleted)
+		{
+			m_Context->DestroyEntity(entity);
+			
+			if(m_SelectionContext == entity)
+				m_SelectionContext = {};
 		}
 	}
 
