@@ -68,8 +68,10 @@ namespace Apostle {
 		}
 
 		// Right-click on entity
+		// TODO: Figure out a way to generate unique IDs for each entity
+		// instead of using tag.c_str() - currently doesn't work if multiple 
+		// entities have the same tag.
 		bool entityDeleted = false;
-		// TODO: Figure out a way to generate unique IDs for each entity.
 		if (ImGui::BeginPopupContextItem(tag.c_str()))
 		{
 			std::string itemText = "Delete '" + tag + "'";
