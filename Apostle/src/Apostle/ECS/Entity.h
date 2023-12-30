@@ -39,7 +39,7 @@ namespace Apostle {
 		{
 			AP_CORE_ASSERT(HasComponent<T>(), "Entity does not have component of specified type!");
 
-			return m_Scene->m_Registry.remove<T>(m_EntityHandle);
+			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
 
 		operator bool() { return m_EntityHandle != entt::null; }

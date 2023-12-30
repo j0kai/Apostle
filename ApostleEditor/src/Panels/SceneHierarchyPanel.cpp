@@ -47,7 +47,27 @@ namespace Apostle {
 		ImGui::Begin("Inspector");
 
 		if (m_SelectionContext)
+		{
 			DrawComponents(m_SelectionContext);
+
+			if (ImGui::Button("Add Component"))
+				ImGui::OpenPopup("AddComponent");
+			
+			if(ImGui::BeginPopup("AddComponent"))
+			{
+				if (ImGui::MenuItem("Camera"))
+				{
+					m_SelectionContext.AddComponent<CameraComponent>();
+				}
+
+				if (ImGui::MenuItem("Sprite Renderer"))
+				{
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				}
+
+				ImGui::EndPopup();
+			}
+		}
 
 		ImGui::End();
 	}
@@ -83,11 +103,6 @@ namespace Apostle {
 
 		if (opened)
 		{
-			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
-			if (opened)
-				ImGui::TreePop();
-			
 			ImGui::TreePop();
 		}
 
@@ -175,9 +190,33 @@ namespace Apostle {
 	template<typename T>
 	void SceneHierarchyPanel::DrawComponent(const std::string& name, const std::function<void()>& func)
 	{
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+		
 		if (m_SelectionContext.HasComponent<T>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+			
+			if (ImGui::Button("+", ImVec2{20, 20}))
+			{
+				ImGui::OpenPopup("ComponentSettings");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+				{
+					removeComponent = true;
+				}
+
+				ImGui::EndPopup();
+			}
+
+			if (open)
 			{
 				func();
 
@@ -187,6 +226,9 @@ namespace Apostle {
 			{
 				func();
 			}
+			
+			if (removeComponent)
+				m_SelectionContext.RemoveComponent<T>();
 		}
 	}
 
