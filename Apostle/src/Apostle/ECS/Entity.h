@@ -22,8 +22,9 @@ namespace Apostle {
 		T& AddComponent(Args&&... args)
 		{
 			AP_CORE_ASSERT(!HasComponent<T>(), "Entity already has component of specified type!");
-			
-			return m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			m_Scene->OnComponentAdded<T>(*this, component);
+			return component;
 		}
 
 		template<typename T>
@@ -39,11 +40,13 @@ namespace Apostle {
 		{
 			AP_CORE_ASSERT(HasComponent<T>(), "Entity does not have component of specified type!");
 
-			return m_Scene->m_Registry.remove<T>(m_EntityHandle);
+			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
 
 		operator bool() { return m_EntityHandle != entt::null; }
+		operator entt::entity() { return m_EntityHandle; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
+		
 		bool operator==(const Entity& other) const 
 		{ 
 			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;

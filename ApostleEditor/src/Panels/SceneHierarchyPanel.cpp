@@ -1,4 +1,3 @@
-
 #include "SceneHierarchyPanel.h"
 
 #include "glm/gtc/type_ptr.hpp"
@@ -33,12 +32,41 @@ namespace Apostle {
 			m_SelectionContext = {};
 		}
 
+		// Right-click in blank space
+		if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Create Empty Entity"))
+				m_Context->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
 		ImGui::Begin("Inspector");
 
 		if (m_SelectionContext)
+		{
 			DrawComponents(m_SelectionContext);
+
+			if (ImGui::Button("Add Component"))
+				ImGui::OpenPopup("AddComponent");
+			
+			if(ImGui::BeginPopup("AddComponent"))
+			{
+				if (ImGui::MenuItem("Camera"))
+				{
+					m_SelectionContext.AddComponent<CameraComponent>();
+				}
+
+				if (ImGui::MenuItem("Sprite Renderer"))
+				{
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				}
+
+				ImGui::EndPopup();
+			}
+		}
 
 		ImGui::End();
 	}
@@ -50,18 +78,40 @@ namespace Apostle {
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow;
 		
+		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
-
 		if (ImGui::IsItemClicked())
 		{
 			m_SelectionContext = entity;
 		}
 
+		// Right-click on entity
+		// TODO: Figure out a way to generate unique IDs for each entity
+		// instead of using tag.c_str() - currently doesn't work if multiple 
+		// entities have the same tag.
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem(tag.c_str()))
+		{
+			std::string itemText = "Delete '" + tag + "'";
+			if (ImGui::MenuItem(itemText.c_str()))
+				entityDeleted = true;
+			
+			ImGui::EndPopup();
+		}
+
 		if (opened)
 		{
 			ImGui::TreePop();
+		}
+
+		// Defer entity deletion until end of frame - in case other actions must be performed on it before deletion.
+		if (entityDeleted)
+		{
+			m_Context->DestroyEntity(entity);
+			
+			if(m_SelectionContext == entity)
+				m_SelectionContext = {};
 		}
 	}
 
@@ -139,9 +189,33 @@ namespace Apostle {
 	template<typename T>
 	void SceneHierarchyPanel::DrawComponent(const std::string& name, const std::function<void()>& func)
 	{
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+		
 		if (m_SelectionContext.HasComponent<T>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(T).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+			
+			if (ImGui::Button("+", ImVec2{20, 20}))
+			{
+				ImGui::OpenPopup("ComponentSettings");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Component"))
+				{
+					removeComponent = true;
+				}
+
+				ImGui::EndPopup();
+			}
+
+			if (open)
 			{
 				func();
 
@@ -151,6 +225,9 @@ namespace Apostle {
 			{
 				func();
 			}
+			
+			if (removeComponent)
+				m_SelectionContext.RemoveComponent<T>();
 		}
 	}
 
