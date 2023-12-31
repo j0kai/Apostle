@@ -17,10 +17,8 @@ namespace Apostle {
 		void OnImGuiRender();
 	private:
 		void DrawEntityNode(Entity entity);
-
 		template<typename T>
-		void DrawComponent(const std::string& name, const std::function<void()>& func);
-
+		void DrawComponent(const std::string& name, const std::function<void()>& func, bool isRemovable = true);
 		void DrawComponents(Entity entity);
 	private:
 		Ref<Scene> m_Context;
