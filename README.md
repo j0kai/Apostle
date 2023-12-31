@@ -29,7 +29,7 @@ Furthermore, due to the way that the project is currently set up, there are a fe
 - Ability to create scripts and easily integrate them into your project(s)
 - An audio system
 
-(NOTE: Most of the above features are not implemented as of yet, but I intend to get most implemented by the end of 2023.)
+(NOTE: Most of the above features are not implemented as of yet, but I intend to get most implemented by the end of 2024.)
 
 # Known Issues
 - As explained in the Getting Started section, there are issues with the includes in some files that are used. Unsure how I could fix this without making things unnecessarily complicated as of right now.
