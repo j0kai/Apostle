@@ -49,6 +49,14 @@ namespace Apostle {
 		{
 			DrawComponents(m_SelectionContext);
 
+			ImGui::Spacing();
+
+			// Calculate position of Add Component button using text size.
+			std::string label = "Add Component";
+			ImVec2 textSize = ImGui::CalcTextSize(label.c_str());
+			ImVec2 size = ImGui::CalcItemSize(ImVec2{0, 0}, textSize.x + GImGui->Style.FramePadding.x * 2.0f, textSize.y + GImGui->Style.FramePadding.y * 2.0f);
+			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x * 0.5f - (size.x * 0.5f));
+
 			if (ImGui::Button("Add Component"))
 				ImGui::OpenPopup("AddComponent");
 			
@@ -80,6 +88,7 @@ namespace Apostle {
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
 		
 		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
 		if (ImGui::IsItemClicked())
 		{
@@ -117,6 +126,8 @@ namespace Apostle {
 
 	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+
 		ImGui::PushID(label.c_str());
 
 		// Set ImGui to use 2 columns
@@ -139,10 +150,12 @@ namespace Apostle {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.3f, 0.35f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+		ImGui::PushFont(io.Fonts->Fonts[0]);
 		if (ImGui::Button("X", buttonSize))
 		{
 			values.x = resetValue;
 		}
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		ImGui::DragFloat("##X", &values.x, 0.1f);
@@ -154,10 +167,12 @@ namespace Apostle {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.8f, 0.35f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
+		ImGui::PushFont(io.Fonts->Fonts[0]);
 		if (ImGui::Button("Y", buttonSize))
 		{
 			values.y = resetValue;
 		}
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		ImGui::DragFloat("##Y", &values.y, 0.1f);
@@ -169,10 +184,12 @@ namespace Apostle {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.3f, 0.9f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+		ImGui::PushFont(io.Fonts->Fonts[0]);
 		if (ImGui::Button("Z", buttonSize))
 		{
 			values.z = resetValue;
 		}
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 		ImGui::SameLine();
 		ImGui::DragFloat("##Z", &values.z, 0.1f);
@@ -187,34 +204,39 @@ namespace Apostle {
 	}
 
 	template<typename T>
-	void SceneHierarchyPanel::DrawComponent(const std::string& name, const std::function<void()>& func)
+	void SceneHierarchyPanel::DrawComponent(const std::string& name, const std::function<void()>& func, bool isRemovable)
 	{
-		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-		
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_FramePadding | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_SpanAvailWidth;
+		auto contentAvailRegion = ImGui::GetContentRegionAvail();
+
 		if (m_SelectionContext.HasComponent<T>())
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+			ImGui::Separator();
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			ImGui::PopStyleVar();
+			ImGui::SameLine(contentAvailRegion.x - lineHeight * 0.5f);
 			
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
-			
-			if (ImGui::Button("+", ImVec2{20, 20}))
+			if (ImGui::Button("...", ImVec2{ lineHeight, lineHeight }))
 			{
 				ImGui::OpenPopup("ComponentSettings");
 			}
-			ImGui::PopStyleVar();
 
 			bool removeComponent = false;
-			if (ImGui::BeginPopup("ComponentSettings"))
+			if (isRemovable)
 			{
-				if (ImGui::MenuItem("Remove Component"))
+				if (ImGui::BeginPopup("ComponentSettings"))
 				{
-					removeComponent = true;
+					if (ImGui::MenuItem("Remove Component"))
+					{
+						removeComponent = true;
+					}
+
+					ImGui::EndPopup();
 				}
-
-				ImGui::EndPopup();
 			}
-
+			
 			if (open)
 			{
 				func();
@@ -240,11 +262,11 @@ namespace Apostle {
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
 			strcpy_s(buffer, sizeof(buffer), tag.c_str());
-			if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 			{
 				tag = std::string(buffer);
 			}
-		});
+		}, false);
 		
 		DrawComponent<TransformComponent>("Transform", [&]() {
 			auto& tc = entity.GetComponent<TransformComponent>();
@@ -259,7 +281,9 @@ namespace Apostle {
 			ImGui::Spacing();
 
 			DrawVec3Control("Scale", tc.Scale, 1.0f);
-		});
+
+			ImGui::Spacing();
+		}, false);
 
 		DrawComponent<CameraComponent>("Camera", [&]() {
 			auto& cameraComponent = entity.GetComponent<CameraComponent>();
