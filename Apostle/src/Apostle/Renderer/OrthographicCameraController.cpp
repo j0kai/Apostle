@@ -20,52 +20,55 @@ namespace Apostle {
 		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraMoveSpeed = 5.0f : m_CameraMoveSpeed = 2.0f;
 		Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) ? m_CameraRotationSpeed = 90.0f : m_CameraRotationSpeed = 40.0f;
 		
-		// Movement Controls
-		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
+		// Check that right mouse button is pressed before any other input is registered.
+		if (Input::IsMouseButtonPressed((int)MouseButtonCodes::AP_MOUSE_BUTTON_RIGHT))
 		{
-			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-		}
-		else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
-		{
-			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-		}
+			// Movement Controls
+			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
+			{
+				m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+				m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			}
+			else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
+			{
+				m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+				m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			}
 
-		if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
-		{
-			m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-			m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
+			{
+				m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+				m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			}
+			else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
+			{
+				m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+				m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			}
+
+			// Rotation Controls
+			if (m_EnableRotation)
+			{
+				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_Q))
+					m_CameraRotation += m_CameraRotationSpeed * ts;
+
+				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_E))
+					m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+				/* The following if/else if statement seems useless
+				at first but it's useful when calculating the
+				difference between two angles */
+				if (m_CameraRotation > 180.0f)
+					m_CameraRotation -= 360.0f;
+				else if (m_CameraRotation <= -180.0f)
+					m_CameraRotation += 360.0f;
+
+				m_Camera.SetRotation(m_CameraRotation);
+			}
 		}
-		else if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
-		{
-			m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-			m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
-		}
-		
-		// Rotation Controls
-		if(m_EnableRotation)
-		{
-			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_Q))
-				m_CameraRotation += m_CameraRotationSpeed * ts;
-
-			if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_E))
-				m_CameraRotation -= m_CameraRotationSpeed * ts;
-
-			/* The following if/else if statement seems useless
-			at first but it's useful when calculating the
-			difference between two angles */
-			if (m_CameraRotation > 180.0f)
-				m_CameraRotation -= 360.0f;
-			else if (m_CameraRotation <= -180.0f)
-				m_CameraRotation += 360.0f;
-
-			m_Camera.SetRotation(m_CameraRotation);
-		}
-
 		m_Camera.SetPosition(m_CameraPosition);
 
-		// m_CameraMoveSpeed = m_ZoomLevel; /* Uncomment this for a linear move speed */
+		m_CameraMoveSpeed = m_ZoomLevel; /* Uncomment for a linear move speed */
 	}
 
 	void OrthographicCameraController::Resize(float width, float height)

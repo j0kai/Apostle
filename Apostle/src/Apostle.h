@@ -22,6 +22,13 @@
 #include "Apostle/Events/MouseEvents.h"
 
 
+/* ------------- ECS ---------------*/
+#include "Apostle/ECS/Scene.h"
+#include "Apostle/ECS/Entity.h"
+#include "Apostle/ECS/ScriptableEntity.h"
+#include "Apostle/ECS/Components.h"
+
+
 /* ----------Renderer---------------*/
 #include "Apostle/Renderer/Renderer.h"
 #include "Apostle/Renderer/Renderer2D.h"

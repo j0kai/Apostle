@@ -13,6 +13,9 @@
     <Filter Include="src\Apostle\Debug">
       <UniqueIdentifier>{AADD495F-16F4-47F5-5F6B-D316CBC0187D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Apostle\ECS">
+      <UniqueIdentifier>{7E6A842C-EAF5-F1F0-F306-75E55F114EF1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Apostle\Events">
       <UniqueIdentifier>{98E50F4C-84C9-D0A1-ED29-CBF4D92CBB23}</UniqueIdentifier>
     </Filter>
@@ -104,6 +107,21 @@
     </ClInclude>
     <ClInclude Include="src\Apostle\Debug\Instrumentor.h">
       <Filter>src\Apostle\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\Components.h">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\Entity.h">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\Scene.h">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\SceneCamera.h">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\ScriptableEntity.h">
+      <Filter>src\Apostle\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Events\ApplicationEvents.h">
       <Filter>src\Apostle\Events</Filter>
@@ -1462,6 +1480,15 @@
     </ClCompile>
     <ClCompile Include="src\Apostle\Core\Log.cpp">
       <Filter>src\Apostle\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\ECS\Entity.cpp">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\ECS\Scene.cpp">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\ECS\SceneCamera.cpp">
+      <Filter>src\Apostle\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp">
       <Filter>src\Apostle\ImGui</Filter>
