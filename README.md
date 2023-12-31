@@ -35,3 +35,8 @@ Furthermore, due to the way that the project is currently set up, there are a fe
 - As explained in the Getting Started section, there are issues with the includes in some files that are used. Unsure how I could fix this without making things unnecessarily complicated as of right now.
 
 - Some key presses are showing up as the wrong keys when printing to the console; generally 'modifier' keys (shift, ctrl, etc.)
+
+# Showcase Images
+Below are images showcasing the editor application:
+
+![devenv_XoGHKzVjZT](https://github.com/j0kai/Apostle/assets/105503076/2b600907-c043-4c99-8c2d-6ddd22fb2c9d)
