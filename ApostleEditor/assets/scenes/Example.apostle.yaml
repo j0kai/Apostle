@@ -4,36 +4,38 @@ Entities:
     TagComponent:
       Tag: Clip-Space Camera
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [-4, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
-      Projection Type: 0
-      Orthographic Near: -1
-      Orthographic Far: 1
-      Orthographic Size: 10
-      Perspective Near: 0.00999999978
-      Perspective Far: 1000
-      Perspective FOV: 0.785398185
+      Camera:
+        ProjectionType: 0
+        OrthographicNear: -1
+        OrthographicFar: 1
+        OrthographicSize: 10
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        PerspectiveFOV: 0.785398185
       Primary: false
-      Fixed Aspect Ratio: false
+      FixedAspectRatio: false
   - Entity: 12837192503751
     TagComponent:
       Tag: Scene Camera
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [2, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     CameraComponent:
-      Projection Type: 0
-      Orthographic Near: -1
-      Orthographic Far: 1
-      Orthographic Size: 10
-      Perspective Near: 0.00999999978
-      Perspective Far: 1000
-      Perspective FOV: 0.785398185
+      Camera:
+        ProjectionType: 0
+        OrthographicNear: -1
+        OrthographicFar: 1
+        OrthographicSize: 10
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        PerspectiveFOV: 0.785398185
       Primary: true
-      Fixed Aspect Ratio: false
+      FixedAspectRatio: false
   - Entity: 12837192503751
     TagComponent:
       Tag: Red Square
