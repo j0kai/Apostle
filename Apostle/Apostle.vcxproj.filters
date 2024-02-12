@@ -120,6 +120,9 @@
     <ClInclude Include="src\Apostle\ECS\SceneCamera.h">
       <Filter>src\Apostle\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Apostle\ECS\SceneSerializer.h">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\Apostle\ECS\ScriptableEntity.h">
       <Filter>src\Apostle\ECS</Filter>
     </ClInclude>
@@ -1488,6 +1491,9 @@
       <Filter>src\Apostle\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\ECS\SceneCamera.cpp">
+      <Filter>src\Apostle\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Apostle\ECS\SceneSerializer.cpp">
       <Filter>src\Apostle\ECS</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\ImGui\ImGuiLayer.cpp">

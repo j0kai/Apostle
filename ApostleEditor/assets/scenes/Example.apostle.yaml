@@ -1,0 +1,54 @@
+Scene: Untitled
+Entities:
+  - Entity: 12837192503751
+    TagComponent:
+      Tag: Clip-Space Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Projection Type: 0
+      Orthographic Near: -1
+      Orthographic Far: 1
+      Orthographic Size: 10
+      Perspective Near: 0.00999999978
+      Perspective Far: 1000
+      Perspective FOV: 0.785398185
+      Primary: false
+      Fixed Aspect Ratio: false
+  - Entity: 12837192503751
+    TagComponent:
+      Tag: Scene Camera
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Projection Type: 0
+      Orthographic Near: -1
+      Orthographic Far: 1
+      Orthographic Size: 10
+      Perspective Near: 0.00999999978
+      Perspective Far: 1000
+      Perspective FOV: 0.785398185
+      Primary: true
+      Fixed Aspect Ratio: false
+  - Entity: 12837192503751
+    TagComponent:
+      Tag: Red Square
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 12837192503751
+    TagComponent:
+      Tag: Square
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 1, 0, 1]

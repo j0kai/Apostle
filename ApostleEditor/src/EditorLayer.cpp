@@ -5,6 +5,8 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
+#include "Apostle\ECS\SceneSerializer.h"
+
 namespace Apostle {
 
 	EditorLayer::EditorLayer()
@@ -78,6 +80,9 @@ namespace Apostle {
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+		SceneSerializer serializer(m_ActiveScene);
+		serializer.Serialize("assets/scenes/Example.apostle.yaml");
 	}
 
 	void EditorLayer::OnDetach()
@@ -118,7 +123,7 @@ namespace Apostle {
 
 	void EditorLayer::OnImGuiRender()
 	{
-
+		// NOTE: Switch this to true to enable dockspace.
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen = true;
 		static bool opt_padding = false;
