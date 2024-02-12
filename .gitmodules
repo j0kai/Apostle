@@ -10,3 +10,6 @@
 [submodule "Apostle/vendor/imgui"]
 	path = Apostle/vendor/imgui
 	url = https://www.github.com/j0kai/imgui
+[submodule "Apostle/vendor/yaml-cpp"]
+	path = Apostle/vendor/yaml-cpp
+	url = https://github.com/j0kai/yaml-cpp.git
