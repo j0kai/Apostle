@@ -18,11 +18,13 @@ IncludeDir["ImGui"] = "Apostle/vendor/imgui"
 IncludeDir["glm"] = "Apostle/vendor/glm"
 IncludeDir["stb_image"] = "Apostle/vendor/stb_image"
 IncludeDir["entt"] = "Apostle/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Apostle/vendor/yaml-cpp/include"
 
 group "Dependencies"
     include "Apostle/vendor/GLFW"
     include "Apostle/vendor/Glad"
     include "Apostle/vendor/imgui"
+    include "Apostle/vendor/yaml-cpp"
 
 group""
 
@@ -61,7 +63,8 @@ project "Apostle"
       "%{IncludeDir.ImGui}",
       "%{IncludeDir.glm}",
       "%{IncludeDir.stb_image}",
-      "%{IncludeDir.entt}"
+      "%{IncludeDir.entt}",
+      "%{IncludeDir.yaml_cpp}"
     }
 
     links
@@ -69,6 +72,7 @@ project "Apostle"
       "GLFW",
       "Glad",
       "ImGui",
+      "yaml-cpp",
       "opengl32.lib"
     }
 
@@ -85,7 +89,8 @@ project "Apostle"
         "AP_PLATFORM_WINDOWS",
         "AP_BUILD_DLL",
         "GLFW_INCLUDE_NONE",
-        "IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
+        "IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
+        "YAML_CPP_STATIC_DEFINE"
       }
       
       

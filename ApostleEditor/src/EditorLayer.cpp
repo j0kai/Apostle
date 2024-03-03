@@ -5,6 +5,10 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
+#include "Apostle\ECS\SceneSerializer.h"
+
+#include "Apostle\Utils\PlatformUtils.h"
+
 namespace Apostle {
 
 	EditorLayer::EditorLayer()
@@ -24,7 +28,7 @@ namespace Apostle {
 		m_Framebuffer = Framebuffer::Create(framebufferSpecs);
 
 		m_ActiveScene = CreateRef<Scene>();
-
+#if 0
 		auto square = m_ActiveScene->CreateEntity("Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
@@ -76,7 +80,7 @@ namespace Apostle {
 
 		m_SceneCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
+#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -118,7 +122,7 @@ namespace Apostle {
 
 	void EditorLayer::OnImGuiRender()
 	{
-
+		// NOTE: Switch this to true to enable dockspace.
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen = true;
 		static bool opt_padding = false;
@@ -168,7 +172,7 @@ namespace Apostle {
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
 		float minWindowWidth = style.WindowMinSize.x;
-		style.WindowMinSize.x = 450.0f;
+		style.WindowMinSize.x = 175.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
@@ -181,7 +185,17 @@ namespace Apostle {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Quit")) Apostle::Application::Get().Close();
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
+				
+				
+				if (ImGui::MenuItem("Exit")) Apostle::Application::Get().Close();
 				ImGui::EndMenu();
 			}
 
@@ -226,5 +240,77 @@ namespace Apostle {
 	void EditorLayer::OnEvent(Apostle::Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(AP_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_CONTROL) || Input::IsKeyPressed((int)KeyCodes::AP_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) || Input::IsKeyPressed((int)KeyCodes::AP_KEY_RIGHT_SHIFT);
+		switch (e.GetKeycode())
+		{
+			case (int)KeyCodes::AP_KEY_N:
+			{
+				if (control)
+					NewScene();
+
+				break;
+			}
+
+			case (int)KeyCodes::AP_KEY_O:
+			{
+				if (control)
+					OpenScene();
+
+				break;
+			}
+
+			case (int)KeyCodes::AP_KEY_S:
+			{
+				if (control && shift)
+					SaveSceneAs();
+
+				break;
+			}
+		}
+	}
+
+	void Apostle::EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Apostle Scene (*.apostle)\0*.apostle\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Apostle Scene (*.apostle)\0*.apostle\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath + ".apostle");
+		}
 	}
 }
+
+	

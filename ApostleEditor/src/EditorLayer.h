@@ -19,6 +19,12 @@ namespace Apostle {
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& e) override;
 	private:
+		bool OnKeyPressed(KeyPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+	private:
 		// temp
 		Ref<Shader> m_FlatColorShader;
 		Ref<VertexArray> m_SquareVA;
