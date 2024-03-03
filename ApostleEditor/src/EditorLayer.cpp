@@ -186,35 +186,13 @@ namespace Apostle {
 			if (ImGui::BeginMenu("File"))
 			{
 				if (ImGui::MenuItem("New", "Ctrl+N"))
-				{
-					m_ActiveScene = CreateRef<Scene>();
-					m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-					m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-				}
+					NewScene();
 
 				if (ImGui::MenuItem("Open...", "Ctrl+O"))
-				{
-					std::string filepath = FileDialogs::OpenFile("Apostle Scene (*.apostle)\0*.apostle\0");
-					if (!filepath.empty())
-					{
-						m_ActiveScene = CreateRef<Scene>();
-						m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-						m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-						
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.Deserialize(filepath);
-					}
-				}
+					OpenScene();
 
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
-				{
-					std::string filepath = FileDialogs::SaveFile("Apostle Scene (*.apostle)\0*.apostle\0");
-					if (!filepath.empty())
-					{
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.Serialize(filepath + ".apostle");
-					}
-				}
+					SaveSceneAs();
 				
 				
 				if (ImGui::MenuItem("Exit")) Apostle::Application::Get().Close();
@@ -262,5 +240,77 @@ namespace Apostle {
 	void EditorLayer::OnEvent(Apostle::Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(AP_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_CONTROL) || Input::IsKeyPressed((int)KeyCodes::AP_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed((int)KeyCodes::AP_KEY_LEFT_SHIFT) || Input::IsKeyPressed((int)KeyCodes::AP_KEY_RIGHT_SHIFT);
+		switch (e.GetKeycode())
+		{
+			case (int)KeyCodes::AP_KEY_N:
+			{
+				if (control)
+					NewScene();
+
+				break;
+			}
+
+			case (int)KeyCodes::AP_KEY_O:
+			{
+				if (control)
+					OpenScene();
+
+				break;
+			}
+
+			case (int)KeyCodes::AP_KEY_S:
+			{
+				if (control && shift)
+					SaveSceneAs();
+
+				break;
+			}
+		}
+	}
+
+	void Apostle::EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Apostle Scene (*.apostle)\0*.apostle\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Apostle Scene (*.apostle)\0*.apostle\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath + ".apostle");
+		}
 	}
 }
+
+	
