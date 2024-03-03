@@ -7,6 +7,8 @@
 
 #include "Apostle\ECS\SceneSerializer.h"
 
+#include "Apostle\Utils\PlatformUtils.h"
+
 namespace Apostle {
 
 	EditorLayer::EditorLayer()
@@ -170,7 +172,7 @@ namespace Apostle {
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
 		float minWindowWidth = style.WindowMinSize.x;
-		style.WindowMinSize.x = 450.0f;
+		style.WindowMinSize.x = 175.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
@@ -183,20 +185,39 @@ namespace Apostle {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Serialize"))
+				if (ImGui::MenuItem("New", "Ctrl+N"))
 				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/Example.apostle.yaml");
+					m_ActiveScene = CreateRef<Scene>();
+					m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+					m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 				}
 
-				if (ImGui::MenuItem("Deserialize"))
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
 				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/Example.apostle.yaml");
+					std::string filepath = FileDialogs::OpenFile("Apostle Scene (*.apostle)\0*.apostle\0");
+					if (!filepath.empty())
+					{
+						m_ActiveScene = CreateRef<Scene>();
+						m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+						m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+						
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.Deserialize("assets/scenes/Example.apostle.yaml");
+					}
+				}
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+				{
+					std::string filepath = FileDialogs::SaveFile("Apostle Scene (*.apostle)\0*.apostle\0");
+					if (!filepath.empty())
+					{
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.Serialize("assets/scenes/Example.apostle.yaml");
+					}
 				}
 				
 				
-				if (ImGui::MenuItem("Quit")) Apostle::Application::Get().Close();
+				if (ImGui::MenuItem("Exit")) Apostle::Application::Get().Close();
 				ImGui::EndMenu();
 			}
 
