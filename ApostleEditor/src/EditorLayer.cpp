@@ -202,7 +202,7 @@ namespace Apostle {
 						m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 						
 						SceneSerializer serializer(m_ActiveScene);
-						serializer.Deserialize("assets/scenes/Example.apostle.yaml");
+						serializer.Deserialize(filepath);
 					}
 				}
 
@@ -212,7 +212,7 @@ namespace Apostle {
 					if (!filepath.empty())
 					{
 						SceneSerializer serializer(m_ActiveScene);
-						serializer.Serialize("assets/scenes/Example.apostle.yaml");
+						serializer.Serialize(filepath + ".apostle");
 					}
 				}
 				
