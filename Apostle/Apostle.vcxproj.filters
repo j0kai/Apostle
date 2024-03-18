@@ -1480,6 +1480,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Apostle\Math\Math.h" />
+    <ClInclude Include="src\Apostle\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\APpch.cpp">
@@ -1594,5 +1595,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Apostle\Math\Math.cpp" />
+    <ClCompile Include="src\Apostle\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>
