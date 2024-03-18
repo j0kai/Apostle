@@ -5,7 +5,7 @@ Entities:
       Tag: Top
     TransformComponent:
       Translation: [0, 0.5, 0]
-      Rotation: [1.57079637, 0, 0.785398185]
+      Rotation: [1.57079637, 0.785398185, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [0.795157909, 0, 0.810810804, 1]
@@ -13,8 +13,8 @@ Entities:
     TagComponent:
       Tag: Right
     TransformComponent:
-      Translation: [0.349999994, 0, 0.349999994]
-      Rotation: [0, 0.785398185, 0]
+      Translation: [0.35340187, -2.29616077e-07, 0.35340175]
+      Rotation: [0, 0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [0.65637064, 0.00253425376, 0.62355274, 1]
