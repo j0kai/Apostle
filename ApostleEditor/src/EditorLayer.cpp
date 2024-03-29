@@ -34,59 +34,6 @@ namespace Apostle {
 
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-#if 0
-		auto square = m_ActiveScene->CreateEntity("Square");
-		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
-
-		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
-
-		m_SquareEntity = square;
-
-		m_SceneCamera = m_ActiveScene->CreateEntity("Scene Camera");
-		m_SceneCamera.AddComponent<CameraComponent>();
-
-		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Camera");
-		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
-		cc.Primary = false;
-
-		// Native scripting test
-		class CameraController : public ScriptableEntity
-		{
-		public:
-			void OnCreate()
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				translation.x = rand() % 10 - 5.0f;
-			}
-
-			void OnDestroy()
-			{
-			}
-
-			void OnUpdate(Timestep ts)
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				float speed = 5.0f;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
-					translation.y += speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
-					translation.x -= speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
-					translation.y -= speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
-					translation.x += speed * ts;
-			}
-
-		};
-
-		m_SceneCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -297,6 +244,15 @@ namespace Apostle {
 			}
 		}
 		
+		// Hide cursor when editor camera is being controlled
+		if (m_ViewportFocused && m_EditorCamera.IsBeingControlled())
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+		}
+		else
+		{
+			ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+		}
 		
 		ImGui::End(); // Scene Viewport END
 		ImGui::PopStyleVar();

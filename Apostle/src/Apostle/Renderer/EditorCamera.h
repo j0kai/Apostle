@@ -32,6 +32,8 @@ namespace Apostle {
 		float GetPitch() const { return m_Pitch; }
 		float GetYaw() const { return m_Yaw; }
 
+		bool IsBeingControlled() const { return m_ControlActive; }
+
 	private:
 		void UpdateProjection();
 		void UpdateView();
@@ -41,12 +43,6 @@ namespace Apostle {
 		void MousePan(const glm::vec2& delta);
 		void MouseTilt(const glm::vec2& delta);
 		void MouseZoom(float delta);
-
-		float PanSpeed() const;
-		float TiltSpeed() const;
-		float MoveSpeed() const;
-		float RotationSpeed() const;
-		float ZoomSpeed() const;
 	
 	private:
 		float m_FOV = 45.0f, m_AspectRatio = 1.778f, m_NearClip = 0.1f, m_FarClip = 1000.0f;
@@ -57,11 +53,17 @@ namespace Apostle {
 		glm::vec3 m_CameraUp = { 0.0f, 1.0f, 0.0f };
 
 		glm::vec2 m_InitialMousePosition;
+		float m_MouseSensitivity = 8.0f;
+		float m_MovementSpeed = 2.0f;
+		float m_ZoomSpeed = 10.0f;
 
 		float m_Distance = 10.0f;
-		float m_Pitch = 0.0f, m_Yaw = 0.0f;
+		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 
 		float m_ViewportWidth = 1280.0f, m_ViewportHeight = 720.0f;
+
+		bool m_ControlActive = false;
+		bool m_RightMouseFirstActive = true;
 	};
 
 
