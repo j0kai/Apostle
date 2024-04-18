@@ -14,6 +14,8 @@ namespace Apostle {
 
 		static bool IsMouseButtonPressed(int button);
 		static std::pair<float, float> GetMousePosition();
+		static void SetMousePosition(float posX, float posY);
+		static void SetCursorInputMode(int value);
 		static float GetMouseX();
 		static float GetMouseY();
 	};

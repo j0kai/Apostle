@@ -64,6 +64,7 @@ namespace Apostle {
 
 		bool m_ControlActive = false;
 		bool m_RightMouseFirstActive = true;
+		glm::vec2 m_LockedMousePosition = { 0.0f, 0.0f };
 	};
 
 

@@ -9,6 +9,8 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/quaternion.hpp"
 
+#include "GLFW/glfw3.h"
+
 namespace Apostle {
 
 	EditorCamera::EditorCamera(float fov, float aspectRatio, float nearClip, float farClip)
@@ -22,19 +24,20 @@ namespace Apostle {
 		if (Input::IsMouseButtonPressed((int)MouseButtonCodes::AP_MOUSE_BUTTON_RIGHT))
 		{
 			m_ControlActive = true;
-			
 			// Handle rotation from mouse inputs
 			// Stops camera jumping around when first clicking right mouse.
 			if (m_RightMouseFirstActive)
 			{
 				m_InitialMousePosition = { Input::GetMouseX(), Input::GetMouseY() };
 				m_RightMouseFirstActive = false;
+				Input::SetCursorInputMode(GLFW_CURSOR_DISABLED);
 			}
+
 
 			const glm::vec2& mouse{ Input::GetMouseX(), Input::GetMouseY() };
 			glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.003f;
 			m_InitialMousePosition = mouse;
-
+			
 			MousePan(delta);
 			MouseTilt(delta);
 
@@ -62,6 +65,7 @@ namespace Apostle {
 		{
 			m_ControlActive = false;
 			m_RightMouseFirstActive = true;
+			Input::SetCursorInputMode(GLFW_CURSOR_NORMAL);
 		}
 
 		UpdateView();

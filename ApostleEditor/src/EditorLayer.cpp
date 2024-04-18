@@ -244,16 +244,6 @@ namespace Apostle {
 			}
 		}
 		
-		// Hide cursor when editor camera is being controlled
-		if (m_ViewportFocused && m_EditorCamera.IsBeingControlled())
-		{
-			ImGui::SetMouseCursor(ImGuiMouseCursor_None);
-		}
-		else
-		{
-			ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
-		}
-		
 		ImGui::End(); // Scene Viewport END
 		ImGui::PopStyleVar();
 
