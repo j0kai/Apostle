@@ -31,59 +31,9 @@ namespace Apostle {
 		m_Framebuffer = Framebuffer::Create(framebufferSpecs);
 
 		m_ActiveScene = CreateRef<Scene>();
-#if 0
-		auto square = m_ActiveScene->CreateEntity("Square");
-		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
-		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-		m_SquareEntity = square;
-
-		m_SceneCamera = m_ActiveScene->CreateEntity("Scene Camera");
-		m_SceneCamera.AddComponent<CameraComponent>();
-
-		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Camera");
-		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
-		cc.Primary = false;
-
-		// Native scripting test
-		class CameraController : public ScriptableEntity
-		{
-		public:
-			void OnCreate()
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				translation.x = rand() % 10 - 5.0f;
-			}
-
-			void OnDestroy()
-			{
-			}
-
-			void OnUpdate(Timestep ts)
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				float speed = 5.0f;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_W))
-					translation.y += speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_A))
-					translation.x -= speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_S))
-					translation.y -= speed * ts;
-
-				if (Input::IsKeyPressed((int)KeyCodes::AP_KEY_D))
-					translation.x += speed * ts;
-			}
-
-		};
-
-		m_SceneCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
@@ -103,13 +53,16 @@ namespace Apostle {
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_CameraController.Resize(m_ViewportSize.x, m_ViewportSize.y);
-
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		// Update
 		if (m_ViewportFocused)
+		{
 			m_CameraController.OnUpdate(ts);
+			m_EditorCamera.OnUpdate(ts);
+		}
 
 		// Render
 		Apostle::Renderer2D::ResetStats();
@@ -118,7 +71,7 @@ namespace Apostle {
 		Apostle::RenderCommand::Clear();
 		
 		// Update Scene
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		m_Framebuffer->Unbind();
 	}
@@ -247,10 +200,18 @@ namespace Apostle {
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
 			// Camera
+
+			// Runtime camera from entity
+			/*
 			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
 			const glm::mat4& cameraProjection = camera.GetProjection();
 			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			*/
+
+			// Editor Camera
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
 
 			// Entity Transform
 			auto& tc = selectedEntity.GetComponent<TransformComponent>();
@@ -283,7 +244,6 @@ namespace Apostle {
 			}
 		}
 		
-		
 		ImGui::End(); // Scene Viewport END
 		ImGui::PopStyleVar();
 
@@ -293,6 +253,7 @@ namespace Apostle {
 	void EditorLayer::OnEvent(Apostle::Event& e)
 	{
 		m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(AP_BIND_EVENT_FN(EditorLayer::OnKeyPressed));

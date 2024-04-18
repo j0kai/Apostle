@@ -1,8 +1,8 @@
 #pragma once
 
-#include "entt/entt.hpp"
-
+#include "Apostle/Renderer/EditorCamera.h"
 #include "Apostle/Core/Timestep.h"
+#include "entt/entt.hpp"
 
 namespace Apostle {
 
@@ -17,7 +17,8 @@ namespace Apostle {
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateRuntime(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 		Entity GetPrimaryCameraEntity();

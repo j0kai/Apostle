@@ -30,6 +30,22 @@ namespace Apostle {
         return { (float)posX, (float)posY };
     }
 
+    void Input::SetMousePosition(float posX, float posY)
+    {
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        glfwSetCursorPos(window, posX, posY);
+    }
+
+    void Input::SetCursorInputMode(int value)
+    {
+        // CURSOR MODES:
+        // 1 = Normal
+        // 2 = Hidden
+        // 3 = Disabled
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        glfwSetInputMode(window, GLFW_CURSOR, value);
+    }
+
     float Input::GetMouseX()
     {
         auto [x, y] = GetMousePosition();
