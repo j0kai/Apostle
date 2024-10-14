@@ -7,16 +7,9 @@ Visual Studio 2022 is recommended (however, VS2017 and onwards ___should___ work
 
 Furthermore, due to the way that the project is currently set up, there are a few steps you need to follow to get the project up and running:
 
-1) Navigate to ___Apostle/vendor/imgui/backends___ and find the following two files:
+1) Open the 'scripts' folder and run ___Win-GenerateProjects.bat___ and then open Apostle.sln
 
-	  imgui_impl_opengl3.cpp - add ___#include "APpch.h"___ and ___#include <glad/glad.h>___ to the top of the include list
-	  imgui_impl_glfw.cpp - add ___#include "APpch.h"___ to the top of the include list
-
-2) Navigate to ___Apostle/vendor/GLFW/premake5.lua___ and open it, then change the staticruntime from "off" to "on".
-
-3) Open the 'scripts' folder and run ___Win-GenerateProjects.bat___ and then open Apostle.sln
-
-4) And with that you're ready to go! (NOTE: Hit F5 to see the example.)
+2) And with that you're ready to go! (NOTE: Hit F5 to see the example.)
 
 
 # Major Features
@@ -32,7 +25,6 @@ Furthermore, due to the way that the project is currently set up, there are a fe
 (NOTE: Most of the above features are not implemented as of yet, but I intend to get most implemented by the end of 2024.)
 
 # Known Issues
-- As explained in the Getting Started section, there are issues with the includes in some files that are used. Unsure how I could fix this without making things unnecessarily complicated as of right now.
 
 - Some key presses are showing up as the wrong keys when printing to the console; generally 'modifier' keys (shift, ctrl, etc.)
 
