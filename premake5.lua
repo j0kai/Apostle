@@ -19,6 +19,7 @@ IncludeDir["glm"] = "Apostle/vendor/glm"
 IncludeDir["stb_image"] = "Apostle/vendor/stb_image"
 IncludeDir["entt"] = "Apostle/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Apostle/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "Apostle/vendor/ImGuizmo"
 
 group "Dependencies"
     include "Apostle/vendor/GLFW"
@@ -51,7 +52,9 @@ project "Apostle"
       "%{prj.name}/vendor/stb_image/**.h",
       "%{prj.name}/vendor/stb_image/**.cpp",
       "%{prj.name}/vendor/glm/glm/**.hpp",
-      "%{prj.name}/vendor/glm/glm/**.inl"
+      "%{prj.name}/vendor/glm/glm/**.inl",
+      "%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+      "%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
     }
 
     includedirs
@@ -64,7 +67,8 @@ project "Apostle"
       "%{IncludeDir.glm}",
       "%{IncludeDir.stb_image}",
       "%{IncludeDir.entt}",
-      "%{IncludeDir.yaml_cpp}"
+      "%{IncludeDir.yaml_cpp}",
+      "%{IncludeDir.ImGuizmo}"
     }
 
     links
@@ -77,9 +81,12 @@ project "Apostle"
     }
 
     defines
-      {
-        "_CRT_SECURE_NO_WARNINGS"
-      }
+    {
+      "_CRT_SECURE_NO_WARNINGS"
+    }
+
+    filter "files:Apostle/vendor/ImGuizmo/**.cpp"
+      flags { "NoPCH" }
     
     filter "system:windows"
       systemversion "latest"
@@ -132,7 +139,8 @@ project "ApostleEditor"
       "Apostle/src",
       "%{IncludeDir.ImGui}",
       "%{IncludeDir.glm}",
-      "%{IncludeDir.entt}"
+      "%{IncludeDir.entt}",
+      "%{IncludeDir.ImGuizmo}"
     }
 
     links

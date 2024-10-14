@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Apostle.h"
-
 #include "Panels\SceneHierarchyPanel.h"
+
+#include "Apostle\Renderer\EditorCamera.h"
 
 namespace Apostle {
 
@@ -39,12 +40,16 @@ namespace Apostle {
 		Entity m_SecondCamera;
 		bool m_PrimaryCamera = true;
 
+		EditorCamera m_EditorCamera;
+
 		glm::vec2 m_ViewportSize;
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 
 		OrthographicCameraController m_CameraController;
 
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+
+		int m_GizmoType = -1; 
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;

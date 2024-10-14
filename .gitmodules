@@ -13,3 +13,6 @@
 [submodule "Apostle/vendor/yaml-cpp"]
 	path = Apostle/vendor/yaml-cpp
 	url = https://github.com/j0kai/yaml-cpp.git
+[submodule "Apostle/vendor/ImGuizmo"]
+	path = Apostle/vendor/ImGuizmo
+	url = https://github.com/j0kai/ImGuizmo.git
