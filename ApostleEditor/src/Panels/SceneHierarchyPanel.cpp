@@ -28,14 +28,14 @@ namespace Apostle {
 			DrawEntityNode(entity);
 		});
 
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+		if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 		{
 			m_SelectionContext = {};
 		}
-
+		
 		// Right-click in blank space
 		if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
-		{
+		{	
 			if (ImGui::MenuItem("Create Empty Entity"))
 				m_Context->CreateEntity("Empty Entity");
 

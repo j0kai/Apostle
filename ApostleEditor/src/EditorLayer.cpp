@@ -181,7 +181,11 @@ namespace Apostle {
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
- 
+		if(ImGui::IsMouseDown(ImGuiMouseButton_Right) && m_ViewportHovered && !m_ViewportFocused)
+		{
+			ImGui::SetWindowFocus();
+		}
+
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
