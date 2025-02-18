@@ -19,7 +19,7 @@ namespace Apostle {
 		}
 	};
 
-	class APOSTLE_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

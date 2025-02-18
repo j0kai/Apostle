@@ -94,7 +94,6 @@ project "Apostle"
       defines
       {
         "AP_PLATFORM_WINDOWS",
-        "AP_BUILD_DLL",
         "GLFW_INCLUDE_NONE",
         "IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
         "YAML_CPP_STATIC_DEFINE"

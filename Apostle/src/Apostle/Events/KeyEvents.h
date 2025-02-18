@@ -5,7 +5,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeycode() const { return m_Keycode; }
@@ -19,7 +19,7 @@ namespace Apostle {
 		int m_Keycode;
 	};
 
-	class APOSTLE_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
@@ -43,7 +43,7 @@ namespace Apostle {
 		int m_RepeatCount;
 	};
 
-	class APOSTLE_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -62,7 +62,7 @@ namespace Apostle {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class APOSTLE_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

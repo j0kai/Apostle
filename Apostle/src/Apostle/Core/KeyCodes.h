@@ -3,7 +3,7 @@
 #include "APpch.h"
 #include "Apostle/Core/Core.h"
 
-enum class APOSTLE_API KeyCodes
+enum class KeyCodes
 {
 	// From glfw3.h
 	AP_KEY_SPACE = 32,

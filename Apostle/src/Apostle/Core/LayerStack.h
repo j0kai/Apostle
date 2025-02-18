@@ -7,7 +7,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack() = default;

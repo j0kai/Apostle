@@ -8,7 +8,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API Log
+	class Log
 	{
 	public: 
 		static void Init();

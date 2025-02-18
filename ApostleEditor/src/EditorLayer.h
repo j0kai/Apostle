@@ -47,7 +47,7 @@ namespace Apostle {
 
 		OrthographicCameraController m_CameraController;
 
-		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+		glm::vec4 m_SquareColor { 0.2f, 0.3f, 0.8f, 1.0f };
 
 		int m_GizmoType = -1; 
 
