@@ -3,7 +3,7 @@
 #include "APpch.h"
 #include "Apostle/Core/Core.h"
 
-enum class APOSTLE_API MouseButtonCodes
+enum class MouseButtonCodes
 {
 	AP_MOUSE_BUTTON_1       =  0,
 	AP_MOUSE_BUTTON_2       =  1,

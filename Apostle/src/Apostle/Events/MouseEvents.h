@@ -5,7 +5,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -30,7 +30,7 @@ namespace Apostle {
 		float m_MousePosX, m_MousePosY;
 	};
 
-	class APOSTLE_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float offsetX, float offsetY)
@@ -55,7 +55,7 @@ namespace Apostle {
 		float m_ScrollOffsetX, m_ScrollOffsetY;
 	};
 
-	class APOSTLE_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		inline int GetMouseButton() const { return m_MouseButton; }
@@ -68,7 +68,7 @@ namespace Apostle {
 		int m_MouseButton;
 	};
 
-	class APOSTLE_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -85,7 +85,7 @@ namespace Apostle {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class APOSTLE_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

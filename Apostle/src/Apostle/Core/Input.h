@@ -5,7 +5,7 @@
 
 namespace Apostle {
 
-	class APOSTLE_API Input
+	class Input
 	{
 	public:
 		virtual ~Input() = default;

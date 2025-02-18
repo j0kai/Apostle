@@ -143,6 +143,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Apostle\Core\PlatformDetection.h" />
     <ClInclude Include="src\APpch.h" />
     <ClInclude Include="src\Apostle.h" />
     <ClInclude Include="src\Apostle\Core\Application.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="vendor\glm\glm\detail\_swizzle_func.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_vectorize.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\compute_common.hpp" />
+    <ClInclude Include="vendor\glm\glm\detail\compute_vector_decl.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\compute_vector_relational.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\func_common.inl" />
     <ClInclude Include="vendor\glm\glm\detail\func_common_simd.inl" />
@@ -256,7 +258,7 @@
     <ClInclude Include="vendor\glm\glm\detail\type_vec3.inl" />
     <ClInclude Include="vendor\glm\glm\detail\type_vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\type_vec4.inl" />
-    <ClInclude Include="vendor\glm\glm\detail\type_vec4_simd.inl" />
+    <ClInclude Include="vendor\glm\glm\detail\type_vec_simd.inl" />
     <ClInclude Include="vendor\glm\glm\exponential.hpp" />
     <ClInclude Include="vendor\glm\glm\ext.hpp" />
     <ClInclude Include="vendor\glm\glm\ext\_matrix_vectorize.hpp" />
@@ -505,7 +507,7 @@
     <ClInclude Include="vendor\glm\glm\gtx\fast_square_root.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\fast_trigonometry.hpp" />
     <ClInclude Include="vendor\glm\glm\gtx\fast_trigonometry.inl" />
-    <ClInclude Include="vendor\glm\glm\gtx\float_notmalize.inl" />
+    <ClInclude Include="vendor\glm\glm\gtx\float_normalize.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\functions.hpp" />
     <ClInclude Include="vendor\glm\glm\gtx\functions.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\gradient_paint.hpp" />
@@ -547,7 +549,6 @@
     <ClInclude Include="vendor\glm\glm\gtx\normalize_dot.hpp" />
     <ClInclude Include="vendor\glm\glm\gtx\normalize_dot.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\number_precision.hpp" />
-    <ClInclude Include="vendor\glm\glm\gtx\number_precision.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\optimum_pow.hpp" />
     <ClInclude Include="vendor\glm\glm\gtx\optimum_pow.inl" />
     <ClInclude Include="vendor\glm\glm\gtx\orthonormalize.hpp" />
