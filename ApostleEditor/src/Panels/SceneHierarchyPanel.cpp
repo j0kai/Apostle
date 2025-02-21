@@ -214,7 +214,6 @@ namespace Apostle {
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-			ImGui::Separator();
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
 			ImGui::PopStyleVar();
 			ImGui::SameLine(contentAvailRegion.x - lineHeight * 0.5f);
@@ -243,10 +242,6 @@ namespace Apostle {
 				func();
 
 				ImGui::TreePop();
-			}
-			else
-			{
-				func();
 			}
 			
 			if (removeComponent)
