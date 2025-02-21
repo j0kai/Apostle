@@ -53,7 +53,7 @@ namespace Apostle {
 		glm::vec3 m_CameraUp = { 0.0f, 1.0f, 0.0f };
 
 		glm::vec2 m_InitialMousePosition;
-		float m_MouseSensitivity = 8.0f;
+		float m_MouseSensitivity = 15.0f;
 		float m_MovementSpeed = 2.0f;
 		float m_ZoomSpeed = 10.0f;
 
