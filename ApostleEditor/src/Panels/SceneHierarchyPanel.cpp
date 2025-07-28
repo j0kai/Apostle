@@ -374,7 +374,7 @@ namespace Apostle {
 			bool removeComponent = false;
 			if (isRemovable)
 			{
-				if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight) || ImGui::BeginPopup("ComponentSettings"))
+				if (ImGui::BeginPopupContextWindow() || ImGui::BeginPopup("ComponentSettings"))
 				{
 					if (ImGui::MenuItem("Remove Component"))
 					{
