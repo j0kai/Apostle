@@ -44,7 +44,7 @@ namespace Apostle {
 
 		ImGui::End();
 
-		ImGui::Begin("Inspector");
+		ImGui::Begin("Details");
 
 		if (m_SelectionContext)
 		{
@@ -374,7 +374,7 @@ namespace Apostle {
 			bool removeComponent = false;
 			if (isRemovable)
 			{
-				if (ImGui::BeginPopup("ComponentSettings"))
+				if (ImGui::BeginPopupContextWindow(0, ImGuiPopupFlags_MouseButtonRight) || ImGui::BeginPopup("ComponentSettings"))
 				{
 					if (ImGui::MenuItem("Remove Component"))
 					{
