@@ -104,7 +104,7 @@ namespace Apostle {
 		// Right-click on entity
 		// TODO: Figure out a way to generate unique IDs for each entity
 		// instead of using tag.c_str() - currently doesn't work if multiple 
-		// entities have the same tag.
+		// entities have the same name.
 		bool entityDeleted = false;
 		if (ImGui::BeginPopupContextItem(tag.c_str()))
 		{
@@ -360,6 +360,23 @@ namespace Apostle {
 
 		if (m_SelectionContext.HasComponent<T>())
 		{	
+			if (typeid(T) == typeid(TagComponent))
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 3 });
+				ImGui::Text("Name");
+				ImGui::SameLine(60.0f);
+				ImGui::PopStyleVar();
+
+				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 2 });
+				func();
+				ImGui::PopStyleVar();
+				
+				ImGui::Spacing();
+
+				return;
+			}
+			
+			
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
@@ -406,7 +423,7 @@ namespace Apostle {
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
 			strcpy_s(buffer, sizeof(buffer), tag.c_str());
-			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer), ImGuiInputTextFlags_AutoSelectAll))
 			{
 				tag = std::string(buffer);
 			}
