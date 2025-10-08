@@ -1,7 +1,10 @@
 #pragma once
 
-#include "entt/entt.hpp"
+#include "Apostle/Core/UUID.h"
 #include "Scene.h"
+#include "Components.h"
+
+#include "entt/entt.hpp"
 
 namespace Apostle {
 
@@ -47,6 +50,8 @@ namespace Apostle {
 		operator entt::entity() { return m_EntityHandle; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
 		
+		UUID GetUUID() { return GetComponent<IDComponent>().ID; }
+
 		bool operator==(const Entity& other) const 
 		{ 
 			return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene;

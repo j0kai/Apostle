@@ -1,15 +1,26 @@
 #pragma once
 
+#include "SceneCamera.h"
+#include "Apostle/Core/UUID.h"
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "SceneCamera.h"
-#include "ScriptableEntity.h"
 
 namespace Apostle {
+
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+		IDComponent(uint64_t uuid)
+			: ID(uuid) {}
+	};
 
 	struct TransformComponent
 	{
@@ -65,6 +76,8 @@ namespace Apostle {
 
 	};
 
+	// Forward Declaration (to avoid recursive include loop)
+	class ScriptableEntity;
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;
