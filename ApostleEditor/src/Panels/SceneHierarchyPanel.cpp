@@ -44,23 +44,28 @@ namespace Apostle {
 
 		ImGui::End();
 
-		ImGui::Begin("Inspector");
+		ImGui::Begin("Details");
 
 		if (m_SelectionContext)
 		{
 			DrawComponents(m_SelectionContext);
 
-			ImGui::Spacing();
+			ImGui::Dummy(ImVec2{ 0.0f, 10.0f });
 
 			// Calculate position of Add Component button using text size.
 			std::string label = "Add Component";
 			ImVec2 textSize = ImGui::CalcTextSize(label.c_str());
+			ImVec2 padding { 75.0f, GImGui->Style.FramePadding.y };
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, padding);
 			ImVec2 size = ImGui::CalcItemSize(ImVec2{0, 0}, textSize.x + GImGui->Style.FramePadding.x * 2.0f, textSize.y + GImGui->Style.FramePadding.y * 2.0f);
 			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x * 0.5f - (size.x * 0.5f));
-
 			if (ImGui::Button("Add Component"))
+			{
 				ImGui::OpenPopup("AddComponent");
+			}
+			ImGui::PopStyleVar();
 			
+			// Handles what is shown in the popup menu.
 			if(ImGui::BeginPopup("AddComponent"))
 			{
 				if (ImGui::MenuItem("Camera"))
@@ -99,7 +104,7 @@ namespace Apostle {
 		// Right-click on entity
 		// TODO: Figure out a way to generate unique IDs for each entity
 		// instead of using tag.c_str() - currently doesn't work if multiple 
-		// entities have the same tag.
+		// entities have the same name.
 		bool entityDeleted = false;
 		if (ImGui::BeginPopupContextItem(tag.c_str()))
 		{
@@ -125,81 +130,224 @@ namespace Apostle {
 		}
 	}
 
-	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f)
+	/* Functions to draw ImGui widgets w/ the label on the left using tables */
+	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 
 		ImGui::PushID(label.c_str());
 
-		// Set ImGui to use 2 columns
-		ImGui::Columns(2);
-
-		// Label Column
-		ImGui::SetColumnWidth(0, columnWidth);
-		ImGui::Text(label.c_str());
-
-		ImGui::NextColumn();
-
-		// Values Column
-		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 1, 0 });
-
-		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize{ lineHeight + 3.0f, lineHeight };
-
-		// X Value
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.3f, 0.35f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushFont(io.Fonts->Fonts[0]);
-		if (ImGui::Button("X", buttonSize))
+		std::string name = "##Vec3Control" + label;
+		if (ImGui::BeginTable(name.c_str(), 2, ImGuiTableFlags_SizingStretchSame))
 		{
-			values.x = resetValue;
+			ImGui::TableSetupColumn("AAA", ImGuiTableColumnFlags_WidthStretch, 1);
+			ImGui::TableSetupColumn("BBB", ImGuiTableColumnFlags_WidthStretch, 2);
+
+			for (int row = 0; row < 1; ++row)
+			{
+				ImGui::TableNextRow();
+				for (int col = 0; col < 2; ++col)
+				{
+					ImGui::TableSetColumnIndex(col);
+
+					if (col == 0)
+					{
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text(label.c_str());
+					}
+					else
+					{
+						ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+						ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 1, 0 });
+
+						float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+						ImVec2 buttonSize{ lineHeight + 3.0f, lineHeight };
+
+						// X Value
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.3f, 0.35f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+						ImGui::PushFont(io.Fonts->Fonts[0]);
+						if (ImGui::Button("X", buttonSize))
+						{
+							values.x = resetValue;
+						}
+						ImGui::PopFont();
+						ImGui::PopStyleColor(3);
+						ImGui::SameLine();
+						ImGui::DragFloat("##X", &values.x, 0.1f);
+						ImGui::PopItemWidth();
+
+						ImGui::SameLine();
+
+						// Y value
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.8f, 0.35f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
+						ImGui::PushFont(io.Fonts->Fonts[0]);
+						if (ImGui::Button("Y", buttonSize))
+						{
+							values.y = resetValue;
+						}
+						ImGui::PopFont();
+						ImGui::PopStyleColor(3);
+						ImGui::SameLine();
+						ImGui::DragFloat("##Y", &values.y, 0.1f);
+						ImGui::PopItemWidth();
+
+						ImGui::SameLine();
+
+						// Z value
+						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.3f, 0.9f, 1.0f });
+						ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+						ImGui::PushFont(io.Fonts->Fonts[0]);
+						if (ImGui::Button("Z", buttonSize))
+						{
+							values.z = resetValue;
+						}
+						ImGui::PopFont();
+						ImGui::PopStyleColor(3);
+						ImGui::SameLine();
+						ImGui::DragFloat("##Z", &values.z, 0.1f);
+						ImGui::PopItemWidth();
+
+						ImGui::PopStyleVar();
+					}
+				}
+			}
+
+			ImGui::EndTable();
 		}
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::DragFloat("##X", &values.x, 0.1f);
-		ImGui::PopItemWidth();
 
-		ImGui::SameLine();
+		ImGui::PopID();
+	}
 
-		// Y value
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.8f, 0.35f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.7f, 0.15f, 1.0f });
-		ImGui::PushFont(io.Fonts->Fonts[0]);
-		if (ImGui::Button("Y", buttonSize))
+	static void DrawDragFloat(const std::string& label, float& value, bool isChild = false)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGui::PushID(label.c_str());
+
+		if (isChild)
+			ImGui::Indent();
+
+		std::string name = "##DragFloat" + label;
+		if (ImGui::BeginTable(name.c_str(), 2))
 		{
-			values.y = resetValue;
+			ImGui::TableSetupColumn("AAA", ImGuiTableColumnFlags_WidthStretch);
+			ImGui::TableSetupColumn("BBB", ImGuiTableColumnFlags_WidthStretch);
+
+			for (int row = 0; row < 1; ++row)
+			{
+				ImGui::TableNextRow();
+				for (int col = 0; col < 2; ++col)
+				{
+					ImGui::TableSetColumnIndex(col);
+
+					if (col == 0)
+					{
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text(label.c_str());
+					}
+					else
+					{
+						ImGui::DragFloat(name.c_str(), &value);
+					}
+				}
+			}
+
+			ImGui::EndTable();
 		}
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::DragFloat("##Y", &values.y, 0.1f);
-		ImGui::PopItemWidth();
 
-		ImGui::SameLine();
+		if (isChild)
+			ImGui::Unindent();
 
-		// Z value
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.3f, 0.9f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
-		ImGui::PushFont(io.Fonts->Fonts[0]);
-		if (ImGui::Button("Z", buttonSize))
+		ImGui::PopID();
+	}
+
+	static void DrawCheckbox(const std::string& label, bool& value, bool isChild = false)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGui::PushID(label.c_str());
+
+		if (isChild)
+			ImGui::Indent();
+
+		std::string name = "##Checkbox" + label;
+		if (ImGui::BeginTable(name.c_str(), 2))
 		{
-			values.z = resetValue;
+			ImGui::TableSetupColumn("AAA", ImGuiTableColumnFlags_WidthStretch);
+			ImGui::TableSetupColumn("BBB", ImGuiTableColumnFlags_WidthStretch);
+
+			for (int row = 0; row < 1; ++row)
+			{
+				ImGui::TableNextRow();
+				for (int col = 0; col < 2; ++col)
+				{
+					ImGui::TableSetColumnIndex(col);
+
+					if (col == 0)
+					{
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text(label.c_str());
+					}
+					else
+					{
+						ImGui::Checkbox(name.c_str(), &value);
+					}
+				}
+			}
+
+			ImGui::EndTable();
 		}
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-		ImGui::SameLine();
-		ImGui::DragFloat("##Z", &values.z, 0.1f);
-		ImGui::PopItemWidth();
 
-		ImGui::PopStyleVar();
+		if (isChild)
+			ImGui::Unindent();
 
-		// Reset to 1 column
-		ImGui::Columns(1);
+		ImGui::PopID();
+	}
+
+	static void DrawColorEdit(const std::string& label, glm::vec4& color, bool isChild = false)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGui::PushID(label.c_str());
+
+		if (isChild)
+			ImGui::Indent();
+
+		std::string name = "##ColorEdit" + label;
+		if (ImGui::BeginTable(name.c_str(), 2, ImGuiTableFlags_SizingStretchSame))
+		{
+			ImGui::TableSetupColumn("AAA", ImGuiTableColumnFlags_WidthStretch, 1);
+			ImGui::TableSetupColumn("BBB", ImGuiTableColumnFlags_WidthStretch, 4);
+
+			for (int row = 0; row < 1; ++row)
+			{
+				ImGui::TableNextRow();
+				for (int col = 0; col < 2; ++col)
+				{
+					ImGui::TableSetColumnIndex(col);
+
+					if (col == 0)
+					{
+						ImGui::AlignTextToFramePadding();
+						ImGui::Text(label.c_str());
+					}
+					else
+					{
+						ImGui::ColorEdit4(label.c_str(), glm::value_ptr(color), ImGuiColorEditFlags_NoLabel);
+					}
+				}
+			}
+
+			ImGui::EndTable();
+		}
+
+		if (isChild)
+			ImGui::Unindent();
 
 		ImGui::PopID();
 	}
@@ -211,7 +359,24 @@ namespace Apostle {
 		auto contentAvailRegion = ImGui::GetContentRegionAvail();
 
 		if (m_SelectionContext.HasComponent<T>())
-		{
+		{	
+			if (typeid(T) == typeid(TagComponent))
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 3 });
+				ImGui::Text("Name");
+				ImGui::SameLine(60.0f);
+				ImGui::PopStyleVar();
+
+				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 2 });
+				func();
+				ImGui::PopStyleVar();
+				
+				ImGui::Spacing();
+
+				return;
+			}
+			
+			
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
@@ -226,7 +391,7 @@ namespace Apostle {
 			bool removeComponent = false;
 			if (isRemovable)
 			{
-				if (ImGui::BeginPopup("ComponentSettings"))
+				if (ImGui::BeginPopupContextWindow() || ImGui::BeginPopup("ComponentSettings"))
 				{
 					if (ImGui::MenuItem("Remove Component"))
 					{
@@ -258,7 +423,7 @@ namespace Apostle {
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
 			strcpy_s(buffer, sizeof(buffer), tag.c_str());
-			if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
+			if (ImGui::InputText("##Tag", buffer, sizeof(buffer), ImGuiInputTextFlags_AutoSelectAll))
 			{
 				tag = std::string(buffer);
 			}
@@ -288,81 +453,93 @@ namespace Apostle {
 			const char* projectionTypeStrings[] = { "Perspective", "Orthographic" };
 			const char* currentProjectionTypeString = projectionTypeStrings[(int)camera.GetProjectionType()];
 
-			ImGui::Checkbox("Is Primary", &cameraComponent.Primary);
-
-			if (ImGui::BeginCombo("Projection Type", currentProjectionTypeString))
+			DrawCheckbox("Is Primary", cameraComponent.Primary);
+			
+			if (ImGui::BeginTable("Projection Type", 2, ImGuiTableFlags_SizingFixedFit))
 			{
-
-				for (int i = 0; i < 2; i++)
-				{
-					bool isSelected = currentProjectionTypeString == projectionTypeStrings[i];
-					if (ImGui::Selectable(projectionTypeStrings[i], isSelected))
-					{
-						currentProjectionTypeString = projectionTypeStrings[i];
-						camera.SetProjectionType((SceneCamera::ProjectionType)i);
-					}
+				ImGui::TableSetupColumn("AAA", ImGuiTableColumnFlags_WidthStretch);
+				ImGui::TableSetupColumn("BBB", ImGuiTableColumnFlags_WidthStretch);
 				
-					if (isSelected)
+				for (int row = 0; row < 1; ++row)
+				{
+					ImGui::TableNextRow();
+					for (int col = 0; col < 2; ++col)
 					{
-						ImGui::SetItemDefaultFocus();
+						ImGui::TableSetColumnIndex(col);
+						
+						if (col == 0)
+						{
+							ImGui::AlignTextToFramePadding();
+							ImGui::Text("Projection Type");
+						}
+						else
+						{
+							if (ImGui::BeginCombo("##Projection Type", currentProjectionTypeString))
+							{
+								for (int i = 0; i < 2; i++)
+								{
+									bool isSelected = currentProjectionTypeString == projectionTypeStrings[i];
+									if (ImGui::Selectable(projectionTypeStrings[i], isSelected))
+									{
+										currentProjectionTypeString = projectionTypeStrings[i];
+										camera.SetProjectionType((SceneCamera::ProjectionType)i);
+									}
+
+									if (isSelected)
+									{
+										ImGui::SetItemDefaultFocus();
+									}
+								}
+
+								ImGui::EndCombo();
+							}
+						}
 					}
 				}
-
-				ImGui::EndCombo();
+				
+				ImGui::EndTable();
 			}
 
 			// Show inspector items needed when projection is set to perspective
 			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
 			{
 				float verticalFOV = glm::degrees(camera.GetPerspectiveVerticalFOV());
-				if (ImGui::DragFloat("Vertical FOV", &verticalFOV))
-				{
-					camera.SetPerspectiveVerticalFOV(glm::radians(verticalFOV));
-				}
-
+				DrawDragFloat("Vertical FOV", verticalFOV, true);
+				camera.SetPerspectiveVerticalFOV(glm::radians(verticalFOV));
+				
 				float perpectiveNear = camera.GetPerspectiveNear();
-				if (ImGui::DragFloat("Near Clip", &perpectiveNear))
-				{
-					camera.SetPerspectiveNear(perpectiveNear);
-				}
+				DrawDragFloat("Near Clip", perpectiveNear, true);
+				camera.SetPerspectiveNear(perpectiveNear);
 
 				float perpectiveFar = camera.GetPerspectiveFar();
-				if (ImGui::DragFloat("Far Clip", &perpectiveFar))
-				{
-					camera.SetPerspectiveFar(perpectiveFar);
-				}
-
+				DrawDragFloat("Far Clip", perpectiveFar, true);
+				camera.SetPerspectiveFar(perpectiveFar);
 			}
 
 			// Show inspector items needed when projection is set to perspective
 			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
 			{
 				float orthoSize = camera.GetOrthographicSize();
-				if (ImGui::DragFloat("Orthographic Size", &orthoSize))
-				{
-					camera.SetOrthographicSize(orthoSize);
-				}
+				DrawDragFloat("Size", orthoSize, true);
+				camera.SetOrthographicSize(orthoSize);
 
 				float orthographicNear = camera.GetOrthographicNear();
-				if (ImGui::DragFloat("Near Clip", &orthographicNear))
-				{
-					camera.SetOrthographicNear(orthographicNear);
-				}
+				DrawDragFloat("Near Clip", orthographicNear, true);
+				camera.SetOrthographicNear(orthographicNear);
 
 				float orthographicFar = camera.GetOrthographicFar();
-				if (ImGui::DragFloat("Far Clip", &orthographicFar))
-				{
-					camera.SetOrthographicFar(orthographicFar);
-				}
+				DrawDragFloat("Far Clip", orthographicFar, true);
+				camera.SetOrthographicFar(orthographicFar);
 
-				ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+				DrawCheckbox("Fixed Aspect Ratio", cameraComponent.FixedAspectRatio, true);
 			}
 		});
 
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", [&]() {
 			auto& src = entity.GetComponent<SpriteRendererComponent>();
-			ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));;
+			DrawColorEdit("Color", src.Color);
 		});
 	}
+
 
 }

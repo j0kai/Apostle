@@ -162,7 +162,7 @@ namespace Apostle {
 		m_SceneHierarchyPanel.OnImGuiRender();
 
 		// Statistics Panel
-		ImGui::Begin("Statistics");
+		ImGui::Begin("Stats");
 		
 		auto stats = Apostle::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Statistics: ");
@@ -175,7 +175,7 @@ namespace Apostle {
 
 		// Scene Viewport
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		ImGui::Begin("Scene Viewport");
+		ImGui::Begin("Viewport");
 		
 		//Handle Event Blocking
 		m_ViewportFocused = ImGui::IsWindowFocused();
@@ -356,5 +356,3 @@ namespace Apostle {
 		}
 	}
 }
-
-	
