@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Apostle/Renderer/EditorCamera.h"
 #include "Apostle/Core/Timestep.h"
+#include "Apostle/Core/UUID.h"
+#include "Apostle/Renderer/EditorCamera.h"
 #include "entt/entt.hpp"
 
 namespace Apostle {
@@ -15,6 +16,7 @@ namespace Apostle {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnUpdateRuntime(Timestep ts);
