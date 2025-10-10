@@ -1,10 +1,12 @@
 #include "APpch.h"
+
+#include "Entity.h"
+#include "Components.h"
 #include "SceneSerializer.h"
 
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 
-#include "Components.h"
 
 namespace YAML {
 
@@ -83,8 +85,11 @@ namespace Apostle {
 
 	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
+		AP_CORE_ASSERT(entity.HasComponent<IDComponent>(), "Entity has not been assigned an ID");
+
+
 		out << YAML::BeginMap; // Entity
-		out << YAML::Key << "Entity" << YAML::Value << "12837192503751"; // TODO: Entity UUID will go here eventually.
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID();
 
 		if (entity.HasComponent<TagComponent>())
 		{
@@ -192,7 +197,7 @@ namespace Apostle {
 		{
 			for (auto entity : entities)
 			{
-				uint64_t uuid = entity["Entity"].as<uint64_t>(); // TODO
+				uint64_t uuid = entity["Entity"].as<uint64_t>();
 
 				std::string name;
 				auto tagComponent = entity["TagComponent"];
@@ -201,7 +206,7 @@ namespace Apostle {
 			
 				AP_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
-				Entity deserializedEntity = m_Scene->CreateEntity(name);
+				Entity deserializedEntity = m_Scene->CreateEntityWithUUID(uuid, name);
 
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)

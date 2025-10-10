@@ -1,12 +1,12 @@
 #include "APpch.h"
-#include "Scene.h"
 
 #include "Components.h"
-
-#include "glm/glm.hpp"
+#include "Entity.h"
+#include "Scene.h"
+#include "ScriptableEntity.h"
 #include "Apostle/Renderer/Renderer2D.h"
 
-#include "Entity.h"
+#include "glm/glm.hpp"
 
 namespace Apostle {
 
@@ -20,12 +20,18 @@ namespace Apostle {
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
+		return CreateEntityWithUUID(UUID(), name);
+	}
+
+	Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
+	{
 		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>(name);
 		if (name.empty())
 			tag.Tag = "Entity";
-		
+
 		return entity;
 	}
 
@@ -133,7 +139,13 @@ namespace Apostle {
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
-		static_assert(sizeof(T) == 0);
+		//static_assert(sizeof(T) == 0);
+		static_assert(false);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
+	{
 	}
 
 	template<>
