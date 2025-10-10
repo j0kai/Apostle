@@ -26,3 +26,10 @@ Furthermore, due to the way that the project is currently set up, there are a fe
 The Editor Application:
 
 ![devenv_XoGHKzVjZT](https://github.com/j0kai/Apostle/assets/105503076/2b600907-c043-4c99-8c2d-6ddd22fb2c9d)
+
+
+# Bug Report Form
+
+If you discover any bugs, please feel free to fill out this short form:
+
+[Bug Report Form - Click me!](https://kyle-jones-dev.atlassian.net/jira/software/projects/KAN/form/34?atlOrigin=eyJpIjoiMDMyN2I0NDg2NjhiNDFhYmE3NzIxZDY3Nzk1ZjZmMDgiLCJwIjoiaiJ9)
